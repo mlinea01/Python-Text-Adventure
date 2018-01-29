@@ -1,5 +1,9 @@
 import Multiplayer
+<<<<<<< HEAD
 MultiplayerConnection()
+=======
+Multiplayer.MultiplayerConnection()
+>>>>>>> 364e7658d84f18f3329fbc560a18f65ae1a3efbd
 
 leaveGame = 0
 xp = 0
