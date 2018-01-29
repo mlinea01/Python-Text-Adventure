@@ -1,5 +1,5 @@
-import Multiplayer.py
-MultiplayerConnection()
+import Multiplayer
+Multiplayer.MultiplayerConnection()
 
 leaveGame = 0
 xp = 0
