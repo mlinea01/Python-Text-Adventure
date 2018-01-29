@@ -1,3 +1,6 @@
+import Multiplayer.py
+MultiplayerConnection()
+
 leaveGame = 0
 xp = 0
 startHealth = 25
