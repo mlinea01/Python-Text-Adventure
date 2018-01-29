@@ -1,3 +1,4 @@
+import Adventure1
 import Multiplayer
 Multiplayer.MultiplayerConnection()
 
@@ -52,6 +53,8 @@ while leaveGame != "q":
                 enemyHealth -= fireTwister
                 print("It was a direct hit!")
                 print(name,":",startHealth, "Dummy:",enemyHealth)
+                print("")
+                Adventure1.step1
         
             if fireSpell == 2:
                 print("You chose Scorch. Let's practice using it.")
@@ -61,6 +64,8 @@ while leaveGame != "q":
                 enemyHealth -= scorch
                 print("It was a direct hit!")
                 print(name,":",startHealth, "Dummy:",enemyHealth)
+                print("")
+                Adventure1.step1
 
             if fireSpell == 3:
                 print("You chose Fire Breathe. let's practice using it.")
@@ -70,6 +75,8 @@ while leaveGame != "q":
                 enemyHealth -= fireBreath
                 print("It was a direct hit!")
                 print(name,":",startHealth,"Dummy:",enemyHealth)
+                print("")
+                Adventure1.step1
 
         else:
             continue
@@ -98,6 +105,8 @@ while leaveGame != "q":
                 enemyHealth -= tidalWave
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
             if waterSpell == 2:
                 print("You chose Whirl Pool. Let's practice using it.")
@@ -107,6 +116,8 @@ while leaveGame != "q":
                 enemyHealth -= whirlPool
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
             if waterSpell == 3:
                 print("You chose Mist. let's practice using it.")
@@ -116,6 +127,8 @@ while leaveGame != "q":
                 enemyHealth -= mist
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
         else:
             continue
@@ -144,6 +157,8 @@ while leaveGame != "q":
                 enemyHealth -= Earthquake
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
             if earthSpell == 2:
                 print("You chose Rock Throw. Let's practice using it.")
@@ -153,6 +168,8 @@ while leaveGame != "q":
                 enemyHealth -= rockThrow
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
             if earthSpell == 3:
                 print("You chose Rock Slide. let's practice using it.")
@@ -162,6 +179,8 @@ while leaveGame != "q":
                 enemyHealth -= rockSlide
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
 
         else:
@@ -191,6 +210,8 @@ while leaveGame != "q":
                 enemyHealth -= Hurricane
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
             if windSpell == 2:
                 print("You chose Tornado. Let's practice using it.")
@@ -200,6 +221,8 @@ while leaveGame != "q":
                 enemyHealth -= Tornado
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
             if windSpell == 3:
                 print("You chose Poison Breeze. let's practice using it.")
@@ -209,6 +232,8 @@ while leaveGame != "q":
                 enemyHealth -= poisonBreeze
                 print("It was a direct hit!")
                 print(name, ":", startHealth, "Dummy:", enemyHealth)
+                print("")
+                Adventure1.step1
 
         else:
             continue
