@@ -1,4 +1,4 @@
-import Multiplayer.py
+import Multiplayer
 MultiplayerConnection()
 
 leaveGame = 0
