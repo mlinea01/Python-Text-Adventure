@@ -1,13 +1,13 @@
-from Battle import *
-
 class Water:
+
+    def __init__(self):
+        self.damage = 1
+        self.spellName = "spell"
 
     def getName(self):
         return "Water"
 
-    def useSpell(self):
-
-        Attack = Battle()
+    def chooseSpell(self):
 
         name = input("Create a name for your character.")
         print("Hello", name)
@@ -23,19 +23,18 @@ class Water:
         if water_spell == 1:
             print("You chose Tidal Wave.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 10
+            self.damage = 10
+            self.spellName = "Tidal Wave"
+
 
         if water_spell == 2:
             print("You chose Whirl Pool. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 7
+            self.damage = 7
+            self.spellName = "Whirl Pool"
 
         if water_spell == 3:
             print("You chose Mist. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 7
-
-        Attack.mainAttack(damage)
+            self.damage = 7
+            self.spellName = "Mist"

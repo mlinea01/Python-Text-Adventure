@@ -1,13 +1,13 @@
-from Battle import *
-
 class Wind:
+
+    def __init__(self):
+        self.damage = 1
+        self.spellName = ""
 
     def getName(self):
         return "Wind"
 
-    def useSpell(self):
-
-        Attack = Battle()
+    def chooseSpell(self):
 
         name = input("Create a name for your character.")
         print("Hello", name)
@@ -23,19 +23,17 @@ class Wind:
         if wind_spell == 1:
             print("You chose Hurricane.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 10
+            self.damage = 10
+            self.spellName = "Hurricane"
 
         if wind_spell == 2:
             print("You chose Tornado. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 7
+            self.damage = 7
+            self.spellName = "Tornado"
 
         if wind_spell == 3:
             print("You chose Poison Breeze. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 7
-
-        Attack.mainAttack(damage)
+            self.damage = 7
+            self.spellName = "Poison Breeze"

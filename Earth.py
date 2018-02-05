@@ -1,13 +1,13 @@
-from Battle import *
-
 class Earth:
+
+    def __init__(self):
+        self.damage = 1
+        self.spellName = ""
 
     def getName(self):
         return "Earth"
 
-    def useSpell(self):
-
-        Attack = Battle()
+    def chooseSpell(self):
 
         name = input("Create a name for your character.")
         print("Hello", name)
@@ -23,19 +23,17 @@ class Earth:
         if earth_spell == 1:
             print("You chose Earthquake.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 10
+            self.damage = 10
+            self.spellName = "Earthquake"
 
         if earth_spell == 2:
             print("You chose Rock Throw. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 7
+            self.damage = 7
+            self.spellName = "Rock Throw"
 
         if earth_spell == 3:
             print("You chose Rock Slide. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
-            input("Press enter to attack")
-            damage = 7
-
-        Attack.mainAttack(damage)
+            self.damage = 7
+            self.spellName = "Rock Slide"
