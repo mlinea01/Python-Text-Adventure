@@ -1,6 +1,9 @@
 class Earth:
 
-    def earth_spell(this):
+    def getName(self):
+        return "Earth"
+
+    def useSpell(self):
         earthquake = 10
         rock_throw = 7
         rock_slide = 7

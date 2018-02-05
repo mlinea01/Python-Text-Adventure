@@ -1,6 +1,9 @@
 class Water:
 
-    def water_spell(this):
+    def getName(self):
+        return "Water"
+
+    def useSpell(self):
         tidal_wave = 10
         whirl_pool = 7
         mist = 7

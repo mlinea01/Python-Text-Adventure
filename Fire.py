@@ -1,6 +1,9 @@
 class Fire:
 
-    def fire_spell(this):
+    def getName(self):
+        return "Fire"
+
+    def useSpell(self):
         fire_twister = 10
         scorch = 7
         fire_breath = 7

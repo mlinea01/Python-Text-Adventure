@@ -1,6 +1,9 @@
 class Wind:
 
-    def wind_spell(this):
+    def getName(self):
+        return "Wind"
+
+    def useSpell(self):
         hurricane = 10
         tornado = 7
         poison_breeze = 7
