@@ -24,16 +24,18 @@ class Water:
             print("You chose Tidal Wave.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.mainAttack()
+            damage = 10
 
         if water_spell == 2:
             print("You chose Whirl Pool. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
 
         if water_spell == 3:
             print("You chose Mist. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
+
+        Attack.mainAttack(damage)

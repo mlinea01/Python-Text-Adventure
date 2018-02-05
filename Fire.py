@@ -24,16 +24,18 @@ class Fire:
             print("You chose Fire Twister.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.mainAttack()
+            damage = 10
 
         elif fire_spell == 2:
             print("You chose Scorch. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
 
         elif fire_spell == 3:
             print("You chose Fire Breathe. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
+
+        Attack.mainAttack(damage)

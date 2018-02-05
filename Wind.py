@@ -24,16 +24,18 @@ class Wind:
             print("You chose Hurricane.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.mainAttack()
+            damage = 10
 
         if wind_spell == 2:
             print("You chose Tornado. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
 
         if wind_spell == 3:
             print("You chose Poison Breeze. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
+
+        Attack.mainAttack(damage)

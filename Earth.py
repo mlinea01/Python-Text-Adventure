@@ -24,16 +24,18 @@ class Earth:
             print("You chose Earthquake.  Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.mainAttack()
+            damage = 10
 
         if earth_spell == 2:
             print("You chose Rock Throw. Let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
 
         if earth_spell == 3:
             print("You chose Rock Slide. let's practice using it.")
             print("Attack the training dummy to practice using your new ability.")
             input("Press enter to attack")
-            Attack.secondaryAttack()
+            damage = 7
+
+        Attack.mainAttack(damage)
