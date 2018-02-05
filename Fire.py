@@ -21,19 +21,15 @@ class Fire:
         print("")
 
         if fire_spell == 1:
-            print("You chose Fire Twister.  Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 10
             self.spellName = "Fire Twister"
 
         elif fire_spell == 2:
-            print("You chose Scorch. Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Scorch"
 
         elif fire_spell == 3:
-            print("You chose Fire Breathe. let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Fire Breathe"
+
+

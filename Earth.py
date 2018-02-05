@@ -21,19 +21,14 @@ class Earth:
         print("")
 
         if earth_spell == 1:
-            print("You chose Earthquake.  Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 10
             self.spellName = "Earthquake"
 
         if earth_spell == 2:
-            print("You chose Rock Throw. Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Rock Throw"
 
         if earth_spell == 3:
-            print("You chose Rock Slide. let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Rock Slide"
+

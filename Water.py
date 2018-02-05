@@ -21,20 +21,14 @@ class Water:
         print("")
 
         if water_spell == 1:
-            print("You chose Tidal Wave.  Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 10
             self.spellName = "Tidal Wave"
 
 
         if water_spell == 2:
-            print("You chose Whirl Pool. Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Whirl Pool"
 
         if water_spell == 3:
-            print("You chose Mist. let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Mist"

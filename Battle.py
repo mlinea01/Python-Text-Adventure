@@ -13,3 +13,5 @@ class Battle:
             training_dummy -= spell.damage
             print("training dummy:",training_dummy)
             print("")
+
+        print("The training dummy was defeated!\n")

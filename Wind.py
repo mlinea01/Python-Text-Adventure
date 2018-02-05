@@ -21,19 +21,13 @@ class Wind:
         print("")
 
         if wind_spell == 1:
-            print("You chose Hurricane.  Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 10
             self.spellName = "Hurricane"
 
         if wind_spell == 2:
-            print("You chose Tornado. Let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Tornado"
 
         if wind_spell == 3:
-            print("You chose Poison Breeze. let's practice using it.")
-            print("Attack the training dummy to practice using your new ability.")
             self.damage = 7
             self.spellName = "Poison Breeze"

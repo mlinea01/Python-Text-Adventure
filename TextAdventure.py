@@ -24,5 +24,7 @@ class Game:
         if change == 2: continue
 
         playerSpell.chooseSpell()
+        print("You chose " + playerSpell.spellName + ". Let's practice using it.")
+        print("Attack the training dummy to practice using your new ability.")
         practiceBattle.mainAttack(playerSpell)
         stepOne.step1()
