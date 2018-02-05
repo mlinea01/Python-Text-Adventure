@@ -1,5 +1,3 @@
-
-*.pyc
+.idea/libraries/R_User_Library.xml*.iml.idea/workspace.xml*.pyc
+__pycache__/Wind.cpython-36.pyc
 .idea/libraries/R_User_Library.xml
-*.iml
-.idea/workspace.xml
