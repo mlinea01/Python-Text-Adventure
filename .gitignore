@@ -1,0 +1,5 @@
+
+*.pyc
+.idea/libraries/R_User_Library.xml
+*.iml
+.idea/workspace.xml
