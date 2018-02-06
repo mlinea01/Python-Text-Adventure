@@ -4,13 +4,14 @@ import enum
 
 # Base class for all attacks
 class Attack:
-    def __init__(self, name, desc, damage, atkType, target, manaCost):
+    def __init__(self, name, desc, damage, atkType, statusEffects, target, manaCost):
         self.name = name
         self.desc = desc
         self.damage = damage
         self.atkType = atkType
         self.target = target
         self.manaCost = manaCost
+        self.statusEffects = statusEffects
 
 
 # This class keeps track of attack types - useful for things like determining resistances to certain moves
