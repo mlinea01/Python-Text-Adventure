@@ -7,7 +7,7 @@ class Battle:
         while training_dummy > 0:
             input("Press enter to attack")
             print("")
-            print("You attacked with",spell.spellName)
+            print("You attacked with",spell.name)
             print("It was a direct hit!")
             print("You attacked the training dummy for",spell.damage,"damage!")
             training_dummy -= spell.damage
