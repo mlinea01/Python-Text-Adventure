@@ -1,11 +1,8 @@
 from Adventure1 import *
-from Fire import *
-from Water import *
-from Earth import *
-from Wind import *
 from Battle import *
 from characters.Player import Player
 from attacks.Spells import *
+from attacks.Weapons import *
 
 
 class Game:
@@ -19,6 +16,9 @@ class Game:
                       [Earthquake(), rock_slide(), rock_throw()],
                       [Hurricane(), Tornado(), poison_breeze()]]
     characterTypes = ["Fire", "Water", "Earth", "Wind"]
+
+    weapons = [Sword(), war_hammer(), Staff()]
+
     practiceBattle = Battle()
 
     while leaveGame != "q":
@@ -45,8 +45,18 @@ class Game:
         name = input("\nCreate a name for your character: ")
         print("Hello", name)
 
+        # prompt the player to choose a starting weapon
+        print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
+        weaponNum = 1
+        for weapon in weapons:
+            print(str(weaponNum) + ". " + weapon.name)
+            weaponNum += 1
+        weapon = int(input("\nYour choice: "))
+        print("")
+        print("You chose a " + weapons[weapon - 1].name)
+
         # prompt the player to choose a starting spell
-        print("\nYou will need an ability to protect yourself.(Choose One)\n")
+        print("\nYou will also need an ability to protect yourself.(Choose One)\n")
         spellNum = 1
         for spell in startingSpells[characterType-1]:
             print(str(spellNum)+". "+spell.name)
@@ -57,4 +67,5 @@ class Game:
         print("\nYou chose " + chosenSpell.name + ". Let's practice using it.")
         print("Attack the training dummy to practice using your new ability.")
         practiceBattle.mainAttack(chosenSpell)
+
         stepOne.step1()

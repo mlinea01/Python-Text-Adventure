@@ -14,3 +14,8 @@ class Stun:
 class Blind:
     def __init__(self, blindDuration):
         self.duration = blindDuration
+
+
+class Bleed:
+    def __init__(self, bleedDuration):
+        self.duration = bleedDuration
