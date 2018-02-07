@@ -1,3 +1,6 @@
+from attacks.Spells import *
+
+
 class Earth:
 
     def __init__(self):
@@ -9,26 +12,13 @@ class Earth:
 
     def chooseSpell(self):
 
+        chooseSpell = [Earthquake, rock_throw, rock_slide]
+
         name = input("Create a name for your character.")
         print("Hello", name)
         print("")
-        print("You will need an ability to protect yourself.(Choose One)")
-        print("1. Earthquake (Shakes the earth below your enemy, dealing heavy damage.)")
-        print("2. Rock Throw (Hurls a boulder at your enemy, stunning them and dealing medium damage.)")
-        print("3. Rock Slide (Causes rocks to fall onto your enemy, blinding them and dealing medium damage.)")
-        print("")
+        for Spell in chooseSpell:
+            print(Spell.name + "\n" + Spell.desc)
+
         earth_spell = int(input("Choose a starting spell:"))
-        print("")
-
-        if earth_spell == 1:
-            self.damage = 10
-            self.spellName = "Earthquake"
-
-        if earth_spell == 2:
-            self.damage = 7
-            self.spellName = "Rock Throw"
-
-        if earth_spell == 3:
-            self.damage = 7
-            self.spellName = "Rock Slide"
-
+        return chooseSpell[earth_spell - 1]

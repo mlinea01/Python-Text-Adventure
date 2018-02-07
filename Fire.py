@@ -1,3 +1,6 @@
+from attacks.Spells import *
+
+
 class Fire:
 
     def __init__(self):
@@ -9,27 +12,13 @@ class Fire:
 
     def chooseSpell(self):
 
+        chooseSpell = [fire_twister, Scorch, fire_breathe]
+
         name = input("Create a name for your character.")
         print("Hello", name)
         print("")
-        print("You will need an ability to protect yourself.(Choose One)")
-        print("1. Fire twister (Surrounds your enemy in a tornado of fire, dealing heavy damage.)")
-        print("2. Scorch (Sets your enamy ablaze, dealing medium damage, and stunning them.)")
-        print("3. Fire breathe (Shoots a breathe of fire at your enamy, blinding them and dealing medium damage.)")
-        print("")
+        for Spell in chooseSpell:
+            print(Spell.name + "\n" + Spell.desc)
+
         fire_spell = int(input("Choose a starting spell:"))
-        print("")
-
-        if fire_spell == 1:
-            self.damage = 10
-            self.spellName = "Fire Twister"
-
-        elif fire_spell == 2:
-            self.damage = 7
-            self.spellName = "Scorch"
-
-        elif fire_spell == 3:
-            self.damage = 7
-            self.spellName = "Fire Breathe"
-
-
+        return chooseSpell[fire_spell - 1]
