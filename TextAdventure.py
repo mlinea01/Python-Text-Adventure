@@ -41,6 +41,10 @@ class Game:
         if change == 2:
             continue
 
+        # prompt the player for a character name
+        name = input("\nCreate a name for your character: ")
+        print("Hello", name)
+
         # prompt the player to choose a starting spell
         print("\nYou will need an ability to protect yourself.(Choose One)\n")
         spellNum = 1
