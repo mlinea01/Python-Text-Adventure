@@ -12,7 +12,7 @@ class Water:
 
     def chooseSpell(self):
 
-        chooseSpell = [tidal_wave, whirl_pool, Mist]
+        chooseSpell = [tidal_wave(), whirl_pool(), Mist()]
 
         name = input("Create a name for your character.")
         print("Hello", name)

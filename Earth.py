@@ -12,7 +12,7 @@ class Earth:
 
     def chooseSpell(self):
 
-        chooseSpell = [Earthquake, rock_throw, rock_slide]
+        chooseSpell = [Earthquake(), rock_throw(), rock_slide()]
 
         name = input("Create a name for your character.")
         print("Hello", name)

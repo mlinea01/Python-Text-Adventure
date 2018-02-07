@@ -12,7 +12,7 @@ class Wind:
 
     def chooseSpell(self):
 
-        chooseSpell = [Hurricane, Tornado, poison_breeze]
+        chooseSpell = [Hurricane(), Tornado(), poison_breeze()]
 
         name = input("Create a name for your character.")
         print("Hello", name)

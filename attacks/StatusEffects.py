@@ -12,5 +12,5 @@ class Stun:
 
 
 class Blind:
-    def __init(self, blindDuration):
+    def __init__(self, blindDuration):
         self.duration = blindDuration

@@ -12,7 +12,7 @@ class Fire:
 
     def chooseSpell(self):
 
-        chooseSpell = [fire_twister, Scorch, fire_breathe]
+        chooseSpell = [fire_twister(), Scorch(), fire_breathe()]
 
         name = input("Create a name for your character.")
         print("Hello", name)
