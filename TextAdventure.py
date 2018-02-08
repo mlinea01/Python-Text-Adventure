@@ -20,7 +20,7 @@ class Game:
 
     characterRaces = [Gnome(), Ogre(), Elf()]
 
-    weapons = [Sword(), war_hammer(), Staff()]
+    weapons = [Sword(), war_hammer(), Staff(), battle_axe(), Trident(), bowAndArrow()]
 
     practiceBattle = Battle()
 
