@@ -19,3 +19,11 @@ class Blind:
 class Bleed:
     def __init__(self, bleedDuration):
         self.duration = bleedDuration
+
+class Paralyze:
+    def __init__(self, paralyzeDuration):
+        self.duration = paralyzeDuration
+
+class Slow:
+    def __init__(self, slowDuration):
+        self.duration = slowDuration

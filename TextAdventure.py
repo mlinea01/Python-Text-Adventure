@@ -3,6 +3,7 @@ from Battle import *
 from characters.Player import Player
 from attacks.Spells import *
 from attacks.Weapons import *
+from characters.CharacterRace import *
 
 
 class Game:
@@ -16,6 +17,8 @@ class Game:
                       [Earthquake(), rock_slide(), rock_throw()],
                       [Hurricane(), Tornado(), poison_breeze()]]
     characterTypes = ["Fire", "Water", "Earth", "Wind"]
+
+    characterRaces = [Gnome(), Ogre(), Elf()]
 
     weapons = [Sword(), war_hammer(), Staff()]
 
@@ -40,6 +43,17 @@ class Game:
         change = int(input("Are you sure you want " + characterTypes[characterType-1] + "? (1.yes, 2.no)"))
         if change == 2:
             continue
+
+        #Prompt player to choose a Race for his/her character
+        print("Choose a Race for your character.\n")
+        raceNum = 1
+        for raceType in characterRaces:
+            print(str(raceNum)+". "+raceType.name)
+            raceNum+=1
+
+        characterRace = int(input("\nYour choice: "))
+        print("")
+        print("You chose " +characterRaces[characterRace-1].name)
 
         # prompt the player for a character name
         name = input("\nCreate a name for your character: ")
