@@ -2,11 +2,22 @@ from attacks.AttacksInfo import *
 from attacks.StatusEffects import *
 
 
-class Sword(Attack):
+# a base class that all weapons extend. It has an attack variable but also other data like its own name, description,
+# monetary value, etc. Maybe we'll think of more things a weapon can have or just keep it like this.
+class Weapon:
+    def __init__(self, name, desc, attack, value):
+        self.name = name
+        self.desc = desc
+        self.attack = attack
+        self.value = value
+
+
+class Sword(Weapon):
     def __init__(self):
         desc = "Long steel sword with razor sharp edges that can cut through anything!"
-        super().__init__("Long Sword", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
+        attack = Attack("Swing Long Sword", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
                          target=TargetTypes.Enemy_Single, manaCost=0)
+        super().__init__("Long Sword", desc, attack, value=10)
 
 
 class war_hammer(Attack):

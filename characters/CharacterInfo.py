@@ -13,6 +13,7 @@ class Character:
         self.attacks = attacks
         self.name = name
         self.desc = desc
+        self.weapons = []
 
     def learnAttack(self, attack):
         self.attacks.append(attack)
@@ -21,3 +22,7 @@ class Character:
     #   (this can be overridden in subclasses for more specific behavior)
     def chooseAttack(self):
         return self.attacks[random.randint(0, len(self.attacks)-1)]
+
+    def equip_weapon(self, weapon):
+        self.weapons.append(weapon)
+        self.learnAttack(weapon.attack)
