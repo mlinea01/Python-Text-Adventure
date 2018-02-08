@@ -8,7 +8,6 @@ from characters.CharacterRace import *
 
 class Game:
     leaveGame = 0
-    player = Player()
     stepOne = Adventure1()
 
     # starting spells: fire, water, earth, wind

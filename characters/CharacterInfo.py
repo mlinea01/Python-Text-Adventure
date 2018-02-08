@@ -1,5 +1,7 @@
 # This module is used to keep track of information common to all characters (including players and enemies)
 
+import random
+
 
 # This is the base class for all characters
 class Character:
@@ -14,3 +16,8 @@ class Character:
 
     def learnAttack(self, attack):
         self.attacks.append(attack)
+
+    # default behavior is to choose an attack randomly
+    #   (this can be overridden in subclasses for more specific behavior)
+    def chooseAttack(self):
+        return self.attacks[random.randint(0, len(self.attacks)-1)]
