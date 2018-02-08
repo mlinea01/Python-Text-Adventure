@@ -4,12 +4,13 @@
 # This is the base class for all characters
 class Character:
     # hp: hit points, speed : determines turn order in battle, attacks : list of attacks the character knows
-    def __init__(self, name, hp, mana, speed, attacks):
+    def __init__(self, name, desc, hp, mana, speed, attacks):
         self.hp = hp
         self.mana = mana
         self.speed = speed
         self.attacks = attacks
         self.name = name
+        self.desc = desc
 
     def learnAttack(self, attack):
         self.attacks.append(attack)

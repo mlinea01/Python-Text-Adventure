@@ -44,7 +44,7 @@ class Game:
         if change == 2:
             continue
 
-        #Prompt player to choose a Race for his/her character
+        # Prompt player to choose a Race for his/her character
         print("Choose a Race for your character.\n")
         raceNum = 1
         for raceType in characterRaces:
@@ -53,11 +53,12 @@ class Game:
 
         characterRace = int(input("\nYour choice: "))
         print("")
-        print("You chose " +characterRaces[characterRace-1].name)
+        print("You chose " + characterRaces[characterRace-1].name)
+        print(characterRaces[characterRace-1].desc)
 
         # prompt the player for a character name
         name = input("\nCreate a name for your character: ")
-        print("Hello", name)
+        print("Hello", name, "the almighty " + characterTypes[characterType-1]+" "+characterRaces[characterRace-1].name)
 
         # prompt the player to choose a starting weapon
         print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
