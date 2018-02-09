@@ -14,6 +14,7 @@ class Character:
         self.name = name
         self.desc = desc
         self.weapons = []
+        self.character = self
 
     def learnAttack(self, attack):
         self.attacks.append(attack)

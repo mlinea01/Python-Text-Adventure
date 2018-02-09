@@ -49,14 +49,15 @@ class Game:
             raceNum+=1
 
         characterRace = int(input("\nYour choice: "))
-        player = characterRaces[characterRace-1]
+        raceChar = characterRaces[characterRace-1]
         print("")
-        print("You chose " + player.name)
-        print(player.desc)
+        print("You chose " + raceChar.name)
+        print(raceChar.desc)
 
         # prompt the player for a character name
         name = input("\nCreate a name for your character: ")
-        print("Hello", name, "the almighty " + characterTypes[characterType-1]+" "+player.name)
+        player = Player(name, raceChar)
+        print("Hello", player.character.name, "the almighty " + characterTypes[characterType-1]+" "+player.race)
 
         # prompt the player to choose a starting weapon
         print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
@@ -79,6 +80,6 @@ class Game:
         # practice battle
         print("\nYou chose " + chosenSpell.name + ". Let's practice using it.")
         print("Attack the training dummy to practice using your new ability.")
-        Battle.fight(player, TrainingDummy())
+        Battle.fight(player.character, TrainingDummy().character)
 
         stepOne.step1()
