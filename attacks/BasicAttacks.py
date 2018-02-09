@@ -12,6 +12,14 @@ class Punch(Attack):
                          target=TargetTypes.Enemy_Single, manaCost=0)
 
 
+class BlankStare(Attack):
+    def __init__(self):
+        name = "Blank Stare"
+        desc = "Just an awkward blank stare at your opponent"
+        super().__init__(name, desc, damage=0, atkType=AttackTypes.Normal, statusEffects=[],
+                         target=TargetTypes.Enemy_Single, manaCost=0)
+
+
 # Defensive
 class Block(Attack):
     def __init__(self):

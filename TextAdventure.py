@@ -1,6 +1,6 @@
 from Adventure1 import *
 from Battle import *
-from characters.Player import Player
+from characters.Enemies import *
 from attacks.Spells import *
 from attacks.Weapons import *
 from characters.CharacterRace import *
@@ -19,9 +19,7 @@ class Game:
 
     characterRaces = [Gnome(), Ogre(), Elf()]
 
-    weapons = [Sword(), war_hammer(), Staff(), battle_axe(), Trident(), bowAndArrow()]
-
-    practiceBattle = Battle()
+    weapons = [Sword(), war_hammer(), Staff(), battle_axe(), Trident(), BowAndArrow()]
 
     while leaveGame != "q":
 
@@ -51,13 +49,14 @@ class Game:
             raceNum+=1
 
         characterRace = int(input("\nYour choice: "))
+        player = characterRaces[characterRace-1]
         print("")
-        print("You chose " + characterRaces[characterRace-1].name)
-        print(characterRaces[characterRace-1].desc)
+        print("You chose " + player.name)
+        print(player.desc)
 
         # prompt the player for a character name
         name = input("\nCreate a name for your character: ")
-        print("Hello", name, "the almighty " + characterTypes[characterType-1]+" "+characterRaces[characterRace-1].name)
+        print("Hello", name, "the almighty " + characterTypes[characterType-1]+" "+player.name)
 
         # prompt the player to choose a starting weapon
         print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
@@ -80,6 +79,6 @@ class Game:
         # practice battle
         print("\nYou chose " + chosenSpell.name + ". Let's practice using it.")
         print("Attack the training dummy to practice using your new ability.")
-        practiceBattle.mainAttack(chosenSpell)
+        Battle.fight(player, TrainingDummy())
 
         stepOne.step1()

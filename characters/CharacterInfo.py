@@ -26,3 +26,11 @@ class Character:
     def equip_weapon(self, weapon):
         self.weapons.append(weapon)
         self.learnAttack(weapon.attack)
+
+    def hit_by(self, attack):
+        self.hp -= attack.damage
+        if self.hp < 0:
+            self.hp = 0
+        print(self.name + " takes " + str(attack.damage) + " damage!" + "  HP: " + str(self.hp))
+        if self.hp == 0:
+            print(self.name + " has been defeated!")
