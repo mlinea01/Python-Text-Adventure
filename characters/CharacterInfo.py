@@ -14,11 +14,16 @@ class Character:
         self.name = name
         self.desc = desc
         self.weapons = []
+        self.status_effects = []
 
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
         return self.attacks[random.randint(0, len(self.attacks)-1)]
+
+    def add_status_effect(self, effect):
+        print(self.name + " is " + effect.name)
+        self.status_effects.append(effect)
 
     def hit_by(self, attack):
         self.hp -= attack.damage
@@ -27,3 +32,9 @@ class Character:
         print(self.name + " takes " + str(attack.damage) + " damage!" + "  HP: " + str(self.hp))
         if self.hp == 0:
             print(self.name + " has been defeated!")
+        else:
+            try:
+                for effect in attack.statusEffects:
+                    self.add_status_effect(effect)
+            except TypeError:
+                self.add_status_effect(attack.statusEffects)
