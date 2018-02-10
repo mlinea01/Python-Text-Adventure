@@ -73,7 +73,7 @@ class Game:
             if int(input("Is this the weapon you want? (1.yes 2.no)")) != 1:
                 continue
             else:
-                player.character.equip_weapon(player_weapon)
+                player.equip_weapon(player_weapon)
                 break
 
         # prompt the player to choose a starting spell
@@ -88,12 +88,12 @@ class Game:
             if int(input("Is this the spell you want? (1.yes 2.no)")) != 1:
                 continue
             else:
-                player.character.learn_attack(chosenSpell)
+                player.learn_attack(chosenSpell)
                 break
 
         # practice battle
         print("\nYou'll need to learn how to fight out there. Let's see what ya got!")
         print("Attack this training dummy to practice.")
-        Battle.fight(player.character, TrainingDummy().character)
+        Battle.fight(player.character, TrainingDummy())
 
         stepOne.step1()

@@ -22,4 +22,15 @@ class Player:
 
         return self.character.attacks[chosen_attack_num]
 
+    def learn_attack(self, attack, show_message=True):
+        if show_message:
+            print(self.character.name + " learned " + attack.name + "!")
+        self.character.attacks.append(attack)
+
+    def equip_weapon(self, weapon, show_message=True):
+        if show_message:
+            print(self.character.name + " equipped " + weapon.name + "!")
+        self.character.weapons.append(weapon)
+        self.learn_attack(weapon.attack, False)
+
 
