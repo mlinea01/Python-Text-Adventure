@@ -14,52 +14,64 @@ class Weapon:
 
 class Sword(Weapon):
     def __init__(self):
+        name = "Long Sword"
         desc = "Long steel sword with razor sharp edges that can cut through anything!"
-        attack = Attack("Swing Long Sword", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
+        attack_desc = "Slash with your Long Sword making your opponent bleed."
+        attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
                         target=TargetTypes.Enemy_Single, manaCost=0)
-        super().__init__("Long Sword", desc, attack, value=10)
+        super().__init__(name, desc, attack, value=10)
 
 
 class WarHammer(Weapon):
     def __init__(self):
+        name = "War Hammer"
         desc = "Huge hammer with metal head that cannot be shattered, and a steel handle to swing the hammer so hard" \
                "it can break a mountain into a million pieces!"
-        attack = Attack("Swing War Hammer", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Paralyze(1),
+        attack_desc = "Swing your mighty War Hammer and paralyze your opponent!"
+        attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Paralyze(1),
                         target=TargetTypes.Enemy_Single, manaCost=0)
-        super().__init__("War Hammer", desc, attack, value=10)
+        super().__init__(name, desc, attack, value=10)
 
 
 class Staff(Weapon):
     def __init__(self):
+        name = "Staff"
         desc = "A long staff specifically used in martial arts made from magical wood that possesses incredible " \
                "power. It looks like nothing but make no mistake, you will feel the affects of this staff from around" \
                "the world!"
-        attack = Attack("SWing Staff", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Slow(1),
+        attack_desc = "Strike swiftly with your staff slowing your opponent"
+        attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Slow(1),
                          target=TargetTypes.Enemy_Single, manaCost=0)
-        super().__init__("Staff", desc, attack, value=10)
+        super().__init__(name, desc, attack, value=10)
 
 
 class BattleAxe(Weapon):
     def __init__(self):
+        name = "Battle Axe"
         desc = "An axe molded from moon rocks and molten lava! This axe can cut through to the center of the WORLD!"
-        attack = Attack("Swing Battle Axe", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
+        attack_desc = "Swing your deadly Battle Axe making your opponent bleed."
+        attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
                          target=TargetTypes.Enemy_Single, manaCost=0)
-        super().__init__("Battle Axe", desc, attack, value=10)
+        super().__init__(name, desc, attack, value=10)
 
 
 class Trident(Weapon):
     def __init__(self):
+        name = "Trident"
         desc = "This trident was said to be the one and only trident from the depths of Atlantis! Wielding the power" \
                "of the sea!"
-        attack = Attack("Stab with Trident", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
+        attack_desc = "Strike with your mighty Trident making you opponent bleed."
+        attack = Attack(name, desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),
                          target=TargetTypes.Enemy_Single, manaCost=0)
-        super().__init__("Trident", desc, attack, value=10)
+        super().__init__(name, desc, attack, value=10)
 
 
 class BowAndArrow(Weapon):
     def __init__(self):
+        name = "Bow and Arrow"
         desc = "This bow and its arrows were crafted from the AVATAR him self, giving it the ability to manipulate" \
                "the elements around us!"
-        attack = Attack("Shoot Bow and Arrow", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Slow(1),
+        attack_desc = "Aim true with an Arrow that will slow your opponent from afar"
+        attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Slow(1),
                          target=TargetTypes.Enemy_Single, manaCost=0)
-        super().__init__("Bow and Arrow", desc, attack, value=10)
+        super().__init__(name, desc, attack, value=10)

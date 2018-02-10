@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0011b6c-972f-4a9c-a964-3628c4418307" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/Battle.py" afterPath="$PROJECT_DIR$/Battle.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TextAdventure.py" afterPath="$PROJECT_DIR$/TextAdventure.py" />
       <change beforePath="$PROJECT_DIR$/attacks/Weapons.py" afterPath="$PROJECT_DIR$/attacks/Weapons.py" />
       <change beforePath="$PROJECT_DIR$/characters/CharacterInfo.py" afterPath="$PROJECT_DIR$/characters/CharacterInfo.py" />
@@ -20,8 +20,8 @@
       <file leaf-file-name="TextAdventure.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TextAdventure.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="55" lean-forward="false" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
+            <state relative-caret-position="262">
+              <caret line="75" column="32" lean-forward="false" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="32" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -54,14 +54,14 @@
       <file leaf-file-name="Player.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/characters/Player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="52" lean-forward="false" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+            <state relative-caret-position="374">
+              <caret line="22" column="56" lean-forward="false" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CharacterRace.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CharacterRace.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/characters/CharacterRace.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
@@ -76,8 +76,8 @@
       <file leaf-file-name="Weapons.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/attacks/Weapons.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="41" column="15" lean-forward="false" selection-start-line="41" selection-start-column="15" selection-end-line="41" selection-end-column="15" />
+            <state relative-caret-position="1173">
+              <caret line="69" column="23" lean-forward="true" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -97,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CharacterInfo.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CharacterInfo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/characters/CharacterInfo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="449">
+              <caret line="30" column="61" lean-forward="false" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -139,15 +139,15 @@
         <option value="$PROJECT_DIR$/attacks/BasicAttacks.py" />
         <option value="$PROJECT_DIR$/characters/CharacterRace.py" />
         <option value="$PROJECT_DIR$/characters/Enemies.py" />
-        <option value="$PROJECT_DIR$/attacks/Weapons.py" />
         <option value="$PROJECT_DIR$/Battle.py" />
-        <option value="$PROJECT_DIR$/characters/CharacterInfo.py" />
-        <option value="$PROJECT_DIR$/TextAdventure.py" />
+        <option value="$PROJECT_DIR$/attacks/Weapons.py" />
         <option value="$PROJECT_DIR$/characters/Player.py" />
+        <option value="$PROJECT_DIR$/TextAdventure.py" />
+        <option value="$PROJECT_DIR$/characters/CharacterInfo.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="974" />
@@ -282,7 +282,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -505,10 +505,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/attacks/BasicAttacks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+          <folding>
+            <element signature="e#72#136#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Battle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="53" lean-forward="false" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/characters/CharacterRace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="46" lean-forward="false" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/attacks/Weapons.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="41" column="15" lean-forward="false" selection-start-line="41" selection-start-column="15" selection-end-line="41" selection-end-column="15" />
+        <state relative-caret-position="1173">
+          <caret line="69" column="23" lean-forward="true" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
@@ -525,36 +553,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attacks/BasicAttacks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding>
-            <element signature="e#72#136#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/characters/CharacterInfo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Battle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="53" lean-forward="false" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TextAdventure.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="55" lean-forward="false" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
+        <state relative-caret-position="262">
+          <caret line="75" column="32" lean-forward="false" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="32" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
@@ -563,19 +565,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/characters/Player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="52" lean-forward="false" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+        <state relative-caret-position="374">
+          <caret line="22" column="56" lean-forward="false" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/characters/CharacterRace.py">
+    <entry file="file://$PROJECT_DIR$/characters/CharacterInfo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="46" lean-forward="false" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="449">
+          <caret line="30" column="61" lean-forward="false" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>

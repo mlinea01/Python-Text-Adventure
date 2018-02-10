@@ -60,26 +60,40 @@ class Game:
         print("Hello", player.character.name, "the almighty " + characterTypes[characterType-1]+" "+player.race)
 
         # prompt the player to choose a starting weapon
-        print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
-        weaponNum = 1
-        for weapon in weapons:
-            print(str(weaponNum) + ". " + weapon.name)
-            weaponNum += 1
-        weapon = int(input("\nYour choice: "))
-        print("")
-        print("You chose a " + weapons[weapon - 1].name)
+        player_weapon = None
+        while True:
+            print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
+            weaponNum = 1
+            for weapon in weapons:
+                print(str(weaponNum) + ". " + weapon.name)
+                weaponNum += 1
+            player_weapon = weapons[int(input("\nYour choice: "))-1]
+            print("")
+            print("The " + player_weapon.name + " - " + player_weapon.desc)
+            if int(input("Is this the weapon you want? (1.yes 2.no)")) != 1:
+                continue
+            else:
+                player.character.equip_weapon(player_weapon)
+                break
 
         # prompt the player to choose a starting spell
-        print("\nYou will also need an ability to protect yourself.(Choose One)\n")
-        spellNum = 1
-        for spell in startingSpells[characterType-1]:
-            print(str(spellNum)+". "+spell.name)
-            spellNum += 1
-        chosenSpell = startingSpells[characterType-1][int(input("\nYour choice: "))-1]
+        while True:
+            print("\nYou will also need an ability to protect yourself.(Choose One)\n")
+            spellNum = 1
+            for spell in startingSpells[characterType-1]:
+                print(str(spellNum)+". "+spell.name)
+                spellNum += 1
+            chosenSpell = startingSpells[characterType-1][int(input("\nYour choice: "))-1]
+            print(chosenSpell.name + " - " + chosenSpell.desc)
+            if int(input("Is this the spell you want? (1.yes 2.no)")) != 1:
+                continue
+            else:
+                player.character.learn_attack(chosenSpell)
+                break
 
         # practice battle
-        print("\nYou chose " + chosenSpell.name + ". Let's practice using it.")
-        print("Attack the training dummy to practice using your new ability.")
+        print("\nYou'll need to learn how to fight out there. Let's see what ya got!")
+        print("Attack this training dummy to practice.")
         Battle.fight(player.character, TrainingDummy().character)
 
         stepOne.step1()

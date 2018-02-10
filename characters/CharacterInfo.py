@@ -16,7 +16,9 @@ class Character:
         self.weapons = []
         self.character = self
 
-    def learn_attack(self, attack):
+    def learn_attack(self, attack, show_message=True):
+        if show_message:
+            print(self.name + " learned " + attack.name + "!")
         self.attacks.append(attack)
 
     # default behavior is to choose an attack randomly
@@ -24,9 +26,11 @@ class Character:
     def choose_attack(self):
         return self.attacks[random.randint(0, len(self.attacks)-1)]
 
-    def equip_weapon(self, weapon):
+    def equip_weapon(self, weapon, show_message=True):
+        if show_message:
+            print(self.name + " equipped " + weapon.name + "!")
         self.weapons.append(weapon)
-        self.learn_attack(weapon.attack)
+        self.learn_attack(weapon.attack, False)
 
     def hit_by(self, attack):
         self.hp -= attack.damage

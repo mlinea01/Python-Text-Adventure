@@ -12,7 +12,7 @@ class Player:
         attack_num = 1
         chosen_attack_num = -1
         for attack in self.character.attacks:
-            print(str(attack_num) + ". " + attack.name)
+            print(str(attack_num) + ". " + attack.name + " - " + attack.desc)
             attack_num += 1
 
         while chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks):
