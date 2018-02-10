@@ -5,7 +5,7 @@ import random
 
 # This is the base class for all characters
 class Character:
-    # hp: hit points, speed : determines turn order in battle, attacks : list of attacks the character knows
+
     def __init__(self, name, desc, hp, mana, speed, attacks):
         self.hp = hp
         self.mana = mana
@@ -21,11 +21,15 @@ class Character:
     def choose_attack(self):
         return self.attacks[random.randint(0, len(self.attacks)-1)]
 
+    # used to add a status effect
     def add_status_effect(self, effect):
-        print(self.name + " is " + effect.name)
-        self.status_effects.append(effect)
+        if random.randint(0, 100) <= effect.chance:
+            print(self.name + " is " + effect.name)
+            self.status_effects.append(effect)
 
+    # called when hit by an attack
     def hit_by(self, attack):
+        # subtract hp and check for defeat
         self.hp -= attack.damage
         if self.hp < 0:
             self.hp = 0
@@ -33,6 +37,7 @@ class Character:
         if self.hp == 0:
             print(self.name + " has been defeated!")
         else:
+            # if not defeated, apply status effect(s) - one or more can be applied
             try:
                 for effect in attack.statusEffects:
                     self.add_status_effect(effect)
