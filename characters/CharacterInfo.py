@@ -16,17 +16,17 @@ class Character:
         self.weapons = []
         self.character = self
 
-    def learnAttack(self, attack):
+    def learn_attack(self, attack):
         self.attacks.append(attack)
 
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
-    def chooseAttack(self):
+    def choose_attack(self):
         return self.attacks[random.randint(0, len(self.attacks)-1)]
 
     def equip_weapon(self, weapon):
         self.weapons.append(weapon)
-        self.learnAttack(weapon.attack)
+        self.learn_attack(weapon.attack)
 
     def hit_by(self, attack):
         self.hp -= attack.damage

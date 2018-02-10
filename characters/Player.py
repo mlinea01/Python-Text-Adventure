@@ -3,11 +3,11 @@ class Player:
 
     def __init__(self, name, character):
         self.character = character
-        character.chooseAttack = self.chooseAttack
+        character.choose_attack = self.choose_attack
         self.race = character.name
         character.name = name
 
-    def chooseAttack(self):
+    def choose_attack(self):
         print("Choose your attack: ")
         attack_num = 1
         chosen_attack_num = -1

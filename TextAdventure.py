@@ -19,7 +19,7 @@ class Game:
 
     characterRaces = [Gnome(), Ogre(), Elf()]
 
-    weapons = [Sword(), war_hammer(), Staff(), battle_axe(), Trident(), BowAndArrow()]
+    weapons = [Sword(), WarHammer(), Staff(), BattleAxe(), Trident(), BowAndArrow()]
 
     while leaveGame != "q":
 
@@ -49,14 +49,14 @@ class Game:
             raceNum+=1
 
         characterRace = int(input("\nYour choice: "))
-        raceChar = characterRaces[characterRace-1]
+        char = characterRaces[characterRace - 1]
         print("")
-        print("You chose " + raceChar.name)
-        print(raceChar.desc)
+        print("You chose " + char.name)
+        print(char.desc)
 
         # prompt the player for a character name
         name = input("\nCreate a name for your character: ")
-        player = Player(name, raceChar)
+        player = Player(name, char)
         print("Hello", player.character.name, "the almighty " + characterTypes[characterType-1]+" "+player.race)
 
         # prompt the player to choose a starting weapon

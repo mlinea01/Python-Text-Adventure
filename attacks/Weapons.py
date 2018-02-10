@@ -20,7 +20,7 @@ class Sword(Weapon):
         super().__init__("Long Sword", desc, attack, value=10)
 
 
-class war_hammer(Weapon):
+class WarHammer(Weapon):
     def __init__(self):
         desc = "Huge hammer with metal head that cannot be shattered, and a steel handle to swing the hammer so hard" \
                "it can break a mountain into a million pieces!"
@@ -39,7 +39,7 @@ class Staff(Weapon):
         super().__init__("Staff", desc, attack, value=10)
 
 
-class battle_axe(Weapon):
+class BattleAxe(Weapon):
     def __init__(self):
         desc = "An axe molded from moon rocks and molten lava! This axe can cut through to the center of the WORLD!"
         attack = Attack("Swing Battle Axe", desc, damage=2, atkType=AttackTypes.Normal, statusEffects=Bleed(1),

@@ -16,7 +16,7 @@ class Battle:
             while i < len(fighters):
                 fighter = fighters[i]
                 other_fighter = fighters[(i+1) % 2]
-                chosen_attack = fighter.chooseAttack()
+                chosen_attack = fighter.choose_attack()
                 print("\n" + fighter.name + " uses " + chosen_attack.name)
                 other_fighter.hit_by(chosen_attack)
                 i += 1
