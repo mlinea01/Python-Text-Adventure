@@ -15,6 +15,7 @@ class Character:
         self.desc = desc
         self.weapons = []
         self.status_effects = []
+        self.cannot_attack = 0
 
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
