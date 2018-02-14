@@ -12,6 +12,7 @@ class Attack:
         self.target = target
         self.manaCost = manaCost
         self.statusEffects = statusEffects
+        self.enabled = True
 
 
 # This class keeps track of attack types - useful for things like determining resistances to certain moves

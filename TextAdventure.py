@@ -57,7 +57,7 @@ class Game:
         # prompt the player for a character name
         name = input("\nCreate a name for your character: ")
         player = Player(name, char)
-        print("Hello", player.character.name, "the almighty " + characterTypes[characterType-1]+" "+player.race)
+        print("Hello", player.name, "the almighty " + characterTypes[characterType-1]+" "+player.race)
 
         # prompt the player to choose a starting weapon
         player_weapon = None
@@ -93,7 +93,7 @@ class Game:
 
         # practice battle
         print("\nYou'll need to learn how to fight out there. Let's see what ya got!")
-        print("Attack this training dummy to practice.")
-        Battle.fight(player.character, TrainingDummy())
+        print("Attack this training dummy to practice.\n")
+        Battle.fight(player, TrainingDummy())
 
         stepOne.step1()

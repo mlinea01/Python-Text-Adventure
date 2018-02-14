@@ -18,7 +18,7 @@ class Sword(Weapon):
         desc = "Long steel sword with razor sharp edges that can cut through anything!"
         attack_desc = "Slash with your Long Sword making your opponent bleed."
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Bleed(bleedDuration=1, chance=50),
+                        statusEffects=Bleed(bleedDuration=2, chance=50),
                         target=TargetTypes.Enemy_Single, manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
@@ -43,7 +43,7 @@ class Staff(Weapon):
                "the world!"
         attack_desc = "Strike swiftly with your staff slowing your opponent"
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Slow(slowDuration=1, chance=50),
+                        statusEffects=Slow(slowDuration=1, chance=100),
                         target=TargetTypes.Enemy_Single, manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
