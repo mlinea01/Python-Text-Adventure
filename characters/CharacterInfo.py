@@ -92,13 +92,15 @@ class Character:
     def apply_damage(self, damage, show_message=True):
         # subtract hp and check for defeat
         self.hp -= damage
+
         if self.hp < 0:
             self.hp = 0
 
+        if show_message:
+            print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
+
         if self.hp == 0:
             print(self.name + " has been defeated!")
-        elif show_message:
-            print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
 
 
     # called when hit by an attack
