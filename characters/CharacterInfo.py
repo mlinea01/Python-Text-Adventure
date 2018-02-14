@@ -90,8 +90,6 @@ class Character:
                 effect.resolve()
 
     def apply_damage(self, damage, show_message=True):
-        if show_message:
-            print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
         # subtract hp and check for defeat
         self.hp -= damage
         if self.hp < 0:
@@ -99,6 +97,8 @@ class Character:
 
         if self.hp == 0:
             print(self.name + " has been defeated!")
+        elif show_message:
+            print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
 
 
     # called when hit by an attack
