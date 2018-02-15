@@ -7,6 +7,7 @@ class Triggers:
     ON_TURN_START = "on_turn_start"
     ON_TURN_END = "on_turn_end"
     ON_HIT_BY = "on_hit_by"
+    ON_ATTACKING = "on_attacking"
 
 
 # this class defines thing common to all Status Effects (like how they extract data from trigger arguments
@@ -26,6 +27,10 @@ class StatusEffect:
         self.character = args[0]
 
     def on_hit_by_getargs(self, args):
+        self.character = args[0]
+        self.attack = args[1]
+
+    def on_attacking_getargs(self, args):
         self.character = args[0]
         self.attack = args[1]
 
@@ -137,11 +142,11 @@ class Paralyze(StatusEffect):
         self.duration = paralyzeDuration
         self.chance = chance
 
-    def on_effect_apply_getargs(self, args):
+    def on_effect_apply(self, args):
         super().on_effect_apply_getargs(args)
         self.character.cannot_attack += 1
 
-    def on_turn_end_getargs(self, args):
+    def on_turn_end(self, args):
         super().on_turn_end_getargs(args)
         self.duration -= 1
         if self.duration == 0:
@@ -173,6 +178,22 @@ class Slow(StatusEffect):
 
     def on_turn_start(self, args):
         super().on_turn_start_getargs(args)
+        self.duration -= 1
+        if self.duration == 0:
+            self.is_resolved = True
+
+
+class DamageBoost(StatusEffect):
+    def __init__(self, amount, duration):
+        super.__init__()
+        self.amount = amount
+        self.duration = duration
+
+    def on_attacking(self, args):
+        if self.attack.damage is not None:
+            self.attack.damage += self.amount
+
+    def on_turn_end(self, args):
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True
