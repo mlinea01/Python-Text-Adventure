@@ -1,5 +1,5 @@
 from copy import deepcopy
-
+from attacks.StatusEffects import Triggers
 
 # Player class used to keep track of player stats and actions
 class Player:
@@ -35,7 +35,9 @@ class Player:
                     print("That attack is disabled this turn!")
                     continue
 
-            return deepcopy(self.character.attacks[chosen_attack_num])
+            attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
+            self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
+            return attack_chosen
         else:
             print(self.name + " cannot attack this turn!")
             return None

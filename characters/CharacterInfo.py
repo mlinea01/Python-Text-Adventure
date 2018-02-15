@@ -46,7 +46,9 @@ class Character:
             if a.enabled:
                 attacks_enabled.append(a)
         if len(attacks_enabled) > 0:
-            return deepcopy(self.attacks[random.randint(0, len(attacks_enabled)-1)])
+            attack_chosen = deepcopy(self.attacks[random.randint(0, len(attacks_enabled)-1)])
+            self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
+            return attack_chosen
         else:
             print(self.name + " cannot attack this turn!")
             return None
