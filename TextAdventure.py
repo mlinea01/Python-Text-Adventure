@@ -4,6 +4,7 @@ from characters.Enemies import *
 from attacks.Spells import *
 from attacks.Weapons import *
 from characters.CharacterRace import *
+from characters.Player import Player
 
 
 class Game:
