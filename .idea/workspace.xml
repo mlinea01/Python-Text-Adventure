@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0011b6c-972f-4a9c-a964-3628c4418307" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/characters/CharacterInfo.py" afterPath="$PROJECT_DIR$/characters/CharacterInfo.py" />
-      <change beforePath="$PROJECT_DIR$/characters/Player.py" afterPath="$PROJECT_DIR$/characters/Player.py" />
+      <change beforePath="$PROJECT_DIR$/attacks/StatusEffects.py" afterPath="$PROJECT_DIR$/attacks/StatusEffects.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Player.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Player.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/characters/Player.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-95">
@@ -60,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StatusEffects.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="StatusEffects.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/attacks/StatusEffects.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3009">
-              <caret line="183" column="0" lean-forward="true" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+            <state relative-caret-position="272">
+              <caret line="131" column="14" lean-forward="false" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -163,11 +162,11 @@
         <option value="$PROJECT_DIR$/characters/Enemies.py" />
         <option value="$PROJECT_DIR$/Battle.py" />
         <option value="$PROJECT_DIR$/attacks/Weapons.py" />
-        <option value="$PROJECT_DIR$/attacks/StatusEffects.py" />
         <option value="$PROJECT_DIR$/adventures/Potions.py" />
         <option value="$PROJECT_DIR$/adventures/ItemsInfo.py" />
         <option value="$PROJECT_DIR$/characters/CharacterInfo.py" />
         <option value="$PROJECT_DIR$/characters/Player.py" />
+        <option value="$PROJECT_DIR$/attacks/StatusEffects.py" />
       </list>
     </option>
   </component>
@@ -584,14 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attacks/StatusEffects.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3009">
-          <caret line="183" column="0" lean-forward="true" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/adventures/ItemsInfo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -615,6 +606,14 @@
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/attacks/StatusEffects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="131" column="14" lean-forward="false" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
