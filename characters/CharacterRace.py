@@ -1,4 +1,3 @@
-from characters.Player import *
 from attacks import BasicAttacks
 from characters.CharacterInfo import Character
 
