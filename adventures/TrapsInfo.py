@@ -5,4 +5,4 @@ class Traps:
         self.name = name
         self.desc = desc
         self.damage = damage
-        self.duration =  duration
+        self.duration = duration
