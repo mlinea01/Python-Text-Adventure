@@ -1,8 +1,14 @@
+from characters.Player import *
+
 # Base class for all types of armor.
 
 
 class Armor:
 
-    def __init__(self, armor, magResist):
+    def __init__(self, name, armor, magResist):
+        self.name = name
         self.armor = armor
         self.magResist = magResist
+
+    def equip_armor(self, armor):
+        print(Player.name + "equipped" + armor.name)
