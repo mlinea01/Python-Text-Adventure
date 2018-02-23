@@ -8,9 +8,13 @@ class Server:
 
     def __init__(self):
         HOST = socket.gethostbyname(socket.gethostname())
-        self.sock.bind((HOST, 10000))
+        PORT = 10000
+        self.sock.bind((HOST, PORT))
         self.sock.listen(1)
-        print("Server started on " + HOST)
+        print("Server started on " + HOST + ", port: " + PORT)
+        print("Note: For other players to connect to your game session they must be on the same LAN as you"
+              "or you must set up port forwarding on your router. ")
+        print("*Disclaimer* : please only invite players you trust to connect to your game session!")
 
     def connectionHandler(self, connection, address):
         while True:
@@ -53,7 +57,8 @@ class Client:
                 break
             print(str(data, 'utf-8'))
 
-class MultiplayerConnection:
+
+class GameSession:
 
     def __init__(self):
         while True:
