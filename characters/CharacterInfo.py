@@ -3,6 +3,7 @@
 import random
 from attacks.StatusEffects import Triggers
 from copy import deepcopy
+from attacks.AttacksInfo import *
 
 # This is the base class for all characters
 class Character:
@@ -124,6 +125,11 @@ class Character:
 
         if attack.damage is not None:
             self.apply_damage(attack.damage)
+            if attack.atkType == AttackTypes.Normal:
+                attack.damage -= (self.totalArmor/5)
+
+            else:
+                attack.damage -= (self.totalMagResist/5)
 
         if self.hp > 0:
             # if not defeated, apply status effect(s) - one or more can be applied
