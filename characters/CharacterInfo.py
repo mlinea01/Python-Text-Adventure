@@ -7,16 +7,21 @@ from copy import deepcopy
 # This is the base class for all characters
 class Character:
 
-    def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[]):
+    def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[], armor=[]):
         self.hp = hp
         self.mana = mana
         self.speed = speed
         self.attacks = attacks
         self.name = name
         self.desc = desc
+        self.totalArmor = 0
+        self.totalMagResist = 0
         self.weapons = []
         for weapon in weapons:
             self.equip_weapon(weapon, False)
+        self.armor = []
+        for a in armor:
+            self.equip_armor(a, False)
         self.status_effects = []
         self.cannot_attack = 0
         self.attacks_disabled = []
@@ -58,6 +63,13 @@ class Character:
             print(self.name + " equipped " + weapon.name + "!")
         self.weapons.append(weapon)
         self.learn_attack(weapon.attack, False)
+
+    def equip_armor(self, Armor, show_message=True):
+        if show_message:
+            print(self.name + " equipped " + Armor.name + "!")
+        self.armor.append(Armor)
+        self.totalArmor += Armor.armor
+        self.totalMagResist += Armor.magResist
 
     def learn_attack(self, attack, show_message=True):
         if show_message:
