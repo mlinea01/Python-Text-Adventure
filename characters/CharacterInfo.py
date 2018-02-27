@@ -124,12 +124,16 @@ class Character:
         self.trigger_status_effects(Triggers.ON_HIT_BY, self, attack)
 
         if attack.damage is not None:
-            self.apply_damage(attack.damage)
             if attack.atkType == AttackTypes.Normal:
                 attack.damage -= (self.totalArmor/5)
 
             else:
                 attack.damage -= (self.totalMagResist/5)
+
+            if attack.damage < 0:
+                attack.damage = 0
+
+            self.apply_damage(attack.damage)
 
         if self.hp > 0:
             # if not defeated, apply status effect(s) - one or more can be applied
