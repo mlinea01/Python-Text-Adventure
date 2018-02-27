@@ -35,6 +35,8 @@ class Adventure1:
                 input("There is a Mountain Dragon in the camp, Hurry, take that dragon down!")
                 print()
                 Battle.fight(Player, MountainDragon())
+                print("")
+                print("Woah that dragon was tough! Now that that's over lets take a look around this camp.")
 
             elif enter_camp ==2 or enter_camp == 3:
                 print("This camp looks pretty quiet, lets search for clues to see what has happened here.")
