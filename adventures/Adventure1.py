@@ -1,4 +1,7 @@
 import random
+from characters.Enemies import *
+from Battle import *
+from characters.Player import Player
 
 startJourney = True
 
@@ -31,6 +34,7 @@ class Adventure1:
             if enter_camp == 1:
                 input("There is a Mountain Dragon in the camp, Hurry, take that dragon down!")
                 print()
+                Battle.fight(Player, MountainDragon())
 
             elif enter_camp ==2 or enter_camp == 3:
                 print("This camp looks pretty quiet, lets search for clues to see what has happened here.")
