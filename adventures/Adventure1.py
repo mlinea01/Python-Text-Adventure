@@ -23,6 +23,16 @@ class Adventure1:
         print("")
 
         while startJourney:
+
+            def search_camp():
+                search = random.randint(1, 10)
+
+                if search > 5:
+                    print("You found an item!")
+
+                else:
+                    print("There's nothing here, let's keep moving!")
+
             input("There's no turning back now! Keep your eyes open, this forest is filled with creatures that will\n"
                   "not be too happy about you being on their land.")
             print("")
@@ -36,7 +46,11 @@ class Adventure1:
                 print()
                 Battle.fight(Player, MountainDragon())
                 print("")
-                print("Woah that dragon was tough! Now that that's over lets take a look around this camp.")
+                input("Woah that dragon was tough! Now that that's over lets take a look around this camp.")
+                print("")
+                search_camp()
 
-            elif enter_camp ==2 or enter_camp == 3:
+            elif enter_camp == 2 or enter_camp == 3:
                 print("This camp looks pretty quiet, lets search for clues to see what has happened here.")
+                print("")
+                search_camp()
