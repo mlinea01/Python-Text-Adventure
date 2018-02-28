@@ -5,10 +5,22 @@ from attacks.Spells import *
 from attacks.Weapons import *
 from characters.CharacterRace import *
 from characters.Player import Player
+import time
 
 class Game:
 
     def __init__(self):
+
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
+        server.print_text("Game has started!")
+        i = 0
+        while i < server.get_num_players():
+            server.print_text("Getting input from player " + str(i+1))
+            server.print_text("Player " + str(i+1) + " entered: " + str(server.get_player_input(i, "Input: "), 'utf-8'))
+            i += 1
+
+
         leaveGame = 0
         stepOne = Adventure1()
 

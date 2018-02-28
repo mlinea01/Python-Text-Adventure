@@ -1,8 +1,18 @@
 import socket
 import threading
-import sys
 from copy import copy
 from Game import Game
+import enum
+import time
+import sys
+
+
+class ServerStatus(enum.Enum):
+    MultiplayerLobby = enum.auto()
+    WaitingToStartGame = enum.auto()
+    StartGame = enum.auto()
+    GameStarted = enum.auto()
+
 
 class Server:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -14,7 +24,10 @@ class Server:
         self.playerOne = None
         self.sock.bind((HOST, PORT))
         self.sock.listen(1)
-        self.game = None
+        self.status = ServerStatus.MultiplayerLobby
+        self.playersReady = []
+        self.waiting_for_input = []
+        self.player_input_buffer = []
         print("Server started on " + HOST + ", port: " + str(PORT))
         print("Note: For other players to connect to your game session they must be on the same LAN as you "
               "or you must set up port forwarding on your router. ")
@@ -27,8 +40,31 @@ class Server:
         while True:
             data = connection.recv(1024)
 
-            if connection == self.playerOne and self.game is None and str(data, 'utf-8') == "start game":
-                self.send_msg(bytes("Game Started!", 'utf-8'), self.connections)
+            player_num = self.get_player_num(connection)
+            if self.status == ServerStatus.GameStarted and self.waiting_for_input[player_num] is True:
+                self.player_input_buffer[player_num] = data
+                continue
+
+            if self.status == ServerStatus.WaitingToStartGame and not self.playersReady.__contains__(connection):
+                self.playersReady.append(connection)
+                if len(self.playersReady) >= len(self.connections):
+                    self.status = ServerStatus.StartGame
+
+            if self.status == ServerStatus.MultiplayerLobby and connection == self.playerOne \
+                    and str(data, 'utf-8') == "start game":
+                self.status = ServerStatus.WaitingToStartGame
+                self.print_text(ClientTrigger.game_starting)
+
+                wait_for_host = threading.Thread(target=self.connectionHandler, args=(connection, address))
+                wait_for_host.daemon = True
+                wait_for_host.start()
+
+                while self.status != ServerStatus.StartGame:
+                    time.sleep(0.5)
+
+                self.status = ServerStatus.GameStarted
+                game = threading.Thread(target=Game)
+                game.start()
                 break
 
             if not data:
@@ -37,13 +73,35 @@ class Server:
                 print(str(address) + ": disconnected")
                 break
 
-            recipients = copy(self.connections)
-            recipients.remove(connection)
-            self.send_msg(data, recipients)
+            if self.status == ServerStatus.MultiplayerLobby:
+                recipients = copy(self.connections)
+                recipients.remove(connection)
+                self.send_msg(data, recipients)
+
+    def print_text(self, text):
+        self.send_msg(bytes(text, 'utf-8'), self.connections)
 
     def send_msg(self, data, recipients):
         for con in recipients:
             con.send(data)
+
+    def get_player_input(self, player, message=""):
+        self.connections[player].send(bytes(message, 'utf-8'))
+        self.waiting_for_input[player] = True
+        while self.player_input_buffer[player] is None:
+            time.sleep(0.1)
+        self.waiting_for_input[player] = False
+        return self.player_input_buffer[player]
+
+    def get_player_num(self, connection):
+        i = 0
+        while i < len(self.connections):
+            if self.connections[i] == connection:
+                return i
+            i += 1
+
+    def get_num_players(self):
+        return len(self.connections)
 
     def run(self):
         while True:
@@ -52,41 +110,67 @@ class Server:
             threadConnection.damon = True
             threadConnection.start()
             self.connections.append(connection)
+            self.waiting_for_input.append(False)
+            self.player_input_buffer.append(None)
             if len(self.connections)>1: print(str(address) + ": connected")
             elif self.playerOne is None:
                 self.playerOne = connection
+
+
+class ClientStatus(enum.Enum):
+    Chat = enum.auto()
+    WaitingForGameStart = enum.auto()
+    GameStarted = enum.auto()
+
+class ClientTrigger:
+    game_starting = "game_starting"
+    get_input = "get_input"
 
 class Client:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def sendMsg(self):
         while True:
-            self.sock.send(bytes(input(""), 'utf-8'))
-            if self.game is not None:
-                self.game.start()
-                break
+            data = input("")
+            if self.status == ClientStatus.WaitingForGameStart:
+                self.status = ClientStatus.GameStarted
+                self.sock.send(bytes("go", 'utf-8'))
+                print("Waiting for all other players to be ready to start...")
+                # break
+            else:
+                self.sock.send(bytes(data, 'utf-8'))
 
     def __init__(self, address, show_message=True):
         self.sock.connect(address)
         self.chatMode = True
-        self.game = None
+        self.status = ClientStatus.Chat
 
         threadInput = threading.Thread(target=self.sendMsg)
         threadInput.daemon = True
         threadInput.start()
-        if show_message: print("You connected to " + str(address) )
+        if show_message:
+            print("You connected to " + str(address))
 
         while True:
             data = self.sock.recv(1024)
             if not data:
                 break
-            print(str(data, 'utf-8'))
-            if str(data, 'utf-8') == "Game Started!":
-                self.game = threading.Thread(target=Game)
-                print("The game has been started, press Enter to begin.")
-
+            text_data = str(data, 'utf-8')
+            if text_data == ClientTrigger.game_starting:
+                if self.status == ClientStatus.Chat:
+                    self.status = ClientStatus.WaitingForGameStart
+                    print("The game is ready to start, press Enter to begin.")
+            elif text_data.__contains__(ClientTrigger.get_input):
+                output_data = input(text_data.replace(ClientTrigger.get_input, ""))
+                if len(output_data) == 0:
+                    output_data = "null"
+                self.sock.send(bytes(output_data, 'utf-8'))
+            else:
+                print(text_data)
 
 class GameSession:
+
+    server = None
 
     @classmethod
     def start_session(cls):
@@ -112,5 +196,9 @@ class GameSession:
 
     @classmethod
     def createServer(cls):
-        server = Server()
-        server.run()
+        cls.server = Server()
+        cls.server.run()
+
+    @classmethod
+    def get_server(cls):
+        return cls.server
