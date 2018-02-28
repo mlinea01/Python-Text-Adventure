@@ -3,7 +3,6 @@ from characters.Enemies import *
 from Battle import *
 from characters.Player import Player
 from adventures.Potions import *
-from characters.CharacterInfo import *
 
 startJourney = True
 
