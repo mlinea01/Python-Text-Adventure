@@ -17,6 +17,7 @@ class Character:
         self.desc = desc
         self.totalArmor = 0
         self.totalMagResist = 0
+        self.items = []
         self.weapons = []
         for weapon in weapons:
             self.equip_weapon(weapon, False)
