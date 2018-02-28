@@ -2,11 +2,16 @@ import random
 from characters.Enemies import *
 from Battle import *
 from characters.Player import Player
+from adventures.Potions import *
+from characters.CharacterInfo import *
 
 startJourney = True
 
 
 class Adventure1:
+
+    def __init__(self, character):
+        self.character = character
 
     def step1(self):
         print("Now that you have completed your training, we can begin our first adventure!")
@@ -25,10 +30,13 @@ class Adventure1:
         while startJourney:
 
             def search_camp():
-                search = random.randint(1, 10)
+                potions = [HealthPotion(), ManaPotion(), SpeedPotion(), DamagePotion()]
+                search = random.randint(1, 8)
 
-                if search > 5:
+                if search < 4:
                     print("You found an item!")
+                    print("You found a " + str(potions[search - 1]))
+                    self.character.items.append(potions[search - 1])
 
                 else:
                     print("There's nothing here, let's keep moving!")
