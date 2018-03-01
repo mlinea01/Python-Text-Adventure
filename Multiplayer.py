@@ -1,10 +1,22 @@
 import socket
 import threading
 from copy import copy
+from copy import deepcopy
 from Game import Game
 import enum
 import time
 import sys
+
+class IO:
+    @classmethod
+    def get_input(cls, server, player, message=""):
+        server.print_text(message, [player])
+        server.set_player_input_flag(player)
+        player_input = "null"
+        while player_input == "null":
+            player_input = server.get_player_input(player)
+            time.sleep(0.1)
+        return player_input
 
 
 class ServerStatus(enum.Enum):
@@ -12,6 +24,10 @@ class ServerStatus(enum.Enum):
     WaitingToStartGame = enum.auto()
     StartGame = enum.auto()
     GameStarted = enum.auto()
+
+
+class Clients:
+    ALL = -1
 
 
 class Server:
@@ -39,10 +55,12 @@ class Server:
     def connectionHandler(self, connection, address):
         while True:
             data = connection.recv(1024)
+            str_data = str(data, 'utf-8')
 
             player_num = self.get_player_num(connection)
-            if self.status == ServerStatus.GameStarted and self.waiting_for_input[player_num] is True:
-                self.player_input_buffer[player_num] = data
+            if self.waiting_for_input[player_num] is True and str_data != "null":
+                self.player_input_buffer[player_num] = str_data
+                self.waiting_for_input[player_num] = False
                 continue
 
             if self.status == ServerStatus.WaitingToStartGame and not self.playersReady.__contains__(connection):
@@ -78,20 +96,28 @@ class Server:
                 recipients.remove(connection)
                 self.send_msg(data, recipients)
 
-    def print_text(self, text):
-        self.send_msg(bytes(text, 'utf-8'), self.connections)
+    def print_text(self, text, players=[Clients.ALL]):
+        send_to = []
+        if players[0] == Clients.ALL:
+            send_to = self.connections
+        else:
+            for p in players:
+                send_to.append(self.connections[p])
+
+        self.send_msg(bytes(text, 'utf-8'), send_to)
+        time.sleep(0.01)
 
     def send_msg(self, data, recipients):
         for con in recipients:
             con.send(data)
 
-    def get_player_input(self, player, message=""):
-        self.connections[player].send(bytes(message, 'utf-8'))
+    def set_player_input_flag(self, player):
         self.waiting_for_input[player] = True
-        while self.player_input_buffer[player] is None:
-            time.sleep(0.1)
-        self.waiting_for_input[player] = False
-        return self.player_input_buffer[player]
+
+    def get_player_input(self, player):
+        buffer = copy(self.player_input_buffer[player])
+        self.player_input_buffer[player] = "null"
+        return buffer
 
     def get_player_num(self, connection):
         i = 0
@@ -111,7 +137,7 @@ class Server:
             threadConnection.start()
             self.connections.append(connection)
             self.waiting_for_input.append(False)
-            self.player_input_buffer.append(None)
+            self.player_input_buffer.append("null")
             if len(self.connections)>1: print(str(address) + ": connected")
             elif self.playerOne is None:
                 self.playerOne = connection

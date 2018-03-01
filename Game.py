@@ -6,23 +6,30 @@ from attacks.Weapons import *
 from characters.CharacterRace import *
 from characters.Player import Player
 import time
+import threading
 
 class Game:
 
     def __init__(self):
 
         from Multiplayer import GameSession
+        from Multiplayer import IO
         server = GameSession.get_server()
         server.print_text("Game has started!")
-        i = 0
-        while i < server.get_num_players():
-            server.print_text("Getting input from player " + str(i+1))
-            server.print_text("Player " + str(i+1) + " entered: " + str(server.get_player_input(i, "Input: "), 'utf-8'))
-            i += 1
 
+        p_num = 0
+        while p_num < server.get_num_players():
+            intro_thread = threading.Thread(target=self.adventure_intro, args=(p_num, server))
+            intro_thread.start()
+            p_num += 1
+
+
+    def adventure_intro(self, player_num, server):
+
+        from Multiplayer import IO
 
         leaveGame = 0
-        stepOne = Adventure1()
+        # stepOne = Adventure1()
 
         # starting spells: fire, water, earth, wind
         startingSpells = [[fire_twister(), Scorch(), fire_breathe()],
@@ -38,76 +45,79 @@ class Game:
         while leaveGame != "q":
 
             # prompt player to choose a starting character type which will determine starting spell choices
-            print("Choose a character type.\n")
+            server.print_text("Choose a character type.\n", [player_num])
             typeNum = 1
             for charType in characterTypes:
-                print(str(typeNum)+". "+charType)
+                server.print_text(str(typeNum)+". "+charType, [player_num])
                 typeNum += 1
 
-            characterType = int(input("\nYour choice: "))
-            print("")
+            characterType = int(IO.get_input(server, player_num, "\nYour choice: "))
+            server.print_text("", [player_num])
             if characterType < 1 or characterType > 4:
                 continue
 
             # confirm character type choice
-            print("You chose a " + characterTypes[characterType-1] + " character.")
-            change = int(input("Are you sure you want " + characterTypes[characterType-1] + "? (1.yes, 2.no)"))
+            server.print_text("You chose a " + characterTypes[characterType-1] + " character.", [player_num])
+            change = int(IO.get_input(server, player_num, "Are you sure you want " + characterTypes[characterType-1] + "? (1.yes, 2.no)"))
             if change == 2:
                 continue
 
             # Prompt player to choose a Race for his/her character
-            print("Choose a Race for your character.\n")
+            server.print_text("Choose a Race for your character.\n", [player_num])
             raceNum = 1
             for raceType in characterRaces:
-                print(str(raceNum)+". "+raceType.name)
+                server.print_text(str(raceNum)+". "+ raceType.name, [player_num])
                 raceNum+=1
 
-            characterRace = int(input("\nYour choice: "))
+            characterRace = int(IO.get_input(server, player_num, "\nYour choice: "))
             char = characterRaces[characterRace - 1]
-            print("")
-            print("You chose " + char.name)
-            print(char.desc)
+            server.print_text("", [player_num])
+            server.print_text("You chose " + char.name, [player_num])
+            server.print_text(char.desc, [player_num])
 
             # prompt the player for a character name
-            name = input("\nCreate a name for your character: ")
+            name = IO.get_input(server, player_num, "\nCreate a name for your character: ")
             player = Player(name, char)
-            print("Hello", player.name, "the almighty " + characterTypes[characterType-1]+" "+player.race)
+            server.print_text("Hello " + player.name + " the almighty " + characterTypes[characterType-1]+" "+player.race, [player_num])
 
             # prompt the player to choose a starting weapon
             player_weapon = None
             while True:
-                print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
+                server.print_text("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n", [player_num])
                 weaponNum = 1
                 for weapon in weapons:
-                    print(str(weaponNum) + ". " + weapon.name)
+                    server.print_text(str(weaponNum) + ". " + weapon.name, [player_num])
                     weaponNum += 1
-                player_weapon = weapons[int(input("\nYour choice: "))-1]
-                print("")
-                print("The " + player_weapon.name + " - " + player_weapon.desc)
-                if int(input("Is this the weapon you want? (1.yes 2.no)")) != 1:
+                player_weapon = weapons[int(IO.get_input(server, player_num, "\nYour choice: "))-1]
+                server.print_text("", [player_num])
+                server.print_text("The " + player_weapon.name + " - " + player_weapon.desc, [player_num])
+                if int(IO.get_input(server, player_num, "Is this the weapon you want? (1.yes 2.no)")) != 1:
                     continue
                 else:
-                    player.equip_weapon(player_weapon)
+                    player.equip_weapon(player_weapon, False)
                     break
 
             # prompt the player to choose a starting spell
             while True:
-                print("\nYou will also need an ability to protect yourself.(Choose One)\n")
+                server.print_text("\nYou will also need an ability to protect yourself.(Choose One)\n", [player_num])
                 spellNum = 1
                 for spell in startingSpells[characterType-1]:
-                    print(str(spellNum)+". "+spell.name)
+                    server.print_text(str(spellNum)+". "+spell.name, [player_num])
                     spellNum += 1
-                chosenSpell = startingSpells[characterType-1][int(input("\nYour choice: "))-1]
-                print(chosenSpell.name + " - " + chosenSpell.desc)
-                if int(input("Is this the spell you want? (1.yes 2.no)")) != 1:
+                chosenSpell = startingSpells[characterType-1][int(IO.get_input(server, player_num, "\nYour choice: "))-1]
+                server.print_text(chosenSpell.name + " - " + chosenSpell.desc, [player_num])
+                if int(IO.get_input(server, player_num, "Is this the spell you want? (1.yes 2.no)")) != 1:
                     continue
                 else:
                     player.learn_attack(chosenSpell)
                     break
 
             # practice battle
-            print("\nYou'll need to learn how to fight out there. Let's see what ya got!")
-            print("Attack this training dummy to practice.\n")
-            Battle.fight(player, TrainingDummy())
+            server.print_text("\nYou'll need to learn how to fight out there. Let's see what ya got!", [player_num])
+            server.print_text("Attack this training dummy to practice.\n", [player_num])
+            server.print_text("This is the end of the current implementation of multiplayer functionality!", [player_num])
+            server.print_text("The rest of the game must be converted to use the server for IO! (bug Fred about this)", [player_num])
+            leaveGame = "q"
+            # Battle.fight(player, TrainingDummy())
 
-            stepOne.step1()
+            # stepOne.step1()
