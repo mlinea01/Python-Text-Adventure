@@ -12,8 +12,8 @@ class IO:
     def get_input(cls, server, player, message=""):
         server.print_text(message, [player])
         server.set_player_input_flag(player)
-        player_input = "null"
-        while player_input == "null":
+        player_input = None
+        while player_input is None:
             player_input = server.get_player_input(player)
             time.sleep(0.1)
         return player_input
@@ -58,7 +58,7 @@ class Server:
             str_data = str(data, 'utf-8')
 
             player_num = self.get_player_num(connection)
-            if self.waiting_for_input[player_num] is True and str_data != "null":
+            if self.waiting_for_input[player_num] is True:
                 self.player_input_buffer[player_num] = str_data
                 self.waiting_for_input[player_num] = False
                 continue
@@ -116,7 +116,7 @@ class Server:
 
     def get_player_input(self, player):
         buffer = copy(self.player_input_buffer[player])
-        self.player_input_buffer[player] = "null"
+        self.player_input_buffer[player] = None
         return buffer
 
     def get_player_num(self, connection):
@@ -137,7 +137,7 @@ class Server:
             threadConnection.start()
             self.connections.append(connection)
             self.waiting_for_input.append(False)
-            self.player_input_buffer.append("null")
+            self.player_input_buffer.append(None)
             if len(self.connections)>1: print(str(address) + ": connected")
             elif self.playerOne is None:
                 self.playerOne = connection
@@ -164,6 +164,8 @@ class Client:
                 print("Waiting for all other players to be ready to start...")
                 # break
             else:
+                if len(data) == 0:
+                    data = "null"
                 self.sock.send(bytes(data, 'utf-8'))
 
     def __init__(self, address, show_message=True):
