@@ -19,6 +19,11 @@ class Battle:
             i = 0
             while i < len(fighters):
                 fighter = fighters[i]
+
+                if fighter.hp <= 0:
+                    i += 1
+                    continue
+
                 fighter.turn_start()
 
                 if i == len(fighters)-1:
@@ -30,7 +35,7 @@ class Battle:
                     server.print_text(fighter.name + " cannot attack!")
                 else:
                     chosen_attack = fighter.choose_attack()
-                    if chosen_attack is not None and enemy.hp > 0:
+                    if chosen_attack is not None:
                         server.print_text(fighter.name + " uses " + chosen_attack.name)
                         if chosen_attack.name == "Block":
                             fighter.hit_by(chosen_attack)
