@@ -30,7 +30,7 @@ class Battle:
                     server.print_text(fighter.name + " cannot attack!")
                 else:
                     chosen_attack = fighter.choose_attack()
-                    if chosen_attack is not None:
+                    if chosen_attack is not None and enemy.hp > 0:
                         server.print_text(fighter.name + " uses " + chosen_attack.name)
                         if chosen_attack.name == "Block":
                             fighter.hit_by(chosen_attack)
