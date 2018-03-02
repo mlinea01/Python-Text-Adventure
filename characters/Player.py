@@ -35,13 +35,16 @@ class Player:
                 attack_num += 1
 
             while chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks) + len(self.character.items) \
-                    or self.attacks[chosen_attack_num].enabled is False:
+                    or attack_num < len(self.attacks) and self.attacks[chosen_attack_num].enabled is False:
                 chosen_attack_num = int(IO.get_input(server, self.player_num, "Your choice: "))-1
                 if chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks) + len(self.character.items):
                     server.print_text("Please choose a valid attack or item number from the list!")
-                elif chosen_attack_num > len(self.character.attacks):
+                elif chosen_attack_num >= len(self.character.attacks):
                     chosen_item = self.character.items[chosen_attack_num - len(self.character.attacks)]
-                    chosen_item.use_item_on(self)
+                    server.print_text(self.character.name + " used a " + chosen_item.name)
+                    chosen_item.use_item_on(self.character)
+                    self.character.items.remove(chosen_item)
+                    return None
                 elif self.attacks[chosen_attack_num].enabled is False:
                     server.print_text("That attack is disabled this turn!")
                     continue

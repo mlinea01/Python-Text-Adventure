@@ -189,12 +189,15 @@ class Slow(StatusEffect):
 
 
 class DamageBoost(StatusEffect):
-    def __init__(self, amount, duration):
+    def __init__(self, amount, duration, chance=100):
         super().__init__()
+        self.name = "Damage Boosted"
         self.amount = amount
         self.duration = duration
+        self.chance = chance
 
     def on_attacking(self, args):
+        super().on_attacking_getargs(args)
         if self.attack.damage is not None:
             self.attack.damage += self.amount
 
