@@ -27,8 +27,8 @@ class Adventure1:
             server.print_text("You must begin your journey through the enchanted forest, but be careful! It's not as "
                               "glamorous as it sounds!")
 
-            IO.get_input(server, 0, "Press enter to start your journey in the enchanted forest!")
-            server.print_text("")
+        IO.get_input(server, 0, "Press enter to start your journey in the enchanted forest!")
+        server.print_text("")
 
         while startJourney:
 
@@ -44,8 +44,8 @@ class Adventure1:
                 else:
                     server.print_text("There's nothing here, let's keep moving!")
 
-                IO.get_input(server, 0,"There's no turning back now! Keep your eyes open, this forest is filled with "
-                                       "creatures that will not be too happy about you being on their land.")
+            IO.get_input(server, 0,"There's no turning back now! Keep your eyes open, this forest is filled with "
+                                    "creatures that will not be too happy about you being on their land.")
             server.print_text("")
 
             server.print_text("Look! There is a camp up ahead, Let's check it out and see if we can find any clues!")
