@@ -30,6 +30,8 @@ class Character:
 
     # start and ending turn in battle
     def turn_start(self):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         self.trigger_status_effects(Triggers.ON_TURN_START, self)
         all_effects = "Normal"
         effect_num = 0
@@ -40,7 +42,7 @@ class Character:
             if effect_num < len(self.status_effects)-1:
                 all_effects += ", "
             effect_num += 1
-        print(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects)
+            server.print_text(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects)
 
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
@@ -48,6 +50,8 @@ class Character:
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         attacks_enabled = []
         for a in self.attacks:
             if a.enabled:
@@ -57,37 +61,45 @@ class Character:
             self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
             return attack_chosen
         else:
-            print(self.name + " cannot attack this turn!")
+            server.print_text(self.name + " cannot attack this turn!")
             return None
 
     def equip_weapon(self, weapon, show_message=True):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         if show_message:
-            print(self.name + " equipped " + weapon.name + "!")
+            server.print_text(self.name + " equipped " + weapon.name + "!")
         self.weapons.append(weapon)
         self.learn_attack(weapon.attack, False)
 
     def equip_armor(self, Armor, show_message=True):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         if show_message:
-            print(self.name + " equipped " + Armor.name + "!")
+            server.print_text(self.name + " equipped " + Armor.name + "!")
         self.armor.append(Armor)
         self.totalArmor += Armor.armor
         self.totalMagResist += Armor.magResist
 
     def learn_attack(self, attack, show_message=True):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         if show_message:
-            print(self.name + " learned " + attack.name + "!")
+            server.print_text(self.name + " learned " + attack.name + "!")
         self.attacks.append(attack)
 
 
     # status effects
     def status_effect_add(self, effect):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
                 if e.name == effect.name:
-                    print(self.name + " is already " + effect.name)
+                    server.print_text(self.name + " is already " + effect.name)
                     return
 
-            print(self.name + " is " + effect.name)
+            server.print_text(self.name + " is " + effect.name)
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
 
@@ -106,6 +118,8 @@ class Character:
                 effect.resolve()
 
     def apply_damage(self, damage, show_message=True):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         # subtract hp and check for defeat
         self.hp -= damage
 
@@ -113,10 +127,10 @@ class Character:
             self.hp = 0
 
         if show_message:
-            print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
+            server.print_text(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
 
         if self.hp == 0:
-            print(self.name + " has been defeated!")
+            server.print_text(self.name + " has been defeated!")
 
 
     # called when hit by an attack

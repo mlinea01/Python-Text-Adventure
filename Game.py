@@ -8,12 +8,13 @@ from characters.Player import Player
 import time
 import threading
 
+
 class Game:
+    players = []
 
     def __init__(self):
 
         from Multiplayer import GameSession
-        from Multiplayer import IO
         server = GameSession.get_server()
         server.print_text("Game has started!")
 
@@ -22,14 +23,13 @@ class Game:
             intro_thread = threading.Thread(target=self.adventure_intro, args=(p_num, server))
             intro_thread.start()
             p_num += 1
-
+            Game.players.append(None)
 
     def adventure_intro(self, player_num, server):
 
         from Multiplayer import IO
 
         leaveGame = 0
-        # stepOne = Adventure1()
 
         # starting spells: fire, water, earth, wind
         startingSpells = [[fire_twister(), Scorch(), fire_breathe()],
@@ -48,7 +48,7 @@ class Game:
             server.print_text("Choose a character type.\n", [player_num])
             typeNum = 1
             for charType in characterTypes:
-                server.print_text(str(typeNum)+". "+charType, [player_num])
+                server.print_text(str(typeNum) + ". " + charType, [player_num])
                 typeNum += 1
 
             characterType = int(IO.get_input(server, player_num, "\nYour choice: "))
@@ -57,8 +57,9 @@ class Game:
                 continue
 
             # confirm character type choice
-            server.print_text("You chose a " + characterTypes[characterType-1] + " character.", [player_num])
-            change = int(IO.get_input(server, player_num, "Are you sure you want " + characterTypes[characterType-1] + "? (1.yes, 2.no)"))
+            server.print_text("You chose a " + characterTypes[characterType - 1] + " character.", [player_num])
+            change = int(IO.get_input(server, player_num,
+                                      "Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)"))
             if change == 2:
                 continue
 
@@ -66,8 +67,8 @@ class Game:
             server.print_text("Choose a Race for your character.\n", [player_num])
             raceNum = 1
             for raceType in characterRaces:
-                server.print_text(str(raceNum)+". "+ raceType.name, [player_num])
-                raceNum+=1
+                server.print_text(str(raceNum) + ". " + raceType.name, [player_num])
+                raceNum += 1
 
             characterRace = int(IO.get_input(server, player_num, "\nYour choice: "))
             char = characterRaces[characterRace - 1]
@@ -77,8 +78,11 @@ class Game:
 
             # prompt the player for a character name
             name = IO.get_input(server, player_num, "\nCreate a name for your character: ")
-            player = Player(name, char)
-            server.print_text("Hello " + player.name + " the almighty " + characterTypes[characterType-1]+" "+player.race, [player_num])
+            player = Player(name, char, player_num)
+            Game.players[player_num] = player
+            server.print_text(
+                "Hello " + player.name + " the almighty " + characterTypes[characterType - 1] + " " + player.race,
+                [player_num])
 
             # prompt the player to choose a starting weapon
             player_weapon = None
@@ -88,7 +92,7 @@ class Game:
                 for weapon in weapons:
                     server.print_text(str(weaponNum) + ". " + weapon.name, [player_num])
                     weaponNum += 1
-                player_weapon = weapons[int(IO.get_input(server, player_num, "\nYour choice: "))-1]
+                player_weapon = weapons[int(IO.get_input(server, player_num, "\nYour choice: ")) - 1]
                 server.print_text("", [player_num])
                 server.print_text("The " + player_weapon.name + " - " + player_weapon.desc, [player_num])
                 if int(IO.get_input(server, player_num, "Is this the weapon you want? (1.yes 2.no)")) != 1:
@@ -101,10 +105,11 @@ class Game:
             while True:
                 server.print_text("\nYou will also need an ability to protect yourself.(Choose One)\n", [player_num])
                 spellNum = 1
-                for spell in startingSpells[characterType-1]:
-                    server.print_text(str(spellNum)+". "+spell.name, [player_num])
+                for spell in startingSpells[characterType - 1]:
+                    server.print_text(str(spellNum) + ". " + spell.name, [player_num])
                     spellNum += 1
-                chosenSpell = startingSpells[characterType-1][int(IO.get_input(server, player_num, "\nYour choice: "))-1]
+                chosenSpell = startingSpells[characterType - 1][
+                    int(IO.get_input(server, player_num, "\nYour choice: ")) - 1]
                 server.print_text(chosenSpell.name + " - " + chosenSpell.desc, [player_num])
                 if int(IO.get_input(server, player_num, "Is this the spell you want? (1.yes 2.no)")) != 1:
                     continue
@@ -115,9 +120,12 @@ class Game:
             # practice battle
             server.print_text("\nYou'll need to learn how to fight out there. Let's see what ya got!", [player_num])
             server.print_text("Attack this training dummy to practice.\n", [player_num])
-            server.print_text("This is the end of the current implementation of multiplayer functionality!", [player_num])
-            server.print_text("The rest of the game must be converted to use the server for IO! (bug Fred about this)", [player_num])
+            server.print_text("This is the end of the current implementation of multiplayer functionality!",
+                              [player_num])
+            server.print_text("The rest of the game must be converted to use the server for IO! (bug Fred about this)",
+                              [player_num])
             leaveGame = "q"
-            # Battle.fight(player, TrainingDummy())
+            Battle.fight([player], TrainingDummy())
 
-            # stepOne.step1()
+            stepOne = Adventure1(Game.players)
+            stepOne.step1()

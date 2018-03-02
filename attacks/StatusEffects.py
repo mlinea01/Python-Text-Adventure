@@ -47,6 +47,8 @@ class Shield(StatusEffect):
         self.chance = chance
 
     def on_hit_by(self, args):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         super().on_hit_by_getargs(args)
         blocked_amount = self.amount
         if self.attack.damage is None or self.attack.damage == 0:
@@ -54,7 +56,7 @@ class Shield(StatusEffect):
         if self.attack.damage < self.amount:
             blocked_amount = self.attack.damage
 
-        print(self.character.name + " blocked " + str(blocked_amount) + " damage!")
+        server.print_text(self.character.name + " blocked " + str(blocked_amount) + " damage!")
         self.attack.damage -= blocked_amount
         self.amount -= blocked_amount
         if self.amount <= 0:
@@ -127,9 +129,12 @@ class Bleed(StatusEffect):
         self.chance = chance
 
     def on_turn_end(self, args):
+        from Multiplayer import GameSession
+        server = GameSession.get_server()
         super().on_turn_end_getargs(args)
         self.character.apply_damage(self.damage, False)
-        print(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: " + str(self.character.hp))
+        server.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: "
+                          + str(self.character.hp))
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True
@@ -185,7 +190,7 @@ class Slow(StatusEffect):
 
 class DamageBoost(StatusEffect):
     def __init__(self, amount, duration):
-        super.__init__()
+        super().__init__()
         self.amount = amount
         self.duration = duration
 
