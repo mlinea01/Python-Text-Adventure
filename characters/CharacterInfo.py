@@ -42,7 +42,7 @@ class Character:
             if effect_num < len(self.status_effects)-1:
                 all_effects += ", "
             effect_num += 1
-            server.print_text(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects)
+        server.print_text(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects)
 
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
