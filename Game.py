@@ -120,10 +120,7 @@ class Game:
             # practice battle
             server.print_text("\nYou'll need to learn how to fight out there. Let's see what ya got!", [player_num])
             server.print_text("Attack this training dummy to practice.\n", [player_num])
-            server.print_text("This is the end of the current implementation of multiplayer functionality!",
-                              [player_num])
-            server.print_text("The rest of the game must be converted to use the server for IO! (bug Fred about this)",
-                              [player_num])
+
             leaveGame = "q"
             Battle.fight([player], TrainingDummy())
 

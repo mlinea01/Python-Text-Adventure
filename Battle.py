@@ -1,3 +1,5 @@
+from copy import copy
+
 class Battle:
 
     players = []
@@ -12,13 +14,18 @@ class Battle:
 
         while enemy.hp > 0 and Battle.playersAlive():
 
-            fighters = cls.players
+            fighters = copy(cls.players)
             fighters.append(enemy)
             i = 0
             while i < len(fighters):
                 fighter = fighters[i]
                 fighter.turn_start()
-                other_fighter = fighters[(i+1) % 2]
+
+                if i == len(fighters)-1:
+                    other_fighter = players[0]
+                else:
+                    other_fighter = enemy
+
                 if fighter.cannot_attack > 0:
                     server.print_text(fighter.name + " cannot attack!")
                 else:
