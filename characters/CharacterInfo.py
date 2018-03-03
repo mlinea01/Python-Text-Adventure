@@ -4,6 +4,7 @@ import random
 from attacks.StatusEffects import Triggers
 from copy import deepcopy
 from attacks.AttacksInfo import *
+from Multiplayer import GameSession
 
 # This is the base class for all characters
 class Character:
@@ -35,7 +36,6 @@ class Character:
 
     # start and ending turn in battle
     def turn_start(self):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         self.trigger_status_effects(Triggers.ON_TURN_START, self)
         all_effects = "Normal"
@@ -55,7 +55,6 @@ class Character:
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         attacks_enabled = []
         for a in self.attacks:
@@ -70,7 +69,6 @@ class Character:
             return None
 
     def equip_weapon(self, weapon, show_message=True):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         if show_message:
             server.print_text(self.name + " equipped " + weapon.name + "!", [self.player_num])
@@ -78,7 +76,6 @@ class Character:
         self.learn_attack(weapon.attack, False)
 
     def equip_armor(self, Armor, show_message=True):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         if show_message:
             server.print_text(self.name + " equipped " + Armor.name + "!", [self.player_num])
@@ -87,7 +84,6 @@ class Character:
         self.totalMagResist += Armor.magResist
 
     def learn_attack(self, attack, show_message=True):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         if show_message:
             server.print_text(self.name + " learned " + attack.name + "!", [self.player_num])
@@ -96,7 +92,6 @@ class Character:
 
     # status effects
     def status_effect_add(self, effect):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
@@ -123,7 +118,6 @@ class Character:
                 effect.resolve()
 
     def apply_damage(self, damage, show_message=True):
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         # subtract hp and check for defeat
         self.hp -= damage

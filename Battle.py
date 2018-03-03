@@ -1,4 +1,5 @@
 from copy import copy
+from Multiplayer import GameSession
 
 class Battle:
 
@@ -7,7 +8,6 @@ class Battle:
         self.players = players
         self.player_nums = []
         self.enemy = enemy
-        from Multiplayer import GameSession
         self.server = GameSession.get_server()
 
         p_num = 0

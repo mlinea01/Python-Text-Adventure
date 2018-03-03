@@ -18,7 +18,7 @@ class Adventure1:
 
         server.print_text("Now that you have completed your training, we can begin our first adventure!")
         server.print_text("This is exciting!")
-        start = IO.get_input(server, 0, "Are you ready to go? (yes or no)")
+        start = IO().get_input(server, 0, "Are you ready to go? (yes or no)")
         server.print_text("")
 
         if start == "yes":
@@ -27,7 +27,7 @@ class Adventure1:
             server.print_text("You must begin your journey through the enchanted forest, but be careful! It's not as "
                               "glamorous as it sounds!")
 
-        IO.get_input(server, 0, "Press enter to start your journey in the enchanted forest!")
+        IO().get_input(server, 0, "Press enter to start your journey in the enchanted forest!")
         server.print_text("")
 
         while startJourney:
@@ -44,7 +44,7 @@ class Adventure1:
                 else:
                     server.print_text("There's nothing here, let's keep moving!")
 
-            IO.get_input(server, 0,"There's no turning back now! Keep your eyes open, this forest is filled with "
+            IO().get_input(server, 0,"There's no turning back now! Keep your eyes open, this forest is filled with "
                                     "creatures that will not be too happy about you being on their land.")
             server.print_text("")
 
@@ -57,7 +57,7 @@ class Adventure1:
                 server.print_text("")
                 Battle(self.players, MountainDragon())
                 server.print_text("")
-                IO.get_input(server, 0, "Woah that dragon was tough! Now that that's over lets take a look around "
+                IO().get_input(server, 0, "Woah that dragon was tough! Now that that's over lets take a look around "
                                         "this camp.")
                 server.print_text("")
                 search_camp()

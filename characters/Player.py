@@ -1,5 +1,7 @@
 from copy import deepcopy
 from attacks.StatusEffects import Triggers
+from Multiplayer import GameSession
+from Multiplayer import IO
 
 # Player class used to keep track of player stats and actions
 class Player:
@@ -14,8 +16,6 @@ class Player:
         character.name = name
 
     def choose_attack(self):
-        from Multiplayer import GameSession
-        from Multiplayer import IO
         server = GameSession.get_server()
         attacks_enabled = []
         for a in self.attacks:
@@ -39,7 +39,7 @@ class Player:
 
             while chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks) + len(self.character.items) \
                     or attack_num < len(self.attacks) and self.attacks[chosen_attack_num].enabled is False:
-                chosen_attack_num = int(IO.get_input(server, self.player_num, "Your choice: "))-1
+                chosen_attack_num = int(IO().get_input(server, self.player_num, "Your choice: "))-1
                 if chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks) + len(self.character.items):
                     server.print_text("Please choose a valid attack or item number from the list!", [self.player_num])
                 elif chosen_attack_num >= len(self.character.attacks):

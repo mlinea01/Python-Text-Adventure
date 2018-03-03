@@ -7,6 +7,7 @@ from characters.CharacterRace import *
 from characters.Player import Player
 import time
 import threading
+from Multiplayer import GameSession
 
 
 class Game:
@@ -14,7 +15,6 @@ class Game:
 
     def __init__(self):
 
-        from Multiplayer import GameSession
         server = GameSession.get_server()
         server.print_text("Game has started!")
 
@@ -71,14 +71,14 @@ class Game:
                 server.print_text(str(typeNum) + ". " + charType, [player_num])
                 typeNum += 1
 
-            characterType = int(IO.get_input(server, player_num, "\nYour choice: "))
+            characterType = int(IO().get_input(server, player_num, "\nYour choice: "))
             server.print_text("", [player_num])
             if characterType < 1 or characterType > 4:
                 continue
 
             # confirm character type choice
             server.print_text("You chose a " + characterTypes[characterType - 1] + " character.", [player_num])
-            change = int(IO.get_input(server, player_num,
+            change = int(IO().get_input(server, player_num,
                                       "Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)"))
             if change == 2:
                 continue
@@ -90,16 +90,16 @@ class Game:
                 server.print_text(str(raceNum) + ". " + raceType.name, [player_num])
                 raceNum += 1
 
-            characterRace = int(IO.get_input(server, player_num, "\nYour choice: "))
+            characterRace = int(IO().get_input(server, player_num, "\nYour choice: "))
             char = characterRaces[characterRace - 1]
             server.print_text("", [player_num])
             server.print_text("You chose " + char.name, [player_num])
             server.print_text(char.desc, [player_num])
 
             # prompt the player for a character name
-            name = IO.get_input(server, player_num, "\nCreate a name for your character: ")
+            name = IO().get_input(server, player_num, "\nCreate a name for your character: ")
             player = Player(name, char, player_num, characterTypes[characterType - 1])
-            player.desc = IO.get_input(server, player_num, "Describe your character in one word: ").split(' ', 1)[0]
+            player.desc = IO().get_input(server, player_num, "Describe your character in one word: ").split(' ', 1)[0]
             server.print_text("Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1]
                               + " " + player.race, [player_num])
 
@@ -111,10 +111,10 @@ class Game:
                 for weapon in weapons:
                     server.print_text(str(weaponNum) + ". " + weapon.name, [player_num])
                     weaponNum += 1
-                player_weapon = weapons[int(IO.get_input(server, player_num, "\nYour choice: ")) - 1]
+                player_weapon = weapons[int(IO().get_input(server, player_num, "\nYour choice: ")) - 1]
                 server.print_text("", [player_num])
                 server.print_text("The " + player_weapon.name + " - " + player_weapon.desc, [player_num])
-                if int(IO.get_input(server, player_num, "Is this the weapon you want? (1.yes 2.no)")) != 1:
+                if int(IO().get_input(server, player_num, "Is this the weapon you want? (1.yes 2.no)")) != 1:
                     continue
                 else:
                     player.equip_weapon(player_weapon, False)
@@ -128,9 +128,9 @@ class Game:
                     server.print_text(str(spellNum) + ". " + spell.name, [player_num])
                     spellNum += 1
                 chosenSpell = startingSpells[characterType - 1][
-                    int(IO.get_input(server, player_num, "\nYour choice: ")) - 1]
+                    int(IO().get_input(server, player_num, "\nYour choice: ")) - 1]
                 server.print_text(chosenSpell.name + " - " + chosenSpell.desc, [player_num])
-                if int(IO.get_input(server, player_num, "Is this the spell you want? (1.yes 2.no)")) != 1:
+                if int(IO().get_input(server, player_num, "Is this the spell you want? (1.yes 2.no)")) != 1:
                     continue
                 else:
                     player.learn_attack(chosenSpell)

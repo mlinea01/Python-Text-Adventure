@@ -2,14 +2,13 @@ import socket
 import threading
 from copy import copy
 from copy import deepcopy
-from Game import Game
 import enum
 import time
 import sys
 
 class IO:
-    @classmethod
-    def get_input(cls, server, player, message=""):
+
+    def get_input(self, server, player, message=""):
         server.print_text(message, [player])
         server.set_player_input_flag(player)
         player_input = None
@@ -53,6 +52,7 @@ class Server:
         print("Type 'start game' when all players have joined to start the game.")
 
     def connectionHandler(self, connection, address):
+        from Game import Game
         while True:
             data = connection.recv(1024)
             str_data = str(data, 'utf-8')
