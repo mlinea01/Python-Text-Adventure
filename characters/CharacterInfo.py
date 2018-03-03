@@ -101,7 +101,7 @@ class Character:
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
                 if e.name == effect.name:
-                    server.print_text(self.name + " is already " + effect.name, self.player_list)
+                    server.print_text(self.name + " is already " + effect.name, self.players_list)
                     return
 
             server.print_text(self.name + " is " + effect.name)

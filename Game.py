@@ -37,7 +37,8 @@ class Game:
         p_num = 0
         for player in Game.players:
             time.sleep(0.5)
-            server.print_text(player.name + " the " + player.desc + " has joined the party!")
+            server.print_text(player.name + " the " + player.desc + " " + player.character_type + " " + player.race +
+                              " has joined the party!")
             p_num += 1
 
         time.sleep(1)
@@ -97,11 +98,10 @@ class Game:
 
             # prompt the player for a character name
             name = IO.get_input(server, player_num, "\nCreate a name for your character: ")
-            player = Player(name, char, player_num)
+            player = Player(name, char, player_num, characterTypes[characterType - 1])
             player.desc = IO.get_input(server, player_num, "Describe your character in one word: ").split(' ', 1)[0]
-            server.print_text(
-                "Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1] + " " + player.race,
-                [player_num])
+            server.print_text("Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1]
+                              + " " + player.race, [player_num])
 
             # prompt the player to choose a starting weapon
             player_weapon = None

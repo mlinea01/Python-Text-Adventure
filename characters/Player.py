@@ -4,11 +4,12 @@ from attacks.StatusEffects import Triggers
 # Player class used to keep track of player stats and actions
 class Player:
 
-    def __init__(self, name, character, player_num):
+    def __init__(self, name, character, player_num, character_type):
         self.character = character
         self.race = character.name
         self.player_num = player_num
         self.character.player_num = player_num
+        self.character_type = character_type
         self.desc = "mighty"
         character.name = name
 
