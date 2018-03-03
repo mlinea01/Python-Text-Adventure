@@ -55,7 +55,7 @@ class Adventure1:
             if enter_camp == 1:
                 server.print_text("There is a Mountain Dragon in the camp, Hurry, take that dragon down!")
                 server.print_text("")
-                Battle.fight(self.players, MountainDragon())
+                Battle(self.players, MountainDragon())
                 server.print_text("")
                 IO.get_input(server, 0, "Woah that dragon was tough! Now that that's over lets take a look around "
                                         "this camp.")

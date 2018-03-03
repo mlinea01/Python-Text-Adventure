@@ -25,6 +25,25 @@ class Game:
             p_num += 1
             Game.players.append(None)
 
+        players_ready = False
+        while not players_ready:
+            time.sleep(0.1)
+            players_ready = True
+            for player in Game.players:
+                if player is None:
+                    players_ready = False
+
+        server.print_text("Well done in your training everyone!")
+        p_num = 0
+        for player in Game.players:
+            time.sleep(0.5)
+            server.print_text(player.name + " the " + player.desc + " has joined the party!")
+            p_num += 1
+
+        time.sleep(1)
+        stepOne = Adventure1(Game.players)
+        stepOne.step1()
+
     def adventure_intro(self, player_num, server):
 
         from Multiplayer import IO
@@ -79,9 +98,9 @@ class Game:
             # prompt the player for a character name
             name = IO.get_input(server, player_num, "\nCreate a name for your character: ")
             player = Player(name, char, player_num)
-            Game.players[player_num] = player
+            player.desc = IO.get_input(server, player_num, "Describe your character in one word: ").split(' ', 1)[0]
             server.print_text(
-                "Hello " + player.name + " the almighty " + characterTypes[characterType - 1] + " " + player.race,
+                "Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1] + " " + player.race,
                 [player_num])
 
             # prompt the player to choose a starting weapon
@@ -122,7 +141,7 @@ class Game:
             server.print_text("Attack this training dummy to practice.\n", [player_num])
 
             leaveGame = "q"
-            Battle.fight([player], TrainingDummy())
+            Battle([player], TrainingDummy())
 
-            stepOne = Adventure1(Game.players)
-            stepOne.step1()
+            Game.players[player_num] = player
+            server.print_text("Waiting for other players to finish their training...", [player_num])
