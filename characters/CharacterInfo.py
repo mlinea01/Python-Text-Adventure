@@ -4,7 +4,7 @@ import random
 from attacks.StatusEffects import Triggers
 from copy import deepcopy
 from attacks.AttacksInfo import *
-from Multiplayer import GameSession
+from Multiplayer import IO
 
 # This is the base class for all characters
 class Character:
@@ -36,7 +36,6 @@ class Character:
 
     # start and ending turn in battle
     def turn_start(self):
-        server = GameSession.get_server()
         self.trigger_status_effects(Triggers.ON_TURN_START, self)
         all_effects = "Normal"
         effect_num = 0
@@ -47,7 +46,7 @@ class Character:
             if effect_num < len(self.status_effects)-1:
                 all_effects += ", "
             effect_num += 1
-        server.print_text(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects, self.players_list)
+        IO.print_text(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects, self.players_list)
 
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
@@ -55,7 +54,6 @@ class Character:
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
-        server = GameSession.get_server()
         attacks_enabled = []
         for a in self.attacks:
             if a.enabled:
@@ -65,41 +63,37 @@ class Character:
             self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
             return attack_chosen
         else:
-            server.print_text(self.name + " cannot attack this turn!",  self.players_list)
+            IO.print_text(self.name + " cannot attack this turn!",  self.players_list)
             return None
 
     def equip_weapon(self, weapon, show_message=True):
-        server = GameSession.get_server()
         if show_message:
-            server.print_text(self.name + " equipped " + weapon.name + "!", [self.player_num])
+            IO.print_text(self.name + " equipped " + weapon.name + "!", [self.player_num])
         self.weapons.append(weapon)
         self.learn_attack(weapon.attack, False)
 
     def equip_armor(self, Armor, show_message=True):
-        server = GameSession.get_server()
         if show_message:
-            server.print_text(self.name + " equipped " + Armor.name + "!", [self.player_num])
+            IO.print_text(self.name + " equipped " + Armor.name + "!", [self.player_num])
         self.armor.append(Armor)
         self.totalArmor += Armor.armor
         self.totalMagResist += Armor.magResist
 
     def learn_attack(self, attack, show_message=True):
-        server = GameSession.get_server()
         if show_message:
-            server.print_text(self.name + " learned " + attack.name + "!", [self.player_num])
+            IO.print_text(self.name + " learned " + attack.name + "!", [self.player_num])
         self.attacks.append(attack)
 
 
     # status effects
     def status_effect_add(self, effect):
-        server = GameSession.get_server()
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
                 if e.name == effect.name:
-                    server.print_text(self.name + " is already " + effect.name, self.players_list)
+                    IO.print_text(self.name + " is already " + effect.name, self.players_list)
                     return
 
-            server.print_text(self.name + " is " + effect.name)
+            IO.print_text(self.name + " is " + effect.name, self.players_list)
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
 
@@ -118,7 +112,6 @@ class Character:
                 effect.resolve()
 
     def apply_damage(self, damage, show_message=True):
-        server = GameSession.get_server()
         # subtract hp and check for defeat
         self.hp -= damage
 
@@ -126,10 +119,10 @@ class Character:
             self.hp = 0
 
         if show_message:
-            server.print_text(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),  self.players_list)
+            IO.print_text(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),  self.players_list)
 
         if self.hp == 0:
-            server.print_text(self.name + " has been defeated!",  self.players_list)
+            IO.print_text(self.name + " has been defeated!",  self.players_list)
 
 
     # called when hit by an attack

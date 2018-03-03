@@ -1,5 +1,6 @@
 # This module is for status effects usually applied by attacks (i.e. shields, poison, stuns, etc.)
 from attacks.AttacksInfo import TargetTypes
+from Multiplayer import IO
 
 # the things that can trigger a status effect to perform some action (start of turn, getting hit by attack, etc.)
 class Triggers:
@@ -47,8 +48,6 @@ class Shield(StatusEffect):
         self.chance = chance
 
     def on_hit_by(self, args):
-        from Multiplayer import GameSession
-        server = GameSession.get_server()
         super().on_hit_by_getargs(args)
         blocked_amount = self.amount
         if self.attack.damage is None or self.attack.damage == 0:
@@ -56,7 +55,7 @@ class Shield(StatusEffect):
         if self.attack.damage < self.amount:
             blocked_amount = self.attack.damage
 
-        server.print_text(self.character.name + " blocked " + str(blocked_amount) + " damage!")
+        IO.print_text(self.character.name + " blocked " + str(blocked_amount) + " damage!")
         self.attack.damage -= blocked_amount
         self.amount -= blocked_amount
         if self.amount <= 0:
@@ -129,11 +128,9 @@ class Bleed(StatusEffect):
         self.chance = chance
 
     def on_turn_end(self, args):
-        from Multiplayer import GameSession
-        server = GameSession.get_server()
         super().on_turn_end_getargs(args)
         self.character.apply_damage(self.damage, False)
-        server.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: "
+        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: "
                           + str(self.character.hp))
         self.duration -= 1
         if self.duration == 0:

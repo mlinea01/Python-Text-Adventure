@@ -1,5 +1,5 @@
 from copy import copy
-from Multiplayer import GameSession
+from Multiplayer import IO
 
 class Battle:
 
@@ -8,7 +8,6 @@ class Battle:
         self.players = players
         self.player_nums = []
         self.enemy = enemy
-        self.server = GameSession.get_server()
 
         p_num = 0
         while p_num < len(self.players):
@@ -39,18 +38,18 @@ class Battle:
                     other_fighter = enemy
 
                 if fighter.cannot_attack > 0:
-                    self.server.print_text(fighter.name + " cannot attack!", self.player_nums)
+                   IO.print_text(fighter.name + " cannot attack!", self.player_nums)
                 else:
                     chosen_attack = fighter.choose_attack()
                     if chosen_attack is not None:
-                        self.server.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
+                        IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
                         if chosen_attack.name == "Block":
                             fighter.hit_by(chosen_attack)
                         else:
                             other_fighter.hit_by(chosen_attack)
                 i += 1
                 fighter.turn_end()
-                self.server.print_text("", self.player_nums)
+                IO.print_text("", self.player_nums)
 
     def playersAlive(self, players):
         for player in players:

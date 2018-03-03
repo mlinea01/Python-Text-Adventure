@@ -1,6 +1,5 @@
 from copy import deepcopy
 from attacks.StatusEffects import Triggers
-from Multiplayer import GameSession
 from Multiplayer import IO
 
 # Player class used to keep track of player stats and actions
@@ -16,47 +15,46 @@ class Player:
         character.name = name
 
     def choose_attack(self):
-        server = GameSession.get_server()
         attacks_enabled = []
         for a in self.attacks:
             if a.enabled:
                 attacks_enabled.append(a)
 
         if len(attacks_enabled) > 0 or len(self.character.items) > 0:
-            server.print_text("Choose your attack: ", [self.player_num])
+            IO.print_text("Choose your attack: ", [self.player_num])
             attack_num = 1
             chosen_attack_num = -1
             for attack in self.character.attacks:
                 if attack.enabled:
-                    server.print_text(str(attack_num) + ". " + attack.name + " - " + attack.desc, [self.player_num])
+                    IO.print_text(str(attack_num) + ". " + attack.name + " - " + attack.desc, [self.player_num])
                 else:
-                    server.print_text(str(attack_num) + ". " + attack.name + " - (DISABLED)", [self.player_num])
+                    IO.print_text(str(attack_num) + ". " + attack.name + " - (DISABLED)", [self.player_num])
                 attack_num += 1
 
             for item in self.character.items:
-                server.print_text(str(attack_num) + ". " + item.name, [self.player_num])
+                IO.print_text(str(attack_num) + ". " + item.name, [self.player_num])
                 attack_num += 1
 
             while chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks) + len(self.character.items) \
                     or attack_num < len(self.attacks) and self.attacks[chosen_attack_num].enabled is False:
-                chosen_attack_num = int(IO().get_input(server, self.player_num, "Your choice: "))-1
+                chosen_attack_num = int(IO.get_input(self.player_num, "Your choice: "))-1
                 if chosen_attack_num < 0 or chosen_attack_num > len(self.character.attacks) + len(self.character.items):
-                    server.print_text("Please choose a valid attack or item number from the list!", [self.player_num])
+                    IO.print_text("Please choose a valid attack or item number from the list!", [self.player_num])
                 elif chosen_attack_num >= len(self.character.attacks):
                     chosen_item = self.character.items[chosen_attack_num - len(self.character.attacks)]
-                    server.print_text(self.character.name + " used a " + chosen_item.name, [self.player_num])
+                    IO.print_text(self.character.name + " used a " + chosen_item.name, [self.player_num])
                     chosen_item.use_item_on(self.character)
                     self.character.items.remove(chosen_item)
                     return None
                 elif self.attacks[chosen_attack_num].enabled is False:
-                    server.print_text("That attack is disabled this turn!", [self.player_num])
+                    IO.print_text("That attack is disabled this turn!", [self.player_num])
                     continue
 
             attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
             self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
             return attack_chosen
         else:
-            server.print_text(self.name + " cannot attack this turn!", [self.player_num])
+            IO.print_text(self.name + " cannot attack this turn!", [self.player_num])
             return None
 
     def __getattr__(self, item):

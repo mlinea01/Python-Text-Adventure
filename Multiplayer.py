@@ -6,16 +6,36 @@ import enum
 import time
 import sys
 
+
+class Clients:
+    ALL = -1
+
+
 class IO:
 
-    def get_input(self, server, player, message=""):
-        server.print_text(message, [player])
-        server.set_player_input_flag(player)
+    @classmethod
+    def get_input(cls, player, message=""):
+        return ServerIO().get_server_input(player, message)
+
+    @classmethod
+    def print_text(cls, text, players=None):
+        Server.print_text(text, players)
+
+    @classmethod
+    def get_num_players(cls):
+        return Server.get_num_players()
+
+
+class ServerIO:
+    def get_server_input(self, player, message=""):
+        Server.print_text(message, [player])
+        Server.set_player_input_flag(player)
         player_input = None
         while player_input is None:
-            player_input = server.get_player_input(player)
+            player_input = Server.get_player_input(player)
             time.sleep(0.1)
         return player_input
+
 
 
 class ServerStatus(enum.Enum):
@@ -25,24 +45,22 @@ class ServerStatus(enum.Enum):
     GameStarted = enum.auto()
 
 
-class Clients:
-    ALL = -1
-
-
 class Server:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     connections = []
+    status = ServerStatus.MultiplayerLobby
+    playersReady = []
+    waiting_for_input = []
+    player_input_buffer = []
+    playerOne = None
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def __init__(self):
+    @classmethod
+    def create_server(cls):
         HOST = socket.gethostbyname(socket.gethostname())
         PORT = 10000
-        self.playerOne = None
-        self.sock.bind((HOST, PORT))
-        self.sock.listen(1)
-        self.status = ServerStatus.MultiplayerLobby
-        self.playersReady = []
-        self.waiting_for_input = []
-        self.player_input_buffer = []
+        cls.sock.bind((HOST, PORT))
+        cls.sock.listen(1)
+
         print("Server started on " + HOST + ", port: " + str(PORT))
         print("Note: For other players to connect to your game session they must be on the same LAN as you "
               "or you must set up port forwarding on your router. ")
@@ -51,96 +69,104 @@ class Server:
         print("Waiting for other players...")
         print("Type 'start game' when all players have joined to start the game.")
 
-    def connectionHandler(self, connection, address):
+    @classmethod
+    def connectionHandler(cls, connection, address):
         from Game import Game
         while True:
             data = connection.recv(1024)
             str_data = str(data, 'utf-8')
 
-            player_num = self.get_player_num(connection)
-            if self.waiting_for_input[player_num] is True:
-                self.player_input_buffer[player_num] = str_data
-                self.waiting_for_input[player_num] = False
+            player_num = cls.get_player_num(connection)
+            if cls.waiting_for_input[player_num] is True:
+                cls.player_input_buffer[player_num] = str_data
+                cls.waiting_for_input[player_num] = False
                 continue
 
-            if self.status == ServerStatus.WaitingToStartGame and not self.playersReady.__contains__(connection):
-                self.playersReady.append(connection)
-                if len(self.playersReady) >= len(self.connections):
-                    self.status = ServerStatus.StartGame
+            if cls.status == ServerStatus.WaitingToStartGame and not cls.playersReady.__contains__(connection):
+                cls.playersReady.append(connection)
+                if len(cls.playersReady) >= len(cls.connections):
+                    cls.status = ServerStatus.StartGame
 
-            if self.status == ServerStatus.MultiplayerLobby and connection == self.playerOne \
+            if cls.status == ServerStatus.MultiplayerLobby and connection == cls.playerOne \
                     and str(data, 'utf-8') == "start game":
-                self.status = ServerStatus.WaitingToStartGame
-                self.print_text(ClientTrigger.game_starting)
+                cls.status = ServerStatus.WaitingToStartGame
+                cls.print_text(ClientTrigger.game_starting)
 
-                wait_for_host = threading.Thread(target=self.connectionHandler, args=(connection, address))
+                wait_for_host = threading.Thread(target=cls.connectionHandler, args=(connection, address))
                 wait_for_host.daemon = True
                 wait_for_host.start()
 
-                while self.status != ServerStatus.StartGame:
+                while cls.status != ServerStatus.StartGame:
                     time.sleep(0.5)
 
-                self.status = ServerStatus.GameStarted
+                cls.status = ServerStatus.GameStarted
                 game = threading.Thread(target=Game)
                 game.start()
                 break
 
             if not data:
-                self.connections.remove(connection)
+                cls.connections.remove(connection)
                 connection.close()
                 print(str(address) + ": disconnected")
                 break
 
-            if self.status == ServerStatus.MultiplayerLobby:
-                recipients = copy(self.connections)
+            if cls.status == ServerStatus.MultiplayerLobby:
+                recipients = copy(cls.connections)
                 recipients.remove(connection)
-                self.send_msg(data, recipients)
+                cls.send_msg(data, recipients)
 
-    def print_text(self, text, players=[Clients.ALL]):
+    @classmethod
+    def print_text(cls, text, players=None):
         send_to = []
-        if players[0] == Clients.ALL:
-            send_to = self.connections
+        if players is None:
+            send_to = cls.connections
         else:
             for p in players:
-                send_to.append(self.connections[p])
+                send_to.append(cls.connections[p])
 
-        self.send_msg(bytes(text, 'utf-8'), send_to)
+        cls.send_msg(bytes(text, 'utf-8'), send_to)
         time.sleep(0.01)
 
-    def send_msg(self, data, recipients):
+    @classmethod
+    def send_msg(cls, data, recipients):
         for con in recipients:
             con.send(data)
 
-    def set_player_input_flag(self, player):
-        self.waiting_for_input[player] = True
+    @classmethod
+    def set_player_input_flag(cls, player):
+        cls.waiting_for_input[player] = True
 
-    def get_player_input(self, player):
-        buffer = copy(self.player_input_buffer[player])
-        self.player_input_buffer[player] = None
+    @classmethod
+    def get_player_input(cls, player):
+        buffer = copy(cls.player_input_buffer[player])
+        cls.player_input_buffer[player] = None
         return buffer
 
-    def get_player_num(self, connection):
+    @classmethod
+    def get_player_num(cls, connection):
         i = 0
-        while i < len(self.connections):
-            if self.connections[i] == connection:
+        while i < len(cls.connections):
+            if cls.connections[i] == connection:
                 return i
             i += 1
 
-    def get_num_players(self):
-        return len(self.connections)
+    @classmethod
+    def get_num_players(cls):
+        return len(cls.connections)
 
-    def run(self):
+    @classmethod
+    def run(cls):
         while True:
-            connection, address = self.sock.accept()
-            threadConnection = threading.Thread(target=self.connectionHandler, args=(connection, address))
+            connection, address = cls.sock.accept()
+            threadConnection = threading.Thread(target=cls.connectionHandler, args=(connection, address))
             threadConnection.damon = True
             threadConnection.start()
-            self.connections.append(connection)
-            self.waiting_for_input.append(False)
-            self.player_input_buffer.append(None)
-            if len(self.connections)>1: print(str(address) + ": connected")
-            elif self.playerOne is None:
-                self.playerOne = connection
+            cls.connections.append(connection)
+            cls.waiting_for_input.append(False)
+            cls.player_input_buffer.append(None)
+            if len(cls.connections)>1: print(str(address) + ": connected")
+            elif cls.playerOne is None:
+                cls.playerOne = connection
 
 
 class ClientStatus(enum.Enum):
@@ -198,8 +224,6 @@ class Client:
 
 class GameSession:
 
-    server = None
-
     @classmethod
     def start_session(cls):
         while True:
@@ -209,7 +233,7 @@ class GameSession:
                 print("\t 2. Connect to a session")
                 inputOption = int(input())
                 if inputOption == 1:
-                    threadServer = threading.Thread(target=cls.createServer)
+                    threadServer = threading.Thread(target=cls.create_server)
                     threadServer.daemon = True
                     threadServer.start()
                     Client( (socket.gethostbyname(socket.gethostname()), 10000), False )
@@ -223,10 +247,6 @@ class GameSession:
                 print("ERROR: Could not connect to game session. Please check your address entry and try again.")
 
     @classmethod
-    def createServer(cls):
-        cls.server = Server()
-        cls.server.run()
-
-    @classmethod
-    def get_server(cls):
-        return cls.server
+    def create_server(cls):
+        Server.create_server()
+        Server.run()
