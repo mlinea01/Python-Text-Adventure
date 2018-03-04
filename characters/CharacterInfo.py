@@ -11,7 +11,9 @@ class Character:
 
     def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[], armor=[]):
         self.hp = hp
+        self.maxHp = hp
         self.mana = mana
+        self.maxMana = mana
         self.speed = speed
         self.attacks = attacks
         self.name = name
@@ -46,7 +48,8 @@ class Character:
             if effect_num < len(self.status_effects)-1:
                 all_effects += ", "
             effect_num += 1
-        IO.print_text(self.name + ":  HP: " + str(self.hp) + ", Status: " + all_effects, self.players_list)
+        IO.print_text(self.name + ":  HP: " + str(self.hp) + " MANA: " + str(self.mana) + ", Status: "
+                      + all_effects, self.players_list)
 
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)

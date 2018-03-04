@@ -52,6 +52,10 @@ class Player:
 
             attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
             self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
+            if self.character.mana > 0:
+                self.character.mana -= 1
+            else:
+                self.character.mana = 0
             return attack_chosen
         else:
             IO.print_text(self.name + " cannot attack this turn!", [self.player_num])

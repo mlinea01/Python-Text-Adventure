@@ -1,5 +1,6 @@
 import adventures.ItemsInfo
 from attacks import StatusEffects
+from characters.CharacterRace import *
 
 class HealthPotion(adventures.ItemsInfo.Items):
     def __init__(self):
@@ -8,6 +9,9 @@ class HealthPotion(adventures.ItemsInfo.Items):
     def use_item_on(self, character):
         character.hp += 10
 
+        if character.hp > character.maxHp:
+            character.hp = character.maxHp
+
 
 class ManaPotion(adventures.ItemsInfo.Items):
     def __init__(self):
@@ -15,6 +19,10 @@ class ManaPotion(adventures.ItemsInfo.Items):
 
     def use_item_on(self, character):
         character.mana += 10
+
+        if character.mana > character.maxMana:
+            character.mana = character.maxMana
+
 
 
 class SpeedPotion(adventures.ItemsInfo.Items):
