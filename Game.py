@@ -58,7 +58,7 @@ class Game:
                           [Hurricane(), Tornado(), poison_breeze()]]
         characterTypes = ["Fire", "Water", "Earth", "Wind"]
 
-        characterRaces = [Gnome(), Ogre(), Elf()]
+        characterRaces = [Gnome(), Ogre(), Elf(), Human()]
 
         weapons = [Sword(), WarHammer(), Staff(), BattleAxe(), Trident(), BowAndArrow()]
 

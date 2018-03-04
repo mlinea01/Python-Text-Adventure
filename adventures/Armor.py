@@ -43,6 +43,24 @@ class leatherShoes(adventures.ArmorInfo.Armor):
         super().__init__("Shoes (Leather)", armor=5, magResist=5)
 
 
+# Chainmail armor
+class chainmailLegArmor(adventures.ArmorInfo.Armor):
+    def __init__(self):
+        super().__init__("Leg Armor (Chainmail)", armor=7, magResist=7)
+
+class chainmailChestArmor(adventures.ArmorInfo.Armor):
+    def __init__(self):
+        super().__init__("Chest Armor (Chainmail)", armor=7, magResist=7)
+
+class chainmailGloves(adventures.ArmorInfo.Armor):
+    def __init__(self):
+        super().__init__("Gloves (Chainmail)", armor=7, magResist=7)
+
+class chainmailShoes(adventures.ArmorInfo.Armor):
+    def __init__(self):
+        super().__init__("Shoes (Chainmail)", armor=7, magResist=7)
+
+
 # Plate Armor Set
 class plateLegArmor(adventures.ArmorInfo.Armor):
     def __init__(self):
