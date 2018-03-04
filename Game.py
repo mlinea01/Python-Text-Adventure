@@ -8,6 +8,7 @@ from characters.Player import Player
 import time
 import threading
 from Multiplayer import IO
+from functools import partial
 
 
 class Game:
@@ -70,10 +71,9 @@ class Game:
                 IO.print_text(str(typeNum) + ". " + charType, [player_num])
                 typeNum += 1
 
-            characterType = int(IO.get_input(player_num, "\nYour choice: "))
+            characterType = int(IO.get_input(player_num, "\nYour choice: ",
+                                             partial(IO.check_num_in_range,minimum=1, maximum=4)))
             IO.print_text("", [player_num])
-            if characterType < 1 or characterType > 4:
-                continue
 
             # confirm character type choice
             IO.print_text("You chose a " + characterTypes[characterType - 1] + " character.", [player_num])

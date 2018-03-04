@@ -5,7 +5,7 @@ from copy import deepcopy
 import enum
 import time
 import sys
-
+from functools import partial
 
 class Clients:
     ALL = -1
@@ -14,8 +14,20 @@ class Clients:
 class IO:
 
     @classmethod
-    def get_input(cls, player, message=""):
-        return ServerIO().get_server_input(player, message)
+    def accept_all_inputs(cls, input_data):
+        return True
+
+    @classmethod
+    def get_input(cls, player, message, check=None):
+        if check is None:
+            check = partial(IO.accept_all_inputs)
+        valid = False
+        input_data = None
+        while not valid:
+            input_data = ServerIO().get_server_input(player, message)
+            valid = check(input_data=input_data)
+            if not valid: IO.print_text("Invalid Input! Please try again.", [player])
+        return input_data
 
     @classmethod
     def print_text(cls, text, players=None):
@@ -24,6 +36,16 @@ class IO:
     @classmethod
     def get_num_players(cls):
         return Server.get_num_players()
+
+    @classmethod
+    def check_num_in_range(cls, minimum, maximum, input_data=""):
+        try:
+            if int(input_data) >= minimum and int(input_data) <= maximum:
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
 
 
 class ServerIO:
