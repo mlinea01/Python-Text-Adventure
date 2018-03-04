@@ -6,7 +6,7 @@ class Earthquake(Attack):
     def __init__(self):
         desc = "Shakes the earth below your enemy, dealing heavy damage."
         super().__init__("Earthquake", desc, damage=10, atkType=AttackTypes.Earth, statusEffects=[],
-                         target=TargetTypes.Enemy_All, manaCost=1)
+                         target=TargetTypes.Enemy_All, manaCost=2)
 
 
 class rock_throw(Attack):
@@ -27,7 +27,7 @@ class fire_twister(Attack):
     def __init__(self):
         desc = "Surrounds your enemy in a tornado of fire, dealing heavy damage."
         super().__init__("Fire Twister", desc, damage=10, atkType=AttackTypes.Fire, statusEffects=[],
-                         target=TargetTypes.Enemy_All, manaCost=1)
+                         target=TargetTypes.Enemy_All, manaCost=2)
 
 
 class Scorch(Attack):
@@ -48,7 +48,7 @@ class tidal_wave(Attack):
     def __init__(self):
         desc = "Hurls a huge wave toward your enemy, dealing heavy damage."
         super().__init__("Tidal Wave", desc, damage=10, atkType=AttackTypes.Water, statusEffects=[],
-                         target=TargetTypes.Enemy_All, manaCost=1)
+                         target=TargetTypes.Enemy_All, manaCost=2)
 
 
 class whirl_pool(Attack):
