@@ -1,4 +1,5 @@
 from characters.Player import *
+from Multiplayer import IO
 
 # Base class for all types of armor.
 
@@ -11,6 +12,4 @@ class Armor:
         self.magResist = magResist
 
     def equip_armor(self, armor):
-        from Multiplayer import GameSession
-        server = GameSession.get_server()
-        server.print_text(Player.name + "equipped" + armor.name)
+        IO.print_text(Player.name + "equipped" + armor.name)
