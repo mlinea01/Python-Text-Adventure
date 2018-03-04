@@ -3,6 +3,7 @@ from characters.Enemies import *
 from Battle import *
 from adventures.Potions import *
 from Multiplayer import IO
+from functools import partial
 
 startJourney = True
 
@@ -15,7 +16,8 @@ class Adventure1:
     def step1(self):
         IO.print_text("Now that you have completed your training, we can begin our first adventure!")
         IO.print_text("This is exciting!")
-        start = IO.get_input(0, "Are you ready to go? (yes or no)")
+        start = IO.get_input(0, "Are you ready to go? (yes or no)",
+                             partial(IO.check_in_list, list_data=["yes", "no"]))
         IO.print_text("")
 
         if start == "yes":

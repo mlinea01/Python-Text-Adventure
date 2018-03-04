@@ -47,6 +47,17 @@ class IO:
         except ValueError:
             return False
 
+    @classmethod
+    def check_not_null(cls, input_data):
+        return input_data != "null"
+
+    @classmethod
+    def check_in_list(cls, input_data, list_data):
+        for item in list_data:
+            if input_data == item:
+                return True
+        return False
+
 
 class ServerIO:
     def get_server_input(self, player, message=""):

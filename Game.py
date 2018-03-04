@@ -72,13 +72,14 @@ class Game:
                 typeNum += 1
 
             characterType = int(IO.get_input(player_num, "\nYour choice: ",
-                                             partial(IO.check_num_in_range,minimum=1, maximum=4)))
+                                             partial(IO.check_num_in_range,minimum=1, maximum=len(characterTypes))))
             IO.print_text("", [player_num])
 
             # confirm character type choice
             IO.print_text("You chose a " + characterTypes[characterType - 1] + " character.", [player_num])
             change = int(IO.get_input(player_num,
-                                      "Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)"))
+                                      "Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)",
+                                      partial(IO.check_num_in_range, minimum=1, maximum=2)))
             if change == 2:
                 continue
 
@@ -89,16 +90,18 @@ class Game:
                 IO.print_text(str(raceNum) + ". " + raceType.name, [player_num])
                 raceNum += 1
 
-            characterRace = int(IO.get_input(player_num, "\nYour choice: "))
+            characterRace = int(IO.get_input(player_num, "\nYour choice: ",
+                                             partial(IO.check_num_in_range,minimum=1, maximum=len(characterRaces))))
             char = characterRaces[characterRace - 1]
             IO.print_text("", [player_num])
             IO.print_text("You chose " + char.name, [player_num])
             IO.print_text(char.desc, [player_num])
 
             # prompt the player for a character name
-            name = IO.get_input(player_num, "\nCreate a name for your character: ")
+            name = IO.get_input(player_num, "\nCreate a name for your character: ", partial(IO.check_not_null))
             player = Player(name, char, player_num, characterTypes[characterType - 1])
-            player.desc = IO.get_input(player_num, "Describe your character in one word: ").split(' ', 1)[0]
+            player.desc = IO.get_input(player_num, "Describe your character in one word: ",
+                                       partial(IO.check_not_null)).split(' ', 1)[0]
             IO.print_text("Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1]
                               + " " + player.race, [player_num])
 
@@ -110,10 +113,13 @@ class Game:
                 for weapon in weapons:
                     IO.print_text(str(weaponNum) + ". " + weapon.name, [player_num])
                     weaponNum += 1
-                player_weapon = weapons[int(IO.get_input(player_num, "\nYour choice: ")) - 1]
+                player_weapon = weapons[int(IO.get_input(player_num, "\nYour choice: ",
+                                                         partial(IO.check_num_in_range, minimum=1,
+                                                                 maximum=len(weapons)))) - 1]
                 IO.print_text("", [player_num])
                 IO.print_text("The " + player_weapon.name + " - " + player_weapon.desc, [player_num])
-                if int(IO.get_input(player_num, "Is this the weapon you want? (1.yes 2.no)")) != 1:
+                if int(IO.get_input(player_num, "Is this the weapon you want? (1.yes 2.no)",
+                                    partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
                     continue
                 else:
                     player.equip_weapon(player_weapon, False)
@@ -127,9 +133,11 @@ class Game:
                     IO.print_text(str(spellNum) + ". " + spell.name, [player_num])
                     spellNum += 1
                 chosenSpell = startingSpells[characterType - 1][
-                    int(IO.get_input(player_num, "\nYour choice: ")) - 1]
+                    int(IO.get_input(player_num, "\nYour choice: ",
+                                     partial(IO.check_num_in_range,minimum=1, maximum=len(startingSpells)))) - 1]
                 IO.print_text(chosenSpell.name + " - " + chosenSpell.desc, [player_num])
-                if int(IO.get_input(player_num, "Is this the spell you want? (1.yes 2.no)")) != 1:
+                if int(IO.get_input(player_num, "Is this the spell you want? (1.yes 2.no)",
+                                    partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
                     continue
                 else:
                     player.learn_attack(chosenSpell)
