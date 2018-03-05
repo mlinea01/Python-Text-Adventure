@@ -47,6 +47,25 @@ class Battle:
                             fighter.hit_by(chosen_attack)
                         else:
                             other_fighter.hit_by(chosen_attack)
+                            if enemy.hp == 0:
+                                IO.print_text("You gained 50 xp!")
+                                fighter.character.xp += 50
+                                if fighter.character.xp == fighter.character.maxXp:
+                                    fighter.character.level += 1
+                                    fighter.character.maxXp += 150
+                                    fighter.character.xp = 0
+
+                                    fighter.character.mana = fighter.character.maxMana
+                                    fighter.character.mana += 10
+                                    fighter.character.maxMana = fighter.character.mana
+
+                                    fighter.character.hp = fighter.character.maxHp
+                                    fighter.character.hp += 10
+                                    fighter.character.maxHp = fighter.character.hp
+
+                                    IO.print_text("You grew to level " + str(fighter.character.level))
+
+
                 i += 1
                 fighter.turn_end()
                 IO.print_text("", self.player_nums)
