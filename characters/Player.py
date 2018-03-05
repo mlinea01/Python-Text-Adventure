@@ -47,7 +47,7 @@ class Player:
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
                         self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
-                        if self.character.mana > 0:
+                        if self.character.mana > 0 and not(self.character.mana < attack_chosen.manaCost):
                             self.character.mana -= attack_chosen.manaCost
                         elif self.character.mana < attack_chosen.manaCost:
                             IO.print_text("You don't have enough mana for that attack")
