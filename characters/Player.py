@@ -43,12 +43,15 @@ class Player:
                 if chosen_attack_num < len(self.character.attacks):
                     if self.attacks[chosen_attack_num].enabled is False:
                         IO.print_text("That attack is disabled this turn!", [self.player_num])
-                        continue
+                        break
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
                         self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
                         if self.character.mana > 0:
                             self.character.mana -= attack_chosen.manaCost
+                        elif self.character.mana < attack_chosen.manaCost:
+                            IO.print_text("You don't have enough mana for that attack")
+                            break
                         else:
                             self.character.mana = 0
                         return attack_chosen
