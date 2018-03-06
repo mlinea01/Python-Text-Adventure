@@ -4,6 +4,10 @@ import random
 from characters.Player import Player
 from attacks.AttacksInfo import TargetTypes
 
+class TestClass:
+    def __init__(self, value):
+        self.value = value
+
 class Battle:
 
     def __init__(self, players, enemy):
@@ -24,6 +28,8 @@ class Battle:
             fighter.battle_start(self.player_nums)
 
         while enemy.hp > 0 and self.playersAlive(self.players):
+
+            fighters.sort(key=lambda char: char.speed, reverse=True)
 
             i = 0
             while i < len(fighters):

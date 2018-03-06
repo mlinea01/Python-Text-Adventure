@@ -5,7 +5,7 @@ from attacks import Weapons
 
 class TrainingDummy(Character):
     def __init__(self):
-        super().__init__("Training Dummy", "", hp=10, mana=0, speed=0, attacks=[BasicAttacks.BlankStare()], weapons=[])
+        super().__init__("Training Dummy", "", hp=10, mana=0, speed=5, attacks=[BasicAttacks.BlankStare()], weapons=[])
 
 
 class MountainDragon(Character):
