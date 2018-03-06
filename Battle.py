@@ -29,6 +29,8 @@ class Battle:
 
         while enemy.hp > 0 and self.playersAlive(self.players):
 
+            IO.print_text("ROUND START")
+
             fighters.sort(key=lambda char: char.speed, reverse=True)
 
             i = 0
@@ -39,6 +41,8 @@ class Battle:
                     i += 1
                     continue
 
+                IO.print_text("Turn " + str(i + 1))
+                IO.print_text("It is " + fighter.name + "'s turn!")
                 fighter.turn_start()
 
                 if fighter.cannot_attack > 0:
@@ -99,7 +103,9 @@ class Battle:
 
                 i += 1
                 fighter.turn_end()
-                IO.print_text("", self.player_nums)
+                IO.print_text(fighter.name + "'s turn is over!")
+            IO.print_text("ROUND OVER")
+            IO.print_text("")
 
     def playersAlive(self, players):
         for player in players:
