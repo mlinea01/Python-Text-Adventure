@@ -5,6 +5,7 @@ from attacks.StatusEffects import Triggers
 from copy import deepcopy
 from attacks.AttacksInfo import *
 from Multiplayer import IO
+import time
 
 # This is the base class for all characters
 class Character:
@@ -69,6 +70,7 @@ class Character:
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
+        time.sleep(2)
         attacks_enabled = []
         for a in self.attacks:
             if a.enabled:

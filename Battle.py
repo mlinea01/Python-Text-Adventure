@@ -3,6 +3,7 @@ from Multiplayer import IO
 import random
 from characters.Player import Player
 from attacks.AttacksInfo import TargetTypes
+import time
 
 class TestClass:
     def __init__(self, value):
@@ -29,9 +30,9 @@ class Battle:
 
         while enemy.hp > 0 and self.playersAlive(self.players):
 
-            IO.print_text("ROUND START")
-
             fighters.sort(key=lambda char: char.speed, reverse=True)
+            IO.print_text("ROUND START")
+            IO.print_text(" ")
 
             i = 0
             while i < len(fighters):
@@ -103,9 +104,10 @@ class Battle:
 
                 i += 1
                 fighter.turn_end()
-                IO.print_text(fighter.name + "'s turn is over!")
-            IO.print_text("ROUND OVER")
-            IO.print_text("")
+                if fighter.hp > 0 and enemy.hp > 0:
+                    IO.print_text(fighter.name + "'s turn is over!")
+                IO.print_text(" ")
+                time.sleep(3)
 
     def playersAlive(self, players):
         for player in players:
