@@ -54,7 +54,7 @@ class Character:
             effect_num += 1
         IO.print_text(self.name + ":  Level: " + str(self.level) + " HP: " + str(self.hp) + " MANA: " + str(self.mana)
                       + ", Status: " + all_effects, self.players_list)
-        IO.print_text("XP: " + str(self.xp) + " / " + str(self.maxXp))
+        IO.print_text("XP: " + str(self.xp) + " / " + str(self.maxXp), self.players_list)
 
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
