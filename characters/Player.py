@@ -66,6 +66,21 @@ class Player:
             IO.print_text(self.name + " cannot attack this turn!", [self.player_num])
             return None
 
+    def choose_target(self, targets):
+        if len(targets) == 0:
+            return []
+        elif len(targets) == 1:
+            return targets
+        else:
+            target_num = 1
+            IO.print_text("Choose target: ", [self.player_num])
+            for target in targets:
+                IO.print_text(str(target_num) + ". " + target.name)
+                target_num += 1
+            target_choice = int(IO.get_input(self.player_num, "Your choice: ",
+                                             partial(IO.check_num_in_range, minimum=1, maximum=len(targets))))
+            return [targets[target_choice]]
+
     def __getattr__(self, item):
         if hasattr(self.character, item):
             return self.character.__getattribute__(item)

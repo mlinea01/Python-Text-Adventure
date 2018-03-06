@@ -122,7 +122,7 @@ class Game:
                                     partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
                     continue
                 else:
-                    # player.equip_weapon(player_weapon, False)
+                    player.equip_weapon(player_weapon, False)
                     break
 
             # prompt the player to choose a starting spell

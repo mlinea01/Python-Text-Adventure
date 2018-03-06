@@ -1,5 +1,7 @@
 from copy import copy
 from Multiplayer import IO
+from attacks.AttacksInfo import TargetTypes
+from characters.Player import Player
 
 class Battle:
 
@@ -37,38 +39,71 @@ class Battle:
                 else:
                     other_fighter = enemy
 
-                if fighter.cannot_attack > 0 or not fighter.can_choose_attack():
+                if fighter.cannot_attack > 0 or fighter.can_choose_attack() is False:
                    IO.print_text(fighter.name + " cannot attack!", self.player_nums)
                 else:
                     chosen_attack = fighter.choose_attack()
                     if chosen_attack is not None:
                         IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
-                        if chosen_attack.name == "Block":
-                            fighter.hit_by(chosen_attack)
-                        else:
-                            other_fighter.hit_by(chosen_attack)
-                            if enemy.hp == 0:
-                                IO.print_text("You gained 50 xp!")
-                                fighter.character.xp += 50
-                                if fighter.character.xp == fighter.character.maxXp:
-                                    fighter.character.level += 1
-                                    fighter.character.maxXp += 150
-                                    fighter.character.xp = 0
 
-                                    fighter.character.mana = fighter.character.maxMana
-                                    fighter.character.mana += 10
-                                    fighter.character.maxMana = fighter.character.mana
+                        target_list = []
+                        can_choose_target = False
+                        if chosen_attack.target == TargetTypes.Enemy_Single:
+                            can_choose_target = True
+                            target_list = self.get_enemies_of(fighter)
+                        elif chosen_attack.target == TargetTypes.Ally_Single:
+                            can_choose_target = True
+                            target_list = self.get_allies_of(fighter)
+                        elif chosen_attack.target == TargetTypes.Self:
+                            can_choose_target = False
+                            target_list = [fighter]
+                        elif chosen_attack.target == TargetTypes.Enemy_All:
+                            can_choose_target = False
+                            target_list = self.get_enemies_of(fighter)
+                        elif chosen_attack.target == TargetTypes.Ally_All:
+                            can_choose_target = False
+                            target_list = self.get_allies_of(fighter)
 
-                                    fighter.character.hp = fighter.character.maxHp
-                                    fighter.character.hp += 10
-                                    fighter.character.maxHp = fighter.character.hp
+                        if can_choose_target:
+                            target_list = fighter.choose_target(target_list)
 
-                                    IO.print_text("You grew to level " + str(fighter.character.level))
+                        for target in target_list:
+                            target.hit_by(chosen_attack)
+
+                        if enemy.hp == 0:
+                            IO.print_text("You gained 50 xp!")
+                            fighter.character.xp += 50
+                            if fighter.character.xp == fighter.character.maxXp:
+                                fighter.character.level += 1
+                                fighter.character.maxXp += 150
+                                fighter.character.xp = 0
+
+                                fighter.character.mana = fighter.character.maxMana
+                                fighter.character.mana += 10
+                                fighter.character.maxMana = fighter.character.mana
+
+                                fighter.character.hp = fighter.character.maxHp
+                                fighter.character.hp += 10
+                                fighter.character.maxHp = fighter.character.hp
+
+                                IO.print_text("You grew to level " + str(fighter.character.level))
 
 
                 i += 1
                 fighter.turn_end()
                 IO.print_text("", self.player_nums)
+
+    def get_enemies_of(self, character):
+        if isinstance(character, Player):
+            return [self.enemy]
+        else:
+            return self.players
+
+    def get_allies_of(self, character):
+        if isinstance(character, Player):
+            return self.players
+        else:
+            return [self.enemy]
 
     def playersAlive(self, players):
         for player in players:
