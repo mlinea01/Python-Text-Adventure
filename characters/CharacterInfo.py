@@ -58,6 +58,14 @@ class Character:
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
 
+    def choose_target(self, targets):
+        if len(targets) == 0:
+            return []
+        elif len(targets) == 1:
+            return targets
+        else:
+            return [targets[random.randint(0, len(targets))]]
+
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
