@@ -6,7 +6,7 @@ from adventures.Armor import *
 class Gnome(Character):
     def __init__(self):
         desc = "The Gnome has increased speed and may be able to dodge attacks."
-        super().__init__("Gnome", desc, hp=10, mana=10, speed=20, attacks=[BasicAttacks.Punch(), BasicAttacks.Block()],
+        super().__init__("Gnome", desc, hp=10, mana=1, speed=20, attacks=[],
                          armor=[leatherLegArmor(), leatherChestArmor(), leatherGloves(), leatherShoes()])
 
 

@@ -37,7 +37,7 @@ class Battle:
                 else:
                     other_fighter = enemy
 
-                if fighter.cannot_attack > 0:
+                if fighter.cannot_attack > 0 or not fighter.can_choose_attack():
                    IO.print_text(fighter.name + " cannot attack!", self.player_nums)
                 else:
                     chosen_attack = fighter.choose_attack()

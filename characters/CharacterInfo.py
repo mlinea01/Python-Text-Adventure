@@ -55,23 +55,24 @@ class Character:
                       + ", Status: " + all_effects, self.players_list)
         IO.print_text("XP: " + str(self.xp) + " / " + str(self.maxXp))
 
+    def can_choose_attack(self):
+        if len(self.items) > 0:
+            return True
+        else:
+            for a in self.attacks:
+                if a.enabled and self.mana >= a.manaCost:
+                    return True
+            return False
+
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
 
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
     def choose_attack(self):
-        attacks_enabled = []
-        for a in self.attacks:
-            if a.enabled:
-                attacks_enabled.append(a)
-        if len(attacks_enabled) > 0:
-            attack_chosen = deepcopy(self.attacks[random.randint(0, len(attacks_enabled)-1)])
-            self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
-            return attack_chosen
-        else:
-            IO.print_text(self.name + " cannot attack this turn!",  self.players_list)
-            return None
+        attack_chosen = deepcopy(self.attacks[random.randint(0, len(self.attacks)-1)])
+        self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
+        return attack_chosen
 
     def equip_weapon(self, weapon, show_message=True):
         if show_message:
