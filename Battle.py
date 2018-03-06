@@ -31,9 +31,9 @@ class Battle:
         while enemy.hp > 0 and self.playersAlive(self.players):
 
             fighters.sort(key=lambda char: char.speed, reverse=True)
-            IO.print_text(" ")
-            IO.print_text("ROUND START")
-            IO.print_text(" ")
+            IO.print_text(" ", self.player_nums)
+            IO.print_text("ROUND START", self.player_nums)
+            IO.print_text(" ", self.player_nums)
 
             i = 0
             while i < len(fighters):
@@ -43,8 +43,8 @@ class Battle:
                     i += 1
                     continue
 
-                IO.print_text("Turn " + str(i + 1))
-                IO.print_text(fighter.name + " is attacking!")
+                IO.print_text("Turn " + str(i + 1), self.player_nums)
+                IO.print_text(fighter.name + " is attacking!", self.player_nums)
                 fighter.turn_start()
 
                 if fighter.cannot_attack > 0:
@@ -79,14 +79,14 @@ class Battle:
                             if target.speed > fighter.speed:
                                 attack_missed = random.randint(1,3)
                                 if attack_missed == 1:
-                                    IO.print_text(fighter.name + " " + "attack missed!")
+                                    IO.print_text(fighter.name + " " + "attack missed!", self.player_nums)
                                 else:
                                     target.hit_by(chosen_attack)
                             else:
                                 target.hit_by(chosen_attack)
 
                             if enemy.hp == 0:
-                                IO.print_text("You gained 50 xp!")
+                                IO.print_text("You gained 50 xp!", fighter.player_num)
                                 fighter.character.xp += 50
                                 if fighter.character.xp == fighter.character.maxXp:
                                     fighter.character.level += 1
@@ -101,13 +101,13 @@ class Battle:
                                     fighter.character.hp += 10
                                     fighter.character.maxHp = fighter.character.hp
 
-                                    IO.print_text("You grew to level " + str(fighter.character.level))
+                                    IO.print_text(fighter.name + " grew to level " + str(fighter.character.level) + "!", self.player_nums)
 
                 i += 1
                 fighter.turn_end()
                 if fighter.hp > 0 and enemy.hp > 0:
-                    IO.print_text(fighter.name + "'s turn is over!")
-                IO.print_text(" ")
+                    IO.print_text(fighter.name + "'s turn is over!", self.player_nums)
+                IO.print_text(" ", self.player_nums)
                 time.sleep(3)
 
     def playersAlive(self, players):
