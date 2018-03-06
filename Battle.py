@@ -1,5 +1,6 @@
 from copy import copy
 from Multiplayer import IO
+import random
 
 class Battle:
 
@@ -44,8 +45,20 @@ class Battle:
                     if chosen_attack is not None:
                         IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
                         if chosen_attack.name == "Block":
+                            if other_fighter.speed > fighter.speed and fighter.hp > chosen_attack.damage:
+                                attack = random.randint(1,3)
+                                if attack == 1:
+                                    fighter.hit_by(chosen_attack)
+                                    print(fighter.name + " " + "attack missed!")
+                                    break
                             fighter.hit_by(chosen_attack)
                         else:
+                            if fighter.speed > other_fighter.speed and other_fighter.hp > chosen_attack.damage:
+                                attack = random.randint(1,3)
+                                if attack == 1:
+                                    other_fighter.hit_by(chosen_attack)
+                                    print(other_fighter.name + " " + ("attack missed"))
+                                    break
                             other_fighter.hit_by(chosen_attack)
                             if enemy.hp == 0:
                                 IO.print_text("You gained 50 xp!")
