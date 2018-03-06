@@ -35,11 +35,6 @@ class Battle:
 
                 fighter.turn_start()
 
-                if i == len(fighters)-1:
-                    other_fighter = players[0]
-                else:
-                    other_fighter = enemy
-
                 if fighter.cannot_attack > 0:
                     IO.print_text(fighter.name + " cannot attack!", self.player_nums)
                 else:
