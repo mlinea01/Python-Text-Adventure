@@ -53,7 +53,6 @@ class Battle:
                     chosen_attack = fighter.choose_attack()
                     if chosen_attack is not None:
 
-                        IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
                         target_list = []
                         can_choose_target = False
                         if chosen_attack.target == TargetTypes.Enemy_Single:
@@ -75,6 +74,7 @@ class Battle:
                         if can_choose_target:
                             target_list = fighter.choose_target(target_list)
 
+                        IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
                         for target in target_list:
                             if target.speed > fighter.speed:
                                 attack_missed = random.randint(1,3)
