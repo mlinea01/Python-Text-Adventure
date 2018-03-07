@@ -10,7 +10,7 @@ import time
 # This is the base class for all characters
 class Character:
 
-    def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[], armor=[]):
+    def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[], armor=[], reward_xp=50):
         self.hp = hp
         self.maxHp = hp
         self.mana = mana
@@ -36,6 +36,7 @@ class Character:
         self.attacks_disabled = []
         self.player_num = None
         self.players_list = []
+        self.reward_xp = reward_xp
 
     def battle_start(self, players_list):
         self.players_list = players_list
