@@ -156,14 +156,15 @@ class Character:
         self.trigger_status_effects(Triggers.ON_HIT_BY, self, attack)
 
         if attack.damage is not None:
-            if attack.atkType == AttackTypes.Normal:
-                attack.damage -= (self.totalArmor/5)
+            if attack.damage > 0:
+                if attack.atkType == AttackTypes.Normal:
+                    attack.damage -= (self.totalArmor/5)
 
-            else:
-                attack.damage -= (self.totalMagResist/5)
+                else:
+                    attack.damage -= (self.totalMagResist/5)
 
-            if attack.damage < 0:
-                attack.damage = 0
+                if attack.damage < 0:
+                    attack.damage = 0
 
             self.apply_damage(attack.damage)
 
