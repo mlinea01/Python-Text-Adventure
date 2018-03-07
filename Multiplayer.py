@@ -154,8 +154,11 @@ class Server:
         if players is None:
             send_to = cls.connections
         else:
-            for p in players:
-                send_to.append(cls.connections[p])
+            try:
+                for p in players:
+                    send_to.append(cls.connections[p])
+            except TypeError:
+                send_to.append(cls.connections[players])
 
         cls.send_msg(bytes(text, 'utf-8'), send_to)
         time.sleep(0.01)

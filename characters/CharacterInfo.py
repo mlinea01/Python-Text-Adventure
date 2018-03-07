@@ -65,7 +65,7 @@ class Character:
         elif len(targets) == 1:
             return targets
         else:
-            return [targets[random.randint(0, len(targets))]]
+            return [targets[random.randint(0, len(targets)-1)]]
 
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
