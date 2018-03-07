@@ -24,10 +24,10 @@ class Player:
             target_num = 1
             IO.print_text("Choose target: ", [self.player_num])
             for target in targets:
-                IO.print_text(str(target_num) + ". " + target.name)
+                IO.print_text(str(target_num) + ". " + target.name, [self.player_num])
                 target_num += 1
             target_choice = int(IO.get_input(self.player_num, "Your choice: ",
-                                             partial(IO.check_num_in_range, minimum=1, maximum=len(targets))))
+                                             partial(IO.check_num_in_range, minimum=1, maximum=len(targets))))-1
             return [targets[target_choice]]
 
     def choose_attack(self):
