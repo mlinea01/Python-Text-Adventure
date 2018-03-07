@@ -53,9 +53,9 @@ class Game:
 
         # starting spells: fire, water, earth, wind
         startingSpells = [[fire_twister(), Scorch(), fire_breathe()],
-                          [tidal_wave(), whirl_pool(), Mist()],
+                          [whirl_pool(), Mist(), calming_waters()],
                           [Earthquake(), rock_slide(), rock_throw()],
-                          [Hurricane(), Tornado(), poison_breeze()]]
+                          [Tornado(), poison_breeze(), healing_breeze()]]
         characterTypes = ["Fire", "Water", "Earth", "Wind"]
 
         characterRaces = [Gnome(), Ogre(), Elf(), Human()]
