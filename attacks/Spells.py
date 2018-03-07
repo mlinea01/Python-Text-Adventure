@@ -65,6 +65,13 @@ class Mist(Attack):
                          target=TargetTypes.Enemy_Single, manaCost=1)
 
 
+class calming_waters(Attack):
+    def __init__(self):
+        desc = "Heals a target ally"
+        super().__init__("Calming Waters", desc, damage=-7, atkType=AttackTypes.Water, statusEffects=[],
+                         target=TargetTypes.Ally_Single, manaCost=2)
+
+
 class Hurricane(Attack):
     def __init__(self):
         desc = "150 mile per around wind tosses your opponent, dealing heavy damage."
@@ -84,3 +91,10 @@ class poison_breeze(Attack):
         desc = "Blows a poison wind at your enemy, blinding them and dealing medium damage."
         super().__init__("Poison Breeze", desc, damage=7, atkType=AttackTypes.Wind, statusEffects=Blind(1),
                          target=TargetTypes.Enemy_Single, manaCost=1)
+
+
+class healing_breeze(Attack):
+    def __init__(self):
+        desc = "Heals a target ally"
+        super().__init__("Healing Wind", desc, damage=-7, atkType=AttackTypes.Wind, statusEffects=[],
+                         target=TargetTypes.Ally_Single, manaCost=2)

@@ -132,11 +132,19 @@ class Character:
         # subtract hp and check for defeat
         self.hp -= damage
 
+        if self.hp > self.maxHp:
+            self.hp = self.maxHp
+
         if self.hp < 0:
             self.hp = 0
 
         if show_message:
-            IO.print_text(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),  self.players_list)
+            if damage >= 0:
+                IO.print_text(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),
+                              self.players_list)
+            else:
+                IO.print_text(self.name + " is healed for " + str(-damage) + " damage! " + "HP: " + str(self.hp),
+                              self.players_list)
 
         if self.hp == 0:
             IO.print_text(self.name + " has been defeated!",  self.players_list)
