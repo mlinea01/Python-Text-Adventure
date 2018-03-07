@@ -14,6 +14,9 @@ class Attack:
         self.statusEffects = statusEffects
         self.enabled = True
 
+    def upgrade(self):
+        self.damage += 2
+
 
 # This class keeps track of attack types - useful for things like determining resistances to certain moves
 class AttackTypes(enum.Enum):

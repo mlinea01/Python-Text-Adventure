@@ -10,4 +10,4 @@ class TrainingDummy(Character):
 
 class MountainDragon(Character):
     def __init__(self):
-        super().__init__("Mountain Dragon", "", hp=15, mana=10, speed=50, attacks=[BasicAttacks.Punch()], weapons=[])
+        super().__init__("Mountain Dragon", "", hp=15, mana=10, speed=15, attacks=[BasicAttacks.Punch()], weapons=[])

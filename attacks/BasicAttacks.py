@@ -39,3 +39,6 @@ class Block(Attack):
         desc = "Attempt to block the next incoming attack to reduce its damage and effects."
         super().__init__(name, desc, damage=None, atkType=AttackTypes.Normal, statusEffects=[Shield(5)],
                          target=TargetTypes.Self, manaCost=0)
+
+    def upgrade(self):
+        self.statusEffects[0].amount += 1

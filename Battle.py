@@ -93,6 +93,9 @@ class Battle:
                                     fighter.character.maxXp += 150
                                     fighter.character.xp = 0
 
+                                    for attack in fighter.attacks:
+                                        attack.upgrade()
+
                                     fighter.character.mana = fighter.character.maxMana
                                     fighter.character.mana += 10
                                     fighter.character.maxMana = fighter.character.mana
