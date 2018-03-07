@@ -86,25 +86,27 @@ class Battle:
                                 target.hit_by(chosen_attack)
 
                             if enemy.hp == 0:
-                                IO.print_text("You gained 50 xp!", fighter.player_num)
-                                fighter.character.xp += 50
-                                if fighter.character.xp == fighter.character.maxXp:
-                                    fighter.character.level += 1
-                                    fighter.character.maxXp += 150
-                                    fighter.character.xp = 0
+                                for fighter in players:
+                                    IO.print_text("You gained 50 xp!", fighter.player_num)
+                                    fighter.character.xp += 50
+                                    if fighter.character.xp == fighter.character.maxXp:
+                                        fighter.character.level += 1
+                                        fighter.character.maxXp += 150
+                                        fighter.character.xp = 0
 
-                                    for attack in fighter.attacks:
-                                        attack.upgrade()
+                                        for attack in fighter.attacks:
+                                            attack.upgrade()
 
-                                    fighter.character.mana = fighter.character.maxMana
-                                    fighter.character.mana += 10
-                                    fighter.character.maxMana = fighter.character.mana
+                                        fighter.character.mana = fighter.character.maxMana
+                                        fighter.character.mana += 10
+                                        fighter.character.maxMana = fighter.character.mana
 
-                                    fighter.character.hp = fighter.character.maxHp
-                                    fighter.character.hp += 10
-                                    fighter.character.maxHp = fighter.character.hp
+                                        fighter.character.hp = fighter.character.maxHp
+                                        fighter.character.hp += 10
+                                        fighter.character.maxHp = fighter.character.hp
 
-                                    IO.print_text(fighter.name + " grew to level " + str(fighter.character.level) + "!", self.player_nums)
+                                        IO.print_text(fighter.name + " grew to level " + str(fighter.character.level)
+                                                      + "!", self.player_nums)
 
                 i += 1
                 fighter.turn_end()
