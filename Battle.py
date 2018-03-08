@@ -12,7 +12,6 @@ class TestClass:
 class Battle:
 
     def __init__(self, players, enemy):
-
         self.players = players
         self.player_nums = []
         self.enemy = enemy
@@ -29,7 +28,6 @@ class Battle:
             fighter.battle_start(self.player_nums)
 
         while enemy.hp > 0 and self.playersAlive(self.players):
-
             fighters.sort(key=lambda char: char.speed, reverse=True)
             IO.print_text(" ", self.player_nums)
             IO.print_text("ROUND START", self.player_nums)

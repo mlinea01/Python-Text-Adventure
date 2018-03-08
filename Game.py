@@ -19,8 +19,6 @@ class Game:
 
         IO.print_text("Game has started!")
 
-        Adventure()
-
         p_num = 0
         while p_num < IO.get_num_players():
             intro_thread = threading.Thread(target=self.adventure_intro, args=[p_num])
@@ -45,6 +43,8 @@ class Game:
             p_num += 1
 
         time.sleep(1)
+        Adventure(Game.players)
+
         stepOne = Adventure1(Game.players)
         stepOne.step1()
 

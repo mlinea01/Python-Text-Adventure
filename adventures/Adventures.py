@@ -1,20 +1,24 @@
 import csv
 from Multiplayer import IO
 from functools import partial
+from Battle import Battle
+from characters.Enemies import *
+import time
 
 
 class Adventure:
-    def __init__(self):
-        self.adventure_data = [["a1", None, "a3"],
-                               ["b1", None, "b3"],
-                               ["c1", "c2", "c3", "c4"]]
+    def __init__(self, players):
+        self.players = players
+        self.adventure_data = [[self.normal_room,     None,   self.normal_room],
+                               [self.normal_room,     None,   self.normal_room],
+                               [self.enemy_room ,  self.trap, self.normal_room , self.dead_end]]
 
         self.player_x = 0
         self.player_y = 0
 
         while True:
             IO.print_text(" ")
-            self.print(self.player_x, self.player_y)
+            self.run_room(self.player_x, self.player_y)
             IO.print_text("Choose direction to go in: ", 0)
             directions = []
             dir_num = 1
@@ -58,5 +62,19 @@ class Adventure:
         except IndexError:
             return False
 
-    def print(self, x, y):
-        IO.print_text(self.adventure_data[y][x])
+    def normal_room(self):
+        IO.print_text("This is just a normal room.")
+
+    def dead_end(self):
+        IO.print_text("This is a dead end...")
+
+    def trap(self):
+        IO.print_text("Careful, there is  trap in this room!")
+
+    def enemy_room(self):
+        IO.print_text("Enemy attacking!")
+        time.sleep(2)
+        Battle(self.players, TerrifyingTurantula())
+
+    def run_room(self, x, y):
+        self.adventure_data[y][x]()
