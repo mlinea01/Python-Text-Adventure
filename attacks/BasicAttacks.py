@@ -13,6 +13,24 @@ class Punch(Attack):
                          target=TargetTypes.Enemy_Single, manaCost=0)
 
 
+class Bite(Attack):
+
+    def __init__(self):
+        name = "Bite"
+        desc = "A ferocious bite that leaves you helpless with long sharp fangs impaling you!"
+        super().__init__(name, desc, damage=2, atkType=AttackTypes.Normal,
+                         statusEffects=Bleed(bleedDuration=1, chance= 50), target=TargetTypes.Enemy_Single, manaCost=0)
+
+
+class Bind(Attack):
+
+    def __init__(self):
+        name = "Bind"
+        desc = "Wraps you up and hugs you, just a little too tight!!!"
+        super().__init__(name, desc, damage=5, atkType=AttackTypes.Normal,statusEffects=Paralyze(
+            paralyzeDuration=1, chance=50), target=TargetTypes.Enemy_Single, manaCost=0)
+
+
 class BlankStare(Attack):
 
     def __init__(self):
