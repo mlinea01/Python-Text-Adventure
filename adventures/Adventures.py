@@ -17,7 +17,10 @@ class Adventure:
             self.x = 0
             self.y += 1
 
-        self.print(2, 2)
+        self.player_x = 1
+        self.player_y = 1
+
+        self.print(self.player_x, self.player_y)
 
     def print(self, x, y):
         x -= 1
