@@ -89,7 +89,7 @@ class Battle:
                                 for fighter in players:
                                     IO.print_text("You gained " + str(enemy.reward_xp) + " xp!", fighter.player_num)
                                     fighter.character.xp += enemy.reward_xp
-                                    if fighter.character.xp == fighter.character.maxXp:
+                                    if fighter.character.xp >= fighter.character.maxXp:
                                         fighter.character.level += 1
                                         fighter.character.maxXp += 150
                                         fighter.character.xp = 0
