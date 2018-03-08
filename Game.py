@@ -9,6 +9,7 @@ import time
 import threading
 from Multiplayer import IO
 from functools import partial
+from adventures.Adventures import Adventure
 
 
 class Game:
@@ -17,6 +18,8 @@ class Game:
     def __init__(self):
 
         IO.print_text("Game has started!")
+
+        Adventure()
 
         p_num = 0
         while p_num < IO.get_num_players():
