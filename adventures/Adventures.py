@@ -24,18 +24,29 @@ class Adventure:
 
         while True:
             self.print(self.player_x, self.player_y)
-            IO.print_text("Choose a direction")
-            IO.print_text("1. North")
-            IO.print_text("2. South")
-            IO.print_text("3. East")
-            IO.print_text("4. West")
-            direction = IO.get_input(0, "Your choice: ", partial(IO.check_num_in_range, minimum=1, maximum=4))
+            directions = []
+            dir_num = 1
+            if self.player_y > 1:
+                directions.append("North")
+            if self.player_y < 3:
+                directions.append("South")
+            if self.player_x < 3:
+                directions.append("East")
+            if self.player_x > 1:
+                directions.append("West")
 
-            if direction == 1:
+            for direction in directions:
+                IO.print_text(str(dir_num) + ". " + direction)
+                dir_num += 1
+
+            direction = int(IO.get_input(0, "Your choice: ", partial(IO.check_num_in_range, minimum=1,
+                                                                     maximum=len(directions))))-1
+
+            if directions[direction] == "North":
                 self.player_y -= 1
-            elif direction == 2:
+            elif directions[direction] == "South":
                 self.player_y += 1
-            elif direction == 3:
+            elif directions[direction] == "East":
                 self.player_x += 1
             else:
                 self.player_x -= 1
