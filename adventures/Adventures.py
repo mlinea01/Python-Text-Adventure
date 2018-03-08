@@ -5,34 +5,26 @@ from functools import partial
 
 class Adventure:
     def __init__(self):
-        self.x = 0
-        self.y = 0
-        self.width = 0
-        self.adventure_data = []
-        file_data = csv.reader(open("adventure_data/adventure1.csv", "rt", encoding='utf-8-sig'))
-        for row in file_data:
-            for item in row:
-                self.adventure_data.append(item)
-                self.x += 1
-            if self.width == 0:
-                self.width = self.x
-            self.x = 0
-            self.y += 1
+        self.adventure_data = [["a1", None, "a3"],
+                               ["b1", None, "b3"],
+                               ["c1", "c2", "c3", "c4"]]
 
-        self.player_x = 1
-        self.player_y = 1
+        self.player_x = 0
+        self.player_y = 0
 
         while True:
+            IO.print_text(" ")
             self.print(self.player_x, self.player_y)
+            IO.print_text("Choose direction to go in: ", 0)
             directions = []
             dir_num = 1
-            if self.player_y > 1:
+            if self.can_move_to(self.player_x, self.player_y-1):
                 directions.append("North")
-            if self.player_y < 3:
+            if self.can_move_to(self.player_x, self.player_y+1):
                 directions.append("South")
-            if self.player_x < 3:
+            if self.can_move_to(self.player_x+1, self.player_y):
                 directions.append("East")
-            if self.player_x > 1:
+            if self.can_move_to(self.player_x-1, self.player_y):
                 directions.append("West")
 
             for direction in directions:
@@ -52,7 +44,19 @@ class Adventure:
                 self.player_x -= 1
 
 
+    def can_move_to(self, x, y):
+        try:
+            if x < 0 or x >= len(self.adventure_data[y]):
+                return False
+            if y < 0 or y >= len(self.adventure_data):
+                return False
+            if self.adventure_data[y][x] is None:
+                return False
+
+            return True
+
+        except IndexError:
+            return False
+
     def print(self, x, y):
-        x -= 1
-        y -= 1
-        print(self.adventure_data[x + y*self.width])
+        IO.print_text(self.adventure_data[y][x])
