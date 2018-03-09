@@ -43,10 +43,8 @@ class Game:
             p_num += 1
 
         time.sleep(1)
-        Adventure(Game.players)
 
-        stepOne = Adventure1(Game.players)
-        stepOne.step1()
+        Adventure1(Game.players)
 
     def adventure_intro(self, player_num):
 

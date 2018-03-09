@@ -7,14 +7,12 @@ import time
 
 
 class Adventure:
-    def __init__(self, players):
+    def __init__(self, players, map_data, start_x=0, start_y=0):
         self.players = players
-        self.adventure_data = [[self.normal_room,     None,   self.normal_room],
-                               [self.normal_room,     None,   self.normal_room],
-                               [self.enemy_room ,  self.trap, self.normal_room , self.dead_end]]
+        self.map_data = map_data
 
-        self.player_x = 0
-        self.player_y = 0
+        self.player_x = start_x
+        self.player_y = start_y
 
         while True:
             IO.print_text(" ")
@@ -50,11 +48,11 @@ class Adventure:
 
     def can_move_to(self, x, y):
         try:
-            if x < 0 or x >= len(self.adventure_data[y]):
+            if x < 0 or x >= len(self.map_data[y]):
                 return False
-            if y < 0 or y >= len(self.adventure_data):
+            if y < 0 or y >= len(self.map_data):
                 return False
-            if self.adventure_data[y][x] is None:
+            if self.map_data[y][x] is None:
                 return False
 
             return True
@@ -62,19 +60,5 @@ class Adventure:
         except IndexError:
             return False
 
-    def normal_room(self):
-        IO.print_text("This is just a normal room.")
-
-    def dead_end(self):
-        IO.print_text("This is a dead end...")
-
-    def trap(self):
-        IO.print_text("Careful, there is  trap in this room!")
-
-    def enemy_room(self):
-        IO.print_text("Enemy attacking!")
-        time.sleep(2)
-        Battle(self.players, TerrifyingTurantula())
-
     def run_room(self, x, y):
-        self.adventure_data[y][x]()
+        self.map_data[y][x]()
