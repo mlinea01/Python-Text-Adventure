@@ -47,20 +47,27 @@ class Adventure1:
                 IO.get_input(0,"There's no turning back now! Keep your eyes open, this forest is filled with "
                                         "creatures that will not be too happy about you being on their land.")
                 IO.print_text("")
+                self.adventure.mark_visited()
 
     def camp(self):
         IO.print_text("Look! There is a camp up ahead, Let's check it out and see if we can find any clues!")
         IO.print_text("")
         time.sleep(1)
+        self.item_loot()
 
-        potions = [HealthPotion(), ManaPotion(), SpeedPotion(), DamagePotion()]
+    def item_loot(self):
+        potions = [HealthPotion, ManaPotion, SpeedPotion, DamagePotion]
         search = random.randint(1, 8)
 
         if search <= 4 and self.adventure.already_visited() is False:
             IO.print_text("You found an item!")
-            IO.print_text("You found a " + potions[search - 1].name)
-            self.players[0].items.append(potions[search - 1])
+            item = potions[search - 1]()
+            IO.print_text("You found a " + item.name)
+            self.players[0].items.append(item)
+            self.adventure.mark_visited()
 
+        elif self.adventure.already_visited():
+            IO.print_text("The place has been ransacked! Looks like there's nothing left.")
         else:
             IO.print_text("There's nothing here, let's keep moving!")
 
@@ -73,7 +80,8 @@ class Adventure1:
             IO.print_text("")
             IO.get_input(0, "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
             IO.print_text("")
-            self.camp()
+            self.item_loot()
+            self.adventure.mark_visited()
         else:
             IO.print_text("The slain Mountain Dragon lies in the middle of the camp.")
             IO.print_text("The wind blows steadily from the mountains to the East, but there is nothing else here.")

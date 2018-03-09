@@ -59,7 +59,6 @@ class Adventure:
 
     def run_room(self, x, y):
         self.map_data[y][x]()
-        self.visited.add((x, y))
 
     def already_visited(self):
         try:
@@ -69,3 +68,6 @@ class Adventure:
                 return False
         except IndexError:
             return False
+
+    def mark_visited(self):
+        self.visited.add((self.player_x, self.player_y))
