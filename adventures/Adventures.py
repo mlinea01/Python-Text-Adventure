@@ -13,7 +13,9 @@ class Adventure:
 
         self.player_x = start_x
         self.player_y = start_y
+        self.visited = set()
 
+    def start(self):
         while True:
             IO.print_text(" ")
             self.run_room(self.player_x, self.player_y)
@@ -62,3 +64,13 @@ class Adventure:
 
     def run_room(self, x, y):
         self.map_data[y][x]()
+        self.visited.add((x, y))
+
+    def get_visited(self, x, y):
+        try:
+            if (x, y) in self.visited:
+                return True
+            else:
+                return False
+        except IndexError:
+            return False
