@@ -61,9 +61,9 @@ class Adventure:
         self.map_data[y][x]()
         self.visited.add((x, y))
 
-    def already_visited(self, x, y):
+    def already_visited(self):
         try:
-            if (x, y) in self.visited:
+            if (self.player_x, self.player_y) in self.visited:
                 return True
             else:
                 return False
