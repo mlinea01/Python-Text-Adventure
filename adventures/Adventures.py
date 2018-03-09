@@ -1,9 +1,5 @@
-import csv
 from Multiplayer import IO
 from functools import partial
-from Battle import Battle
-from characters.Enemies import *
-import time
 
 
 class Adventure:
@@ -47,7 +43,6 @@ class Adventure:
             else:
                 self.player_x -= 1
 
-
     def can_move_to(self, x, y):
         try:
             if x < 0 or x >= len(self.map_data[y]):
@@ -66,7 +61,7 @@ class Adventure:
         self.map_data[y][x]()
         self.visited.add((x, y))
 
-    def get_visited(self, x, y):
+    def already_visited(self, x, y):
         try:
             if (x, y) in self.visited:
                 return True
