@@ -9,7 +9,7 @@ class Punch(Attack):
     def __init__(self):
         name = "Punch"
         desc = "An attack where you throw Hawaiian Punch at - wait, what? It's just a punch? Fine..."
-        super().__init__(name, desc, damage=1, atkType=AttackTypes.Normal, statusEffects=[],
+        super().__init__(name, desc, damage=5, atkType=AttackTypes.Normal, statusEffects=[],
                          target=TargetTypes.Enemy_Single, manaCost=0)
 
 
@@ -18,7 +18,7 @@ class Bite(Attack):
     def __init__(self):
         name = "Bite"
         desc = "A ferocious bite that leaves you helpless with long sharp fangs impaling you!"
-        super().__init__(name, desc, damage=2, atkType=AttackTypes.Normal,
+        super().__init__(name, desc, damage=5, atkType=AttackTypes.Normal,
                          statusEffects=Bleed(bleedDuration=1, chance= 50), target=TargetTypes.Enemy_Single, manaCost=0)
 
 
@@ -27,7 +27,7 @@ class Bind(Attack):
     def __init__(self):
         name = "Bind"
         desc = "Wraps you up and hugs you, just a little too tight!!!"
-        super().__init__(name, desc, damage=5, atkType=AttackTypes.Normal,statusEffects=Paralyze(
+        super().__init__(name, desc, damage=6, atkType=AttackTypes.Normal,statusEffects=Paralyze(
             paralyzeDuration=1, chance=50), target=TargetTypes.Enemy_Single, manaCost=0)
 
 
@@ -44,7 +44,7 @@ class ShadowStrike(Attack):
     def __init__(self):
         name = "Shadow Strike"
         desc = "Strike your opponent with a dark energy, blinding them"
-        super().__init__(name, desc, damage=1, atkType=AttackTypes.Normal,
+        super().__init__(name, desc, damage=5, atkType=AttackTypes.Normal,
                          statusEffects=[Blind(blindDuration=1, chance=50)],
                          target=TargetTypes.Enemy_Single, manaCost=0)
 

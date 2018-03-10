@@ -5,6 +5,7 @@ from adventures.Potions import *
 from Multiplayer import IO
 from functools import partial
 from adventures.Adventures import Adventure
+from adventures.Clues import *
 
 startJourney = True
 
@@ -61,6 +62,7 @@ class Adventure1:
         IO.print_text("")
         time.sleep(1)
         self.item_loot()
+        self.find_clues()
 
     def item_loot(self):
         potions = [HealthPotion, ManaPotion, SpeedPotion, DamagePotion]
@@ -76,7 +78,23 @@ class Adventure1:
         elif self.adventure.already_visited():
             IO.print_text("The place has been ransacked! Looks like there's nothing left.")
         else:
-            IO.print_text("There's nothing here, let's keep moving!")
+            IO.print_text("There are no items here, Let's see if we can find any clues.")
+
+    def find_clues(self):
+        clues = [clue1, clue2, clue3, clue4]
+        find = random.randint(1, 8)
+
+        if find <= 4 and self.adventure.already_visited() is False:
+            IO.print_text("You found a clue! You may need this at some point.")
+            clue = clues[find - 1]()
+            IO.print_text(clue.name + ": " +clue.desc)
+            self.players[0].items.append(clue)
+            self.adventure.mark_visited()
+
+        elif self.adventure.mark_visited():
+            IO.print_text("We already found all the clues we could here!")
+        else:
+            IO.print_text("There doesn't seem to be any clues!")
 
     def dragon_fight(self):
         if self.adventure.already_visited() is False:
@@ -88,6 +106,7 @@ class Adventure1:
             IO.get_input(0, "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
             IO.print_text("")
             self.item_loot()
+            self.find_clues()
             self.adventure.mark_visited()
 
         else:
@@ -104,6 +123,7 @@ class Adventure1:
             IO.get_input(0, "Wow that was a huge spider, I really hope we don't see another one of those!")
             IO.print_text("")
             self.item_loot()
+            self.find_clues()
             self.adventure.mark_visited()
 
         else:
@@ -117,9 +137,10 @@ class Adventure1:
             IO.print_text("")
             Battle(self.players, ZombieRat())
             IO.print_text("")
-            IO.get_input(0, "Where did a zombie rat comr from? that was so wierd!")
+            IO.get_input(0, "Where did a zombie rat come from? that was so wierd!")
             IO.print_text("")
             self.item_loot()
+            self.find_clues()
             self.adventure.mark_visited()
 
         else:
@@ -136,6 +157,7 @@ class Adventure1:
             IO.get_input(0, "That squid almost had us! And you wanted to take a boat!")
             IO.print_text("")
             self.item_loot()
+            self.find_clues()
             self.adventure.mark_visited()
 
         else:
