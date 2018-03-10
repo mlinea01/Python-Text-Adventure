@@ -16,7 +16,14 @@ class Adventure1:
 
         map_data = [[self.step1,  self.camp,    self.empty],
                     [self.empty,      None,      self.empty],
-                    [self.camp,  self.empty,    self.dragon_fight]]
+                    [self.camp,  self.empty,    self.dragon_fight],
+                    [self.zombieRat_fight,  self.empty, self.empty],
+                    [self.camp,  self.empty,     None],
+                    [None,       self.camp,     self.empty],
+                    [self.turantula_fight, self.empty, self.empty],
+                    [None,       self.empty,     None],
+                    [self.camp,  self.empty,    self.giantSquid_fight]]
+
 
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
@@ -82,6 +89,55 @@ class Adventure1:
             IO.print_text("")
             self.item_loot()
             self.adventure.mark_visited()
+
         else:
             IO.print_text("The slain Mountain Dragon lies in the middle of the camp.")
             IO.print_text("The wind blows steadily from the mountains to the East, but there is nothing else here.")
+
+    def turantula_fight(self):
+        if self.adventure.already_visited() is False:
+            IO.print_text("There is a huge turantula in this camp! OMG kill it!!!!!")
+            time.sleep(2)
+            IO.print_text("")
+            Battle(self.players, TerrifyingTurantula())
+            IO.print_text("")
+            IO.get_input(0, "Wow that was a huge spider, I really hope we don't see another one of those!")
+            IO.print_text("")
+            self.item_loot()
+            self.adventure.mark_visited()
+
+        else:
+            IO.print_text("That nasty spider is still laying here, why did we come back here?")
+            IO.print_text("This camp is completely empty, no need to look around again and be near this spider!")
+
+    def zombieRat_fight(self):
+        if self.adventure.already_visited() is False:
+            IO.print_text("That is one big rat, it looks like it should be dead.  Its a ZOMBIE!!!")
+            time.sleep(2)
+            IO.print_text("")
+            Battle(self.players, ZombieRat())
+            IO.print_text("")
+            IO.get_input(0, "Where did a zombie rat comr from? that was so wierd!")
+            IO.print_text("")
+            self.item_loot()
+            self.adventure.mark_visited()
+
+        else:
+            IO.print_text("The blood from the zombie rat is here but the rat is gone! we must not have killed it!")
+            IO.print_text("We've searched this camp as much as we could, lets go before that rat comes back.")
+
+    def giantSquid_fight(self):
+        if self.adventure.already_visited() is False:
+            IO.print_text("What is that coming out of the water? NO! its a giant squid!!!")
+            time.sleep(2)
+            IO.print_text("")
+            Battle(self.players, GiantSquid())
+            IO.print_text("")
+            IO.get_input(0, "That squid almost had us! And you wanted to take a boat!")
+            IO.print_text("")
+            self.item_loot()
+            self.adventure.mark_visited()
+
+        else:
+            IO.print_text("Whats that smell? Smells like rotten fish! oh its that squid!")
+            IO.print_text("If you want to look around go for it, ")
