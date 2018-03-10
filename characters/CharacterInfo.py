@@ -25,6 +25,7 @@ class Character:
         self.totalArmor = 0
         self.totalMagResist = 0
         self.items = []
+        self.clues = []
         self.weapons = []
         for weapon in weapons:
             self.equip_weapon(weapon, False)

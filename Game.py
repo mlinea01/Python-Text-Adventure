@@ -9,7 +9,6 @@ import time
 import threading
 from Multiplayer import IO
 from functools import partial
-from adventures.Adventures import Adventure
 
 
 class Game:

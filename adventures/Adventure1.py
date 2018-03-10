@@ -1,8 +1,6 @@
-import random
 from characters.Enemies import *
 from Battle import *
 from adventures.Potions import *
-from Multiplayer import IO
 from functools import partial
 from adventures.Adventures import Adventure
 from adventures.Clues import *
@@ -15,22 +13,22 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,  self.camp,    self.empty],
-                    [self.empty,      None,      self.empty],
-                    [self.camp,  self.empty,    self.dragon_fight],
-                    [self.zombieRat_fight,  self.empty, self.empty],
-                    [self.camp,  self.empty,     None],
-                    [None,       self.camp,     self.empty],
+        map_data = [[self.step1, self.camp, self.empty],
+                    [self.empty, None, self.empty],
+                    [self.camp, self.empty, self.dragon_fight],
+                    [self.zombieRat_fight, self.empty, self.empty],
+                    [self.camp, self.empty, None],
+                    [None, self.camp, self.empty],
                     [self.turantula_fight, self.empty, self.empty],
-                    [None,       self.empty,     None],
-                    [self.camp,  self.empty,    self.giantSquid_fight]]
-
+                    [None, self.empty, None],
+                    [self.camp, self.empty, self.giantSquid_fight]]
 
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
 
     def empty(self):
-        IO.print_text("This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
+        IO.print_text(
+            "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
 
     def step1(self):
         if self.adventure.already_visited():
@@ -44,16 +42,15 @@ class Adventure1:
 
             if start == "yes":
                 IO.print_text("A long time ago, in a mythical land...It is up to you to find those responsible and take"
-                                  " them down!")
+                              " them down!")
                 IO.print_text("You must begin your journey through the enchanted forest, but be careful! It's not as "
-                                  "glamorous as it sounds!")
+                              "glamorous as it sounds!")
 
                 IO.get_input(0, "Press enter to start your journey in the enchanted forest!")
                 IO.print_text("")
 
-
-                IO.get_input(0,"There's no turning back now! Keep your eyes open, this forest is filled with "
-                                        "creatures that will not be too happy about you being on their land.")
+                IO.get_input(0, "There's no turning back now! Keep your eyes open, this forest is filled with "
+                                "creatures that will not be too happy about you being on their land.")
                 IO.print_text("")
                 self.adventure.mark_visited()
 
@@ -87,8 +84,8 @@ class Adventure1:
         if find <= 4 and self.adventure.already_visited() is False:
             IO.print_text("You found a clue! You may need this at some point.")
             clue = clues[find - 1]()
-            IO.print_text(clue.name + ": " +clue.desc)
-            self.players[0].items.append(clue)
+            IO.print_text(clue.name + ": " + clue.desc)
+            self.players[0].clues.append(clue)
             self.adventure.mark_visited()
 
         elif self.adventure.mark_visited():

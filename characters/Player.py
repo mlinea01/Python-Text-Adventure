@@ -39,7 +39,6 @@ class Player:
         if len(attacks_enabled) > 0 or len(self.character.items) > 0:
             IO.print_text("Choose your attack: ", [self.player_num])
             attack_num = 1
-            chosen_attack_num = -1
             for attack in self.character.attacks:
                 if attack.enabled:
                     IO.print_text(str(attack_num) + ". " + attack.name + " - " + attack.desc, [self.player_num])

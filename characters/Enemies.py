@@ -1,6 +1,5 @@
 from characters.CharacterInfo import Character
 from attacks import BasicAttacks
-from attacks import Weapons
 
 
 class TrainingDummy(Character):

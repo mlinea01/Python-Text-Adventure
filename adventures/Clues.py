@@ -1,4 +1,3 @@
-from Multiplayer import IO
 import adventures.ItemsInfo
 
 
