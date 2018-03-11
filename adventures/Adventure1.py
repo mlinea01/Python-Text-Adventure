@@ -4,6 +4,7 @@ from adventures.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
 from adventures.Clues import *
+from Puzzles import Riddle
 
 startJourney = True
 
@@ -13,15 +14,19 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1, self.camp, self.empty],
-                    [self.empty, None, self.empty],
-                    [self.camp, self.empty, self.dragon_fight],
-                    [self.zombieRat_fight, self.empty, self.empty],
-                    [self.camp, self.empty, None],
-                    [None, self.camp, self.empty],
-                    [self.turantula_fight, self.empty, self.empty],
-                    [None, self.empty, None],
-                    [self.camp, self.empty, self.giantSquid_fight]]
+        map_data = [[self.step1,             self.camp,         self.empty],
+                    [self.empty,                None,           self.empty],
+                    [self.camp,              self.empty,        self.dragon_fight],
+                    [self.zombieRat_fight,   self.empty,        self.empty],
+                    [self.camp,              self.empty,          None],
+                    [None,                   self.camp,         self.empty],
+                    [self.turantula_fight,   self.empty,        self.empty],
+                    [None,                   self.empty,          None],
+                    [self.camp,              self.empty,        self.giantSquid_fight]]
+
+        self.riddle = Riddle("mailbox", ["I start with M",
+                                         "I end with X",
+                                         "I have a never ending amount of letters"])
 
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
@@ -78,13 +83,12 @@ class Adventure1:
             IO.print_text("There are no items here, Let's see if we can find any clues.")
 
     def find_clues(self):
-        clues = [clue1, clue2, clue3, clue4]
         find = random.randint(1, 8)
 
         if find <= 4 and self.adventure.already_visited() is False:
             IO.print_text("You found a clue! You may need this at some point.")
-            clue = clues[find - 1]()
-            IO.print_text(clue.name + ": " + clue.desc)
+            clue = self.riddle.get_rand_clue()
+            IO.print_text("CLue: " + clue)
             self.players[0].clues.append(clue)
             self.adventure.mark_visited()
 
