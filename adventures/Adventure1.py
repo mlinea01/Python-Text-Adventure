@@ -88,7 +88,7 @@ class Adventure1:
         if find <= 4 and self.adventure.already_visited() is False:
             IO.print_text("You found a clue! You may need this at some point.")
             clue = self.riddle.get_rand_clue()
-            IO.print_text("CLue: " + clue)
+            IO.print_text("Clue: " + clue)
             self.players[0].clues.append(clue)
             self.adventure.mark_visited()
 

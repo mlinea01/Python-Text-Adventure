@@ -11,10 +11,10 @@ class TestClass:
 
 class Battle:
 
-    def __init__(self, players, enemy):
+    def __init__(self, players, enemies):
         self.players = players
         self.player_nums = []
-        self.enemy = enemy
+        self.enemies = enemies
 
         p_num = 0
         while p_num < len(self.players):
@@ -22,18 +22,24 @@ class Battle:
             p_num += 1
 
         fighters = copy(self.players)
-        fighters.append(enemy)
+        try:
+            for enemy in enemies:
+                fighters.append(enemy)
+        except TypeError:
+            self.enemies = [enemies]
+            fighters.append(enemies)
 
         for fighter in fighters:
             fighter.battle_start(self.player_nums)
 
-        while enemy.hp > 0 and self.playersAlive(self.players):
+        while Battle.alive(self.enemies) and Battle.alive(self.players):
             fighters.sort(key=lambda char: char.speed, reverse=True)
             IO.print_text(" ", self.player_nums)
             IO.print_text("ROUND START", self.player_nums)
             IO.print_text(" ", self.player_nums)
 
             i = 0
+            turn_num = 1
             while i < len(fighters):
                 fighter = fighters[i]
 
@@ -41,7 +47,8 @@ class Battle:
                     i += 1
                     continue
 
-                IO.print_text("Turn " + str(i + 1), self.player_nums)
+                IO.print_text("Turn " + str(turn_num), self.player_nums)
+                turn_num += 1
                 IO.print_text(fighter.name + " is attacking!", self.player_nums)
                 fighter.turn_start()
 
@@ -69,6 +76,10 @@ class Battle:
                             can_choose_target = False
                             target_list = self.get_allies_of(fighter)
 
+                        for target in target_list:
+                            if target.hp <= 0:
+                                target_list.remove(target)
+
                         if can_choose_target:
                             target_list = fighter.choose_target(target_list)
 
@@ -83,10 +94,10 @@ class Battle:
                             else:
                                 target.hit_by(chosen_attack)
 
-                            if enemy.hp == 0:
+                            if fighter is Player and target.hp == 0:
                                 for fighter in players:
-                                    IO.print_text("You gained " + str(enemy.reward_xp) + " xp!", fighter.player_num)
-                                    fighter.character.xp += enemy.reward_xp
+                                    IO.print_text("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
+                                    fighter.character.xp += target.reward_xp
                                     if fighter.character.xp >= fighter.character.maxXp:
                                         fighter.character.level += 1
                                         fighter.character.maxXp += 150
@@ -108,21 +119,22 @@ class Battle:
 
                 i += 1
                 fighter.turn_end()
-                if fighter.hp > 0 and enemy.hp > 0:
+                if fighter.hp > 0 and Battle.alive(self.players) and Battle.alive(self.enemies):
                     IO.print_text(fighter.name + "'s turn is over!", self.player_nums)
                 IO.print_text(" ", self.player_nums)
                 time.sleep(3)
 
-    def playersAlive(self, players):
-        for player in players:
-            if player.hp > 0:
+    @classmethod
+    def alive(self, characters):
+        for c in characters:
+            if c.hp > 0:
                 return True
 
         return False
 
     def get_enemies_of(self, character):
         if isinstance(character, Player):
-            return [self.enemy]
+            return self.enemies
         else:
             return self.players
 
@@ -130,4 +142,4 @@ class Battle:
         if isinstance(character, Player):
             return self.players
         else:
-            return [self.enemy]
+            return self.enemies
