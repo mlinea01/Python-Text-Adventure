@@ -129,9 +129,11 @@ class Bleed(StatusEffect):
 
     def on_turn_end(self, args):
         super().on_turn_end_getargs(args)
+        hpLeft = self.character.hp-self.damage
+        if hpLeft < 0:
+            hpLeft = 0
+        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: " + str(hpLeft))
         self.character.apply_damage(self.damage, False)
-        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: "
-                          + str(self.character.hp))
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True

@@ -54,7 +54,7 @@ class BattleAxe(Weapon):
         desc = "An axe molded from moon rocks and molten lava! This axe can cut through to the center of the WORLD!"
         attack_desc = "Swing your deadly Battle Axe making your opponent bleed."
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Bleed(bleedDuration=1, chance=50),
+                        statusEffects=Bleed(bleedDuration=1, chance=100),
                          target=TargetTypes.Enemy_Single, manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
