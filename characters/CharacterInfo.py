@@ -113,6 +113,7 @@ class Character:
                     return
 
             IO.print_text(self.name + " is " + effect.name, self.players_list)
+            time.sleep(1)
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
 
@@ -148,8 +149,11 @@ class Character:
                 IO.print_text(self.name + " is healed for " + str(-damage) + " damage! " + "HP: " + str(self.hp),
                               self.players_list)
 
+        time.sleep(1.5)
+
         if self.hp == 0:
             IO.print_text(self.name + " has been defeated!",  self.players_list)
+            time.sleep(2)
 
 
     # called when hit by an attack

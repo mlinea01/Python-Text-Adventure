@@ -84,6 +84,7 @@ class Battle:
                             target_list = fighter.choose_target(target_list)
 
                         IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
+                        time.sleep(2)
                         for target in target_list:
                             if target.speed > fighter.speed:
                                 attack_missed = random.randint(1,3)
