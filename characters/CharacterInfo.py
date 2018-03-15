@@ -36,6 +36,7 @@ class Character:
         self.cannot_attack = 0
         self.attacks_disabled = []
         self.player_num = None
+        self.is_player = False
         self.players_list = []
         self.reward_xp = reward_xp
 

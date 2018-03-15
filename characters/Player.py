@@ -14,6 +14,7 @@ class Player:
         self.character_type = character_type
         self.desc = "mighty"
         character.name = name
+        character.is_player = True
 
     def choose_target(self, targets):
         if len(targets) == 0:

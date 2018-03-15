@@ -51,7 +51,7 @@ class Battle:
                 turn_num += 1
                 IO.print_text(fighter.name + " is attacking!", self.player_nums)
                 fighter.turn_start()
-                if fighter.player_num is not None:
+                if fighter.is_player:
                     IO.print_text("Level: " + str(fighter.level) + ", XP: " + str(fighter.xp) + " / " +
                                   str(fighter.maxXp), self.player_nums)
 
