@@ -2,7 +2,6 @@ from copy import copy
 from Multiplayer import IO
 import random
 from characters.Player import Player
-from attacks.AttacksInfo import TargetTypes
 import time
 
 class TestClass:
@@ -61,29 +60,10 @@ class Battle:
                     chosen_attack = fighter.choose_attack()
                     if chosen_attack is not None:
 
-                        target_list = []
-                        can_choose_target = False
-                        if chosen_attack.target == TargetTypes.Enemy_Single:
-                            can_choose_target = True
-                            target_list = self.get_enemies_of(fighter)
-                        elif chosen_attack.target == TargetTypes.Ally_Single:
-                            can_choose_target = True
-                            target_list = self.get_allies_of(fighter)
-                        elif chosen_attack.target == TargetTypes.Self:
-                            can_choose_target = False
-                            target_list = [fighter]
-                        elif chosen_attack.target == TargetTypes.Enemy_All:
-                            can_choose_target = False
-                            target_list = self.get_enemies_of(fighter)
-                        elif chosen_attack.target == TargetTypes.Ally_All:
-                            can_choose_target = False
-                            target_list = self.get_allies_of(fighter)
+                        target_list = copy(fighters)
+                        chosen_attack.filter_targets(fighter, target_list)
 
-                        for target in target_list:
-                            if target.hp <= 0:
-                                target_list.remove(target)
-
-                        if can_choose_target:
+                        if chosen_attack.multi_target is False:
                             target_list = fighter.choose_target(target_list)
 
                         IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)

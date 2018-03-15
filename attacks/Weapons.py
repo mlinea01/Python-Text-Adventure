@@ -18,8 +18,7 @@ class Sword(Weapon):
         desc = "Long steel sword with razor sharp edges that can cut through anything!"
         attack_desc = "Slash with your Long Sword making your opponent bleed."
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Bleed(bleedDuration=2, chance=50),
-                        target=TargetTypes.Enemy_Single, manaCost=0)
+                        statusEffects=Bleed(bleedDuration=2, chance=50), manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
 
@@ -30,8 +29,7 @@ class WarHammer(Weapon):
                "it can break a mountain into a million pieces!"
         attack_desc = "Swing your mighty War Hammer and paralyze your opponent!"
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Paralyze(paralyzeDuration=1, chance=50),
-                        target=TargetTypes.Enemy_Single, manaCost=0)
+                        statusEffects=Paralyze(paralyzeDuration=1, chance=50), manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
 
@@ -43,8 +41,7 @@ class Staff(Weapon):
                "the world!"
         attack_desc = "Strike swiftly with your staff slowing your opponent"
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Slow(slowDuration=1, chance=100),
-                        target=TargetTypes.Enemy_Single, manaCost=0)
+                        statusEffects=Slow(slowDuration=1, chance=100), manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
 
@@ -54,8 +51,7 @@ class BattleAxe(Weapon):
         desc = "An axe molded from moon rocks and molten lava! This axe can cut through to the center of the WORLD!"
         attack_desc = "Swing your deadly Battle Axe making your opponent bleed."
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Bleed(bleedDuration=1, chance=100),
-                         target=TargetTypes.Enemy_Single, manaCost=0)
+                        statusEffects=Bleed(bleedDuration=1, chance=100), manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
 
@@ -66,8 +62,7 @@ class Trident(Weapon):
                "of the sea!"
         attack_desc = "Strike with your mighty Trident making you opponent bleed."
         attack = Attack(name, desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Bleed(bleedDuration=1, chance=50),
-                         target=TargetTypes.Enemy_Single, manaCost=0)
+                        statusEffects=Bleed(bleedDuration=1, chance=50), manaCost=0)
         super().__init__(name, desc, attack, value=10)
 
 
@@ -78,6 +73,5 @@ class BowAndArrow(Weapon):
                "the elements around us!"
         attack_desc = "Aim true with an Arrow that will slow your opponent from afar"
         attack = Attack(name, attack_desc, damage=2, atkType=AttackTypes.Normal,
-                        statusEffects=Slow(slowDuration=1),
-                        target=TargetTypes.Enemy_Single, manaCost=0)
+                        statusEffects=Slow(slowDuration=1), manaCost=0)
         super().__init__(name, desc, attack, value=10)

@@ -1,5 +1,4 @@
 # This module is for status effects usually applied by attacks (i.e. shields, poison, stuns, etc.)
-from attacks.AttacksInfo import TargetTypes
 from Multiplayer import IO
 
 # the things that can trigger a status effect to perform some action (start of turn, getting hit by attack, etc.)
