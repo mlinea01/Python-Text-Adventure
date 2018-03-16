@@ -1,5 +1,6 @@
 # This module is for status effects usually applied by attacks (i.e. shields, poison, stuns, etc.)
 from Multiplayer import IO
+import random
 
 # the things that can trigger a status effect to perform some action (start of turn, getting hit by attack, etc.)
 class Triggers:
@@ -96,26 +97,20 @@ class Blind(StatusEffect):
         self.duration = blindDuration
         self.chance = chance
 
-    def attack_matches_cond(self, attack):
-        return attack.target == TargetTypes.Enemy_Single
+    def on_attacking(self, args):
+        super().on_attacking_getargs(args)
+        atk_hit = random.randint(1,8)
 
-    def on_turn_start(self, args):
-        super().on_turn_start_getargs(args)
-        for attack in self.character.attacks:
-            if self.attack_matches_cond(attack) and attack.enabled is True:
-                self.character.attack_disable(attack)
+        if atk_hit <= 4:
+            self.attack.damage = self.attack.damage
+        else:
+            self.attack.damage = 0
+            IO.print_text("Attack missed!")
 
     def on_turn_end(self, args):
-        super().on_turn_end_getargs(args)
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True
-
-    def resolve(self):
-        super().resolve()
-        for attack in self.character.attacks:
-            if self.attack_matches_cond(attack) and attack.enabled is False:
-                self.character.attack_enable(attack)
 
 
 class Bleed(StatusEffect):

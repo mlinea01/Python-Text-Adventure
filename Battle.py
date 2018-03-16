@@ -66,7 +66,6 @@ class Battle:
                         if chosen_attack.multi_target is False:
                             target_list = fighter.choose_target(target_list)
 
-                        IO.print_text(fighter.name + " uses " + chosen_attack.name, self.player_nums)
                         time.sleep(2)
                         for target in target_list:
                             if target.speed > fighter.speed:

@@ -61,6 +61,7 @@ class Player:
                         return self.choose_attack()
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
+                        IO.print_text(self.name + " uses " + attack_chosen.name, self.player_nums)
                         self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
                         if self.character.mana > 0 and not(self.character.mana < attack_chosen.manaCost):
                             self.character.mana -= attack_chosen.manaCost
