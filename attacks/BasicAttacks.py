@@ -60,3 +60,6 @@ class Block(Attack):
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_self(attacker, targets)
+
+    def get_accuracy(self):
+        return 100

@@ -175,7 +175,7 @@ class Character:
 
             self.apply_damage(attack.damage)
 
-        if self.hp > 0 and attack.damage > 0:
+        if self.hp > 0:
             # if not defeated, apply status effect(s) - one or more can be applied
             try:
                 for effect in attack.statusEffects:

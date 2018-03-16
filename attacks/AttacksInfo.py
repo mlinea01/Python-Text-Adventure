@@ -4,7 +4,7 @@ import enum
 
 # Base class for all attacks
 class Attack:
-    def __init__(self, name, desc, damage, atkType, statusEffects, manaCost, multi_target=False):
+    def __init__(self, name, desc, damage, atkType, statusEffects, manaCost, multi_target=False, accuracy=100):
         self.name = name
         self.desc = desc
         self.damage = damage
@@ -13,6 +13,7 @@ class Attack:
         self.manaCost = manaCost
         self.statusEffects = statusEffects
         self.enabled = True
+        self._accuracy = accuracy
 
     def upgrade(self):
         self.damage += 2
@@ -20,6 +21,16 @@ class Attack:
     # default targeting behavior is to target enemies. This can be overridden for different behavior.
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_enemies(attacker, targets)
+
+    def change_accuracy(self, amount):
+        self._accuracy += amount
+        if self._accuracy < 0:
+            self._accuracy = 0
+        if self._accuracy > 100:
+            self._accuracy = 100
+
+    def get_accuracy(self):
+        return self._accuracy
 
 
 # This class keeps track of attack types - useful for things like determining resistances to certain moves

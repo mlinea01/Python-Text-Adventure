@@ -99,14 +99,10 @@ class Blind(StatusEffect):
 
     def on_attacking(self, args):
         super().on_attacking_getargs(args)
-        atk_hit = random.randint(1,8)
-
-        if atk_hit <= 4:
-            self.attack.damage = self.attack.damage
-        else:
-            self.attack.damage = 0
+        self.attack.change_accuracy(-50)
 
     def on_turn_end(self, args):
+        super().on_turn_end_getargs(args)
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True

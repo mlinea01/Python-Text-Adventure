@@ -67,13 +67,13 @@ class Battle:
                             target_list = fighter.choose_target(target_list)
 
                         time.sleep(2)
+                        attack_missed = random.randint(1, 100) > chosen_attack.get_accuracy()
                         for target in target_list:
-                            if target.speed > fighter.speed:
-                                attack_missed = random.randint(1,3)
-                                if attack_missed == 1:
-                                    IO.print_text(fighter.name + " " + "attack missed!", self.player_nums)
-                                else:
-                                    target.hit_by(chosen_attack)
+                            target_dodged = target.speed > fighter.speed and random.randint(1,3) == 1
+                            if attack_missed:
+                                IO.print_text(fighter.name + "'s " + "attack missed!", self.player_nums)
+                            elif target_dodged:
+                                IO.print_text(target.name + " dodged the attack!", self.player_nums)
                             else:
                                 target.hit_by(chosen_attack)
 
