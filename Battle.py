@@ -71,7 +71,6 @@ class Battle:
                             if target.speed > fighter.speed:
                                 attack_missed = random.randint(1,3)
                                 if attack_missed == 1:
-                                    fighter.ON_EFFECT_APPLY = False
                                     IO.print_text(fighter.name + " " + "attack missed!", self.player_nums)
                                 else:
                                     target.hit_by(chosen_attack)
