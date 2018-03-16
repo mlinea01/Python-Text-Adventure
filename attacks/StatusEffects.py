@@ -105,6 +105,7 @@ class Blind(StatusEffect):
             self.attack.damage = self.attack.damage
         else:
             self.attack.damage = 0
+            self.ON_EFFECT_APPLY = False
             IO.print_text("Attack missed!")
 
     def on_turn_end(self, args):
