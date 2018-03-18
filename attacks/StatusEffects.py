@@ -186,7 +186,7 @@ class DamageBoost(StatusEffect):
 
     def on_attacking(self, args):
         super().on_attacking_getargs(args)
-        if self.attack.damage is not None:
+        if self.attack.damage is not None and self.attack.damage > 0:
             self.attack.damage += self.amount
 
     def on_turn_end(self, args):
