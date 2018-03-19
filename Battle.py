@@ -77,7 +77,7 @@ class Battle:
                             else:
                                 target.hit_by(chosen_attack)
 
-                            if fighter is Player and target.hp == 0:
+                            if fighter.is_player and target.hp == 0:
                                 for fighter in players:
                                     IO.print_text("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
                                     fighter.character.xp += target.reward_xp
