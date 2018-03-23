@@ -14,7 +14,7 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,             self.camp,         self.hit_trap()],
+        map_data = [[self.step1,             self.camp,         self.hit_trap],
                     [self.empty,                None,           self.empty],
                     [self.camp,              self.empty,        self.dragon_fight],
                     [self.zombieRat_fight,   self.hit_trap,     self.empty],
@@ -22,7 +22,7 @@ class Adventure1:
                     [None,                   self.camp,         self.empty],
                     [self.turantula_fight,   self.empty,        self.empty],
                     [None,                   self.empty,          None],
-                    [self.camp,              self.hit_trap(),        self.giantSquid_fight]]
+                    [self.camp,              self.hit_trap,        self.giantSquid_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
@@ -100,9 +100,14 @@ class Adventure1:
             IO.print_text("There doesn't seem to be any clues!")
 
     def hit_trap(self):
-        traps = random.randint(1, 4)
-        trap = self.traps[traps-1]
-        IO.print_text("You have been captured in a " + str(trap.name))
+        if self.adventure.already_visited() is False:
+            traps = random.randint(1, 4)
+            trap = self.traps[traps-1]
+            IO.print_text("You have been captured in a " + str(trap.name))
+            time.sleep(2)
+            self.adventure.mark_visited()
+        else:
+            IO.print_text("Theres that trap you got caught in! Let's not do that again!")
 
     def dragon_fight(self):
         if self.adventure.already_visited() is False:
