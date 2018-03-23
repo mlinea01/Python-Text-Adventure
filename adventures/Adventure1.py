@@ -3,7 +3,7 @@ from Battle import *
 from adventures.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
-from adventures.Clues import *
+from adventures.Traps import *
 from Puzzles import Riddle
 
 startJourney = True
@@ -14,19 +14,21 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,             self.camp,         self.empty],
+        map_data = [[self.step1,             self.camp,         self.hit_trap()],
                     [self.empty,                None,           self.empty],
                     [self.camp,              self.empty,        self.dragon_fight],
-                    [self.zombieRat_fight,   self.empty,        self.empty],
+                    [self.zombieRat_fight,   self.hit_trap,     self.empty],
                     [self.camp,              self.empty,          None],
                     [None,                   self.camp,         self.empty],
                     [self.turantula_fight,   self.empty,        self.empty],
                     [None,                   self.empty,          None],
-                    [self.camp,              self.empty,        self.giantSquid_fight]]
+                    [self.camp,              self.hit_trap(),        self.giantSquid_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
                                          "I have a never ending amount of letters"])
+
+        self.traps = [Hole(), Net(), BarbedWire(), BearTrap()]
 
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
@@ -96,6 +98,11 @@ class Adventure1:
             IO.print_text("We already found all the clues we could here!")
         else:
             IO.print_text("There doesn't seem to be any clues!")
+
+    def hit_trap(self):
+        traps = random.randint(1, 4)
+        trap = self.traps[traps-1]
+        IO.print_text("You have been captured in a " + str(trap.name))
 
     def dragon_fight(self):
         if self.adventure.already_visited() is False:
