@@ -22,7 +22,7 @@ class Adventure1:
                     [None,                   self.camp,         self.empty],
                     [self.turantula_fight,   self.empty,        self.empty],
                     [None,                   self.empty,          None],
-                    [self.camp,              self.hit_trap,        self.giantSquid_fight]]
+                    [self.camp,              self.hit_trap,     self.giantSquid_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
@@ -103,8 +103,15 @@ class Adventure1:
         if self.adventure.already_visited() is False:
             traps = random.randint(1, 4)
             trap = self.traps[traps-1]
-            IO.print_text("You have been captured in a " + str(trap.name))
-            time.sleep(2)
+            jump = IO.get_input(0, "Theres a " + trap.name + " Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
+            IO.print_text(" ")
+            if jump != "jump":
+                IO.print_text(trap.desc)
+                self.players[0].hit_by(trap)
+                time.sleep(2)
+                self.adventure.mark_visited()
+            else:
+                IO.print_text("You avoided the trap! I almost peed my pants!")
             self.adventure.mark_visited()
         else:
             IO.print_text("Theres that trap you got caught in! Let's not do that again!")

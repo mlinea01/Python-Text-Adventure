@@ -1,6 +1,5 @@
 # This module is for status effects usually applied by attacks (i.e. shields, poison, stuns, etc.)
 from Multiplayer import IO
-import random
 
 # the things that can trigger a status effect to perform some action (start of turn, getting hit by attack, etc.)
 class Triggers:

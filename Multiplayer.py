@@ -1,10 +1,8 @@
 import socket
 import threading
 from copy import copy
-from copy import deepcopy
 import enum
 import time
-import sys
 from functools import partial
 
 class Clients:
@@ -18,13 +16,13 @@ class IO:
         return True
 
     @classmethod
-    def get_input(cls, player, message, check=None):
+    def get_input(cls, player, message, check=None, time_out=-1):
         if check is None:
             check = partial(IO.accept_all_inputs)
         valid = False
         input_data = None
         while not valid:
-            input_data = ServerIO().get_server_input(player, message)
+            input_data = ServerIO().get_server_input(player, message, time_out)
             valid = check(input_data=input_data)
             if not valid: IO.print_text("Invalid Input! Please try again.", [player])
         return input_data
@@ -60,13 +58,16 @@ class IO:
 
 
 class ServerIO:
-    def get_server_input(self, player, message=""):
+    def get_server_input(self, player, message="", time_out=-1):
         Server.print_text(message, [player])
         Server.set_player_input_flag(player)
         player_input = None
         while player_input is None:
             player_input = Server.get_player_input(player)
             time.sleep(0.1)
+            time_out -= 1
+            if time_out == 0:
+                break
         return player_input
 
 
