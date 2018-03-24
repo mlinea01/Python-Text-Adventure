@@ -91,8 +91,8 @@ class Server:
     @classmethod
     def create_server(cls):
         HOST = socket.gethostbyname(socket.gethostname())
-        PORT = 10000
-        cls.sock.bind((HOST, PORT))
+        PORT = 8090
+        cls.sock.bind(('192.168.86.48', PORT))
         cls.sock.listen(1)
 
         print("Server started on " + HOST + ", port: " + str(PORT))
