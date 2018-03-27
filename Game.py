@@ -1,4 +1,4 @@
-from adventures.Adventure1 import *
+from adventures.Forest.ForestAdventure import *
 from Battle import *
 from characters.Enemies import *
 from attacks.Spells import *

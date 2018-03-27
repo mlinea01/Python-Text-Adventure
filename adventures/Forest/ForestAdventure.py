@@ -3,8 +3,9 @@ from Battle import *
 from adventures.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
-from adventures.Traps import *
+from adventures.Forest.Traps import *
 from Puzzles import Riddle
+from adventures.Forest.Enemies import *
 
 startJourney = True
 
