@@ -3,8 +3,10 @@ from items.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
 from adventures.Forest.Traps import *
-from Puzzles import Riddle
+from adventures.Puzzles import Riddle
 from adventures.Forest.Enemies import *
+import threading
+from time import sleep
 
 startJourney = True
 
@@ -104,18 +106,28 @@ class Adventure1:
         if self.adventure.already_visited() is False:
             traps = random.randint(1, 4)
             trap = self.traps[traps-1]
-            jump = IO.get_input(0, "Theres a " + trap.name + " Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
-            IO.print_text(" ")
-            if jump != "jump":
-                IO.print_text(trap.desc)
-                self.players[0].hit_by(trap)
-                time.sleep(2)
-                self.adventure.mark_visited()
-            else:
-                IO.print_text("You avoided the trap! I almost peed my pants!")
-            self.adventure.mark_visited()
+            self.activePlayers = self.players
+            for player in self.players:
+                intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
+                intro_thread.start()
         else:
             IO.print_text("Theres that trap you got caught in! Let's not do that again!")
+
+        while len(self.activePlayers) > 0:
+            sleep(0.5)
+
+    def player_hit_by_trap(self, player, trap):
+        jump = IO.get_input(player.player_num, "Theres a " + trap.name + " Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
+        IO.print_text(" ")
+        if jump != "jump":
+            IO.print_text(trap.desc, player.player_num)
+            player.hit_by(trap)
+            time.sleep(2)
+            self.adventure.mark_visited()
+        else:
+            IO.print_text("You avoided the trap! I almost peed my pants!", player.player_num)
+        self.adventure.mark_visited()
+        self.activePlayers.remove(player)
 
     def dragon_fight(self):
         if self.adventure.already_visited() is False:

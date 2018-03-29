@@ -91,7 +91,7 @@ class Server:
     @classmethod
     def create_server(cls):
         HOST = socket.gethostbyname(socket.gethostname())
-        PORT = 8090
+        PORT = 10000
         cls.sock.bind((HOST, PORT))
         cls.sock.listen(1)
 
@@ -273,7 +273,7 @@ class GameSession:
                     threadServer = threading.Thread(target=cls.create_server)
                     threadServer.daemon = True
                     threadServer.start()
-                    Client( (socket.gethostbyname(socket.gethostname()), 8090), False )
+                    Client( (socket.gethostbyname(socket.gethostname()), 10000), False )
                 else:
                     print("Enter the address to connect to: ")
                     addr = str(input())
