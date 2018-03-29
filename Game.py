@@ -2,7 +2,7 @@ from adventures.Forest.ForestAdventure import *
 from Battle import *
 from characters.Enemies import *
 from attacks.Spells import *
-from attacks.Weapons import *
+from equipment.Weapons import *
 from characters.CharacterRace import *
 from characters.Player import Player
 import time

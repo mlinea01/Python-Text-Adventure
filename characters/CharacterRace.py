@@ -1,6 +1,6 @@
 from attacks import BasicAttacks
 from characters.CharacterInfo import Character
-from adventures.Armor import *
+from equipment.Armor import *
 
 
 class Gnome(Character):

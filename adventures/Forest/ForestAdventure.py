@@ -1,6 +1,5 @@
-from characters.Enemies import *
 from Battle import *
-from adventures.Potions import *
+from items.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
 from adventures.Forest.Traps import *
@@ -28,6 +27,7 @@ class Adventure1:
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
                                          "I have a never ending amount of letters"])
+        self.riddle2 = Riddle("coin", ["I have a head", "I don't have a body", "I have a tail"])
 
         self.traps = [Hole(), Net(), BarbedWire(), BearTrap()]
 
