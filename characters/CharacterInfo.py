@@ -189,3 +189,19 @@ class Character:
 
     def attack_enable(self, attack):
         attack.enabled = True
+
+    def level_up(self, max_xp_mod=150, speed_mod=0, mana_mod=0, hp_mod=0):
+        self.maxXp += max_xp_mod
+        self.xp = 0
+
+        for attack in self.attacks:
+            attack.upgrade()
+
+        self.maxSpeed += speed_mod
+        self.speed = self.maxSpeed
+
+        self.maxMana += mana_mod
+        self.mana = self.maxMana
+
+        self.maxHp += hp_mod
+        self.hp = self.maxHp
