@@ -79,26 +79,15 @@ class Battle:
 
                             if fighter.is_player and target.hp == 0:
                                 for fighter in players:
-                                    IO.print_text("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
                                     fighter.character.xp += target.reward_xp
+                                    IO.print_text("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
+
                                     if fighter.character.xp >= fighter.character.maxXp:
                                         fighter.character.level += 1
-                                        fighter.character.maxXp += 150
-                                        fighter.character.xp = 0
-
-                                        for attack in fighter.attacks:
-                                            attack.upgrade()
-
-                                        fighter.character.mana = fighter.character.maxMana
-                                        fighter.character.mana += 10
-                                        fighter.character.maxMana = fighter.character.mana
-
-                                        fighter.character.hp = fighter.character.maxHp
-                                        fighter.character.hp += 10
-                                        fighter.character.maxHp = fighter.character.hp
+                                        fighter.character.level_up()
 
                                         IO.print_text(fighter.name + " grew to level " + str(fighter.character.level)
-                                                      + "!", self.player_nums)
+                                                          + "!", self.player_nums)
 
                 i += 1
                 fighter.turn_end()

@@ -19,6 +19,7 @@ class Character:
         self.maxXp = 150
         self.level = 1
         self.speed = speed
+        self.maxSpeed = speed
         self.attacks = attacks
         self.name = name
         self.desc = desc
@@ -55,7 +56,7 @@ class Character:
             if effect_num < len(self.status_effects)-1:
                 all_effects += ", "
             effect_num += 1
-        IO.print_text(self.name + ": HP: " + str(self.hp) + " MANA: " + str(self.mana)
+        IO.print_text(self.name + ": HP: " + str(self.hp) + " MANA: " + str(self.mana) + " SPEED: " + str(self.speed)
                       + ", Status: " + all_effects, self.players_list)
 
     def turn_end(self):

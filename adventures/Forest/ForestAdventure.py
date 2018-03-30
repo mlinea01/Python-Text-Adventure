@@ -117,7 +117,7 @@ class Adventure1:
             sleep(0.5)
 
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + " Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
+        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
         IO.print_text(" ")
         if jump != "jump":
             IO.print_text(trap.desc, player.player_num)
