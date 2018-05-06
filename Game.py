@@ -148,7 +148,7 @@ class Game:
             IO.print_text("Attack this training dummy to practice.\n", [player_num])
 
             leaveGame = "q"
-            Battle([player], TrainingDummy())
+            Battle().start([player], TrainingDummy())
 
             Game.players[player_num] = player
             IO.print_text("Waiting for other players to finish their training...", [player_num])

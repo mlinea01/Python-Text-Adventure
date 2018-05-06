@@ -104,6 +104,12 @@ class Server:
         print("Type 'start game' when all players have joined to start the game.")
 
     @classmethod
+    def startNewGame(cls):
+        from Game import Game
+        cls.game = threading.Thread(target=Game)
+        cls.game.start()
+
+    @classmethod
     def connectionHandler(cls, connection, address):
         from Game import Game
         while True:
@@ -134,8 +140,7 @@ class Server:
                     time.sleep(0.5)
 
                 cls.status = ServerStatus.GameStarted
-                game = threading.Thread(target=Game)
-                game.start()
+                cls.startNewGame()
                 break
 
             if not data:

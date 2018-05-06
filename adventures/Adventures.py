@@ -15,6 +15,11 @@ class Adventure:
         while True:
             IO.print_text(" ")
             self.run_room(self.player_x, self.player_y)
+            sumHp = 0
+            for player in self.players:
+                sumHp += player.hp
+            if sumHp == 0:
+                return
             IO.print_text("Choose direction to go in: ", 0)
             directions = []
             dir_num = 1

@@ -10,7 +10,7 @@ class TestClass:
 
 class Battle:
 
-    def __init__(self, players, enemies):
+    def start(self, players, enemies):
         self.players = players
         self.player_nums = []
         self.enemies = enemies
@@ -69,7 +69,7 @@ class Battle:
                         time.sleep(2)
                         attack_missed = random.randint(1, 100) > chosen_attack.get_accuracy()
                         for target in target_list:
-                            target_dodged = target.speed > fighter.speed and random.randint(1,3) == 1
+                            target_dodged = target.speed > fighter.speed and random.randint(1, 3) == 1
                             if attack_missed:
                                 IO.print_text(fighter.name + "'s " + "attack missed!", self.player_nums)
                             elif target_dodged:
@@ -87,7 +87,7 @@ class Battle:
                                         fighter.character.level_up()
 
                                         IO.print_text(fighter.name + " grew to level " + str(fighter.character.level)
-                                                          + "!", self.player_nums)
+                                                      + "!", self.player_nums)
 
                 i += 1
                 fighter.turn_end()
@@ -95,6 +95,8 @@ class Battle:
                     IO.print_text(fighter.name + "'s turn is over!", self.player_nums)
                 IO.print_text(" ", self.player_nums)
                 time.sleep(3)
+
+        return Battle.alive(self.players)
 
     @classmethod
     def alive(self, characters):
