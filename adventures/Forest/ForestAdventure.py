@@ -134,13 +134,13 @@ class Adventure1:
             IO.print_text("There is a Mountain Dragon in the camp, Hurry, take that dragon down!")
             time.sleep(2)
             IO.print_text("")
-            Battle(self.players, MountainDragon())
-            IO.print_text("")
-            IO.get_input(0, "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
-            IO.print_text("")
-            self.item_loot()
-            self.find_clues()
-            self.adventure.mark_visited()
+            if Battle().start(self.players, MountainDragon()):
+                IO.print_text("")
+                IO.get_input(0, "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
+                IO.print_text("")
+                self.item_loot()
+                self.find_clues()
+                self.adventure.mark_visited()
 
         else:
             IO.print_text("The slain Mountain Dragon lies in the middle of the camp.")
@@ -151,13 +151,13 @@ class Adventure1:
             IO.print_text("There is a huge turantula in this camp! OMG kill it!!!!!")
             time.sleep(2)
             IO.print_text("")
-            Battle(self.players, TerrifyingTurantula())
-            IO.print_text("")
-            IO.get_input(0, "Wow that was a huge spider, I really hope we don't see another one of those!")
-            IO.print_text("")
-            self.item_loot()
-            self.find_clues()
-            self.adventure.mark_visited()
+            if Battle().start(self.players, TerrifyingTurantula()):
+                IO.print_text("")
+                IO.get_input(0, "Wow that was a huge spider, I really hope we don't see another one of those!")
+                IO.print_text("")
+                self.item_loot()
+                self.find_clues()
+                self.adventure.mark_visited()
 
         else:
             IO.print_text("That nasty spider is still laying here, why did we come back here?")
@@ -168,13 +168,13 @@ class Adventure1:
             IO.print_text("That is one big rat, it looks like it should be dead.  Its a ZOMBIE!!!")
             time.sleep(2)
             IO.print_text("")
-            Battle(self.players, ZombieRat())
-            IO.print_text("")
-            IO.get_input(0, "Where did a zombie rat come from? that was so wierd!")
-            IO.print_text("")
-            self.item_loot()
-            self.find_clues()
-            self.adventure.mark_visited()
+            if Battle().start(self.players, ZombieRat()):
+                IO.print_text("")
+                IO.get_input(0, "Where did a zombie rat come from? that was so wierd!")
+                IO.print_text("")
+                self.item_loot()
+                self.find_clues()
+                self.adventure.mark_visited()
 
         else:
             IO.print_text("The blood from the zombie rat is here but the rat is gone! we must not have killed it!")
@@ -185,13 +185,13 @@ class Adventure1:
             IO.print_text("What is that coming out of the water? NO! its a giant squid!!!")
             time.sleep(2)
             IO.print_text("")
-            Battle(self.players, GiantSquid())
-            IO.print_text("")
-            IO.get_input(0, "That squid almost had us! And you wanted to take a boat!")
-            IO.print_text("")
-            self.item_loot()
-            self.find_clues()
-            self.adventure.mark_visited()
+            if Battle().start(self.players, GiantSquid()):
+                IO.print_text("")
+                IO.get_input(0, "That squid almost had us! And you wanted to take a boat!")
+                IO.print_text("")
+                self.item_loot()
+                self.find_clues()
+                self.adventure.mark_visited()
 
         else:
             IO.print_text("Whats that smell? Smells like rotten fish! oh its that squid!")

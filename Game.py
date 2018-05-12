@@ -7,7 +7,7 @@ from characters.CharacterRace import *
 from characters.Player import Player
 import time
 import threading
-from Multiplayer import IO
+from Multiplayer import IO,Server
 from functools import partial
 
 
@@ -44,6 +44,9 @@ class Game:
         time.sleep(1)
 
         Adventure1(Game.players)
+
+        if IO.get_input(0,"GAME OVER\nWould you like to restart? (y/n)",partial(IO.check_in_list, list_data=["y", "n"])):
+            Server.startNewGame()
 
     def adventure_intro(self, player_num):
 
@@ -148,7 +151,7 @@ class Game:
             IO.print_text("Attack this training dummy to practice.\n", [player_num])
 
             leaveGame = "q"
-            Battle().start([player], TrainingDummy())
+            Battle().start([player], GiantSquid())
 
             Game.players[player_num] = player
             IO.print_text("Waiting for other players to finish their training...", [player_num])
