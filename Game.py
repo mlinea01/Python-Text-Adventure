@@ -13,6 +13,7 @@ from functools import partial
 
 class Game:
     players = []
+    player_backup = []
 
     def __init__(self):
 
@@ -47,10 +48,25 @@ class Game:
 
         game_restart = True
         level_num = 0
+        # start of new game
         while game_restart:
+
+            # if there is a backup version of players, restore from backup
+            if len(Game.player_backup) > 0:
+                player_num = 0
+                while player_num < len(Game.players):
+                    Game.players[player_num].character = Game.player_backup[player_num]
+                    player_num += 1
+
+            # play each level
             while level_num < len(levels):
+                Game.player_backup = []
+                for player in Game.players:
+                    if player is not None:
+                        Game.player_backup.append(deepcopy(player.character))
                 levels[level_num](Game.players)
 
+                # check if all players are dead after each level
                 sumHp = 0
                 for player in Game.players:
                     sumHp += player.hp
