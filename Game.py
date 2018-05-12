@@ -16,6 +16,8 @@ class Game:
 
     def __init__(self):
 
+        levels = [Adventure1]
+
         IO.print_text("Game has started!")
 
         p_num = 0
@@ -43,10 +45,23 @@ class Game:
 
         time.sleep(1)
 
-        Adventure1(Game.players)
+        game_restart = True
+        level_num = 0
+        while game_restart:
+            while level_num < len(levels):
+                levels[level_num](Game.players)
 
-        if IO.get_input(0,"GAME OVER\nWould you like to restart? (y/n)",partial(IO.check_in_list, list_data=["y", "n"])):
-            Server.startNewGame()
+                sumHp = 0
+                for player in Game.players:
+                    sumHp += player.hp
+                if sumHp == 0:
+                    break
+
+                level_num = level_num + 1
+
+            if IO.get_input(0,"GAME OVER\nWould you like to restart the current level? (y/n)",partial(IO.check_in_list,
+                                                                                    list_data=["y", "n"])) == "n":
+                game_restart = False
 
     def adventure_intro(self, player_num):
 
@@ -151,7 +166,7 @@ class Game:
             IO.print_text("Attack this training dummy to practice.\n", [player_num])
 
             leaveGame = "q"
-            Battle().start([player], GiantSquid())
+            Battle().start([player], TrainingDummy())
 
             Game.players[player_num] = player
             IO.print_text("Waiting for other players to finish their training...", [player_num])
