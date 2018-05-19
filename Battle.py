@@ -61,11 +61,7 @@ class Battle:
                     if chosen_attack is not None:
 
                         target_list = copy(fighters)
-                        for t in target_list:
-                            IO.print_text("Target: " + t.name)
                         chosen_attack.filter_targets(fighter, target_list)
-                        for t in target_list:
-                            IO.print_text("Target: " + t.name)
 
                         if chosen_attack.multi_target is False:
                             target_list = fighter.choose_target(target_list)

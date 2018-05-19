@@ -48,7 +48,6 @@ class TargetFilters:
     @classmethod
     def target_filter_enemies(cls, attacker, targets):
         for target in targets:
-            IO.print_text("Attacker: " + attacker.name + " " + str(attacker.is_player) + ", target: " + target.name + " " + str(target.is_player))
             if target.is_player == attacker.is_player:
                 targets.remove(target)
 
