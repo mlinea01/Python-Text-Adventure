@@ -36,6 +36,14 @@ class Adventure1:
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
 
+    def get_primary_player(self, players):
+        result = 0
+        for player in players:
+            if player.hp > 0:
+                return result
+            else:
+                result += 1
+
     def empty(self):
         IO.print_text(
             "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
@@ -46,7 +54,7 @@ class Adventure1:
         else:
             IO.print_text("Now that you have completed your training, we can begin our first adventure!")
             IO.print_text("This is exciting!")
-            start = IO.get_input(0, "Are you ready to go? (yes or no)",
+            start = IO.get_input(self.get_primary_player(self.players), "Are you ready to go? (yes or no)",
                                  partial(IO.check_in_list, list_data=["yes", "no"]))
             IO.print_text("")
 
@@ -79,7 +87,7 @@ class Adventure1:
             IO.print_text("You found an item!")
             item = potions[search - 1]()
             IO.print_text("You found a " + item.name)
-            self.players[0].items.append(item)
+            self.players[self.get_primary_player(self.players)].items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
@@ -94,7 +102,7 @@ class Adventure1:
             IO.print_text("You found a clue! You may need this at some point.")
             clue = self.riddle.get_rand_clue()
             IO.print_text("Clue: " + clue)
-            self.players[0].clues.append(clue)
+            self.players[self.get_primary_player(self.players)].clues.append(clue)
             self.adventure.mark_visited()
 
         elif self.adventure.mark_visited():
@@ -136,7 +144,7 @@ class Adventure1:
             IO.print_text("")
             if Battle().start(self.players, MountainDragon()):
                 IO.print_text("")
-                IO.get_input(0, "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
+                IO.get_input(self.get_primary_player(self.players), "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
                 IO.print_text("")
                 self.item_loot()
                 self.find_clues()
@@ -153,7 +161,7 @@ class Adventure1:
             IO.print_text("")
             if Battle().start(self.players, TerrifyingTurantula()):
                 IO.print_text("")
-                IO.get_input(0, "Wow that was a huge spider, I really hope we don't see another one of those!")
+                IO.get_input(self.get_primary_player(self.players), "Wow that was a huge spider, I really hope we don't see another one of those!")
                 IO.print_text("")
                 self.item_loot()
                 self.find_clues()
@@ -170,7 +178,7 @@ class Adventure1:
             IO.print_text("")
             if Battle().start(self.players, ZombieRat()):
                 IO.print_text("")
-                IO.get_input(0, "Where did a zombie rat come from? that was so wierd!")
+                IO.get_input(self.get_primary_player(self.players), "Where did a zombie rat come from? that was so wierd!")
                 IO.print_text("")
                 self.item_loot()
                 self.find_clues()
@@ -187,7 +195,7 @@ class Adventure1:
             IO.print_text("")
             if Battle().start(self.players, GiantSquid()):
                 IO.print_text("")
-                IO.get_input(0, "That squid almost had us! And you wanted to take a boat!")
+                IO.get_input(self.get_primary_player(self.players), "That squid almost had us! And you wanted to take a boat!")
                 IO.print_text("")
                 self.item_loot()
                 self.find_clues()
