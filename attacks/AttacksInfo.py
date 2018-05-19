@@ -1,5 +1,6 @@
 # This module is simply used to keep track of pre-defined values used by attack metadata (such as type)
 import enum
+from Multiplayer import IO
 
 
 # Base class for all attacks
@@ -47,6 +48,7 @@ class TargetFilters:
     @classmethod
     def target_filter_enemies(cls, attacker, targets):
         for target in targets:
+            IO.print_text("Attacker: " + attacker.name + " " + str(attacker.is_player) + ", target: " + target.name + " " + str(target.is_player))
             if target.is_player == attacker.is_player:
                 targets.remove(target)
 
