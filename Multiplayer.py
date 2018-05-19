@@ -30,7 +30,7 @@ class IO:
     @classmethod
     def print_text(cls, text, players=None):
         Server.print_text(text, players)
-        time.sleep(0.3)
+        time.sleep(0.2)
 
     @classmethod
     def get_num_players(cls):
