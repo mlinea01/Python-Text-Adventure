@@ -61,9 +61,7 @@ class Battle:
                     if chosen_attack is not None:
 
                         target_list = copy(fighters)
-                        time.sleep(0.2)
                         chosen_attack.filter_targets(fighter, target_list)
-                        time.sleep(0.2)
 
                         if chosen_attack.multi_target is False:
                             target_list = fighter.choose_target(target_list)

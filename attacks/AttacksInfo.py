@@ -47,9 +47,13 @@ class AttackTypes(enum.Enum):
 class TargetFilters:
     @classmethod
     def target_filter_enemies(cls, attacker, targets):
-        for target in targets:
+        targetIndex = 0
+        while targetIndex < len(targets):
+            target = targets[targetIndex]
             if target.is_player == attacker.is_player:
                 targets.remove(target)
+            else:
+                targetIndex += 1
 
     @classmethod
     def target_filter_allies(cls, attacker, targets):
