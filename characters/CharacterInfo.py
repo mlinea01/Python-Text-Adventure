@@ -80,7 +80,7 @@ class Character:
                 attacks_enabled.append(a)
         if len(attacks_enabled) > 0:
             attack_chosen = deepcopy(self.attacks[random.randint(0, len(attacks_enabled)-1)])
-            IO.print_text(self.name + " uses " + attack_chosen.name)
+            IO.print_text(self.name + " uses " + attack_chosen.name, self.players_list)
             self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
             return attack_chosen
         else:
