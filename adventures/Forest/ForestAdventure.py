@@ -115,6 +115,7 @@ class Adventure1:
             traps = random.randint(1, 4)
             trap = self.traps[traps-1]
             self.activePlayers = copy(self.players)
+            trap.filter_targets(None, self.activePlayers)
             for player in self.players:
                 intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
                 intro_thread.start()

@@ -22,7 +22,7 @@ class Attack:
     # default targeting behavior is to target enemies. This can be overridden for different behavior.
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_enemies(attacker, targets)
-        TargetFilters.tartget_filter_isAlive(targets)
+        TargetFilters.target_filter_isAlive(targets)
 
     def change_accuracy(self, amount):
         self._accuracy += amount
@@ -77,11 +77,21 @@ class TargetFilters:
                 targetIndex += 1
 
     @classmethod
-    def tartget_filter_isAlive(cls, targets):
+    def target_filter_isAlive(cls, targets):
         targetIndex = 0
         while targetIndex < len(targets):
             target = targets[targetIndex]
             if target.hp <= 0:
+                targets.remove(target)
+            else:
+                targetIndex += 1
+
+    @classmethod
+    def target_filter_isDead(cls, targets):
+        targetIndex = 0
+        while targetIndex < len(targets):
+            target = targets[targetIndex]
+            if target.hp > 0:
                 targets.remove(target)
             else:
                 targetIndex += 1
