@@ -194,16 +194,18 @@ class DamageBoost(StatusEffect):
             self.is_resolved = True
 
 
-class HpIncrease(StatusEffect):
+class HpBoost(StatusEffect):
     def __init__(self, amount):
         super().__init__()
-        self.name = "Hp Increase"
+        self.name = "Healed"
         self.amount = amount
+        self.chance = 100
 
     def on_effect_apply(self, args):
         super().on_effect_apply_getargs(args)
         self.character.change_hp(self.amount)
         self.is_resolved = True
+        IO.print_text(self.character.name + "'s HP is now " + str(self.character.hp), self.character.players_list)
 
     def resolve(self):
         super().resolve()

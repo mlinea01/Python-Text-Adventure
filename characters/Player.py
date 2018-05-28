@@ -73,10 +73,9 @@ class Player:
                         return attack_chosen
                 else:
                     chosen_item = self.character.items[chosen_attack_num - len(self.character.attacks)]
-                    IO.print_text(self.character.name + " used a " + chosen_item.name, [self.player_num])
-                    chosen_item.use_item_on(self.character)
+                    IO.print_text(self.character.name + " used a " + chosen_item.name, self.players_list)
                     self.character.items.remove(chosen_item)
-                    return None
+                    return chosen_item.itemAttack
         else:
             IO.print_text(self.name + " cannot attack this turn!", [self.player_num])
             return None
