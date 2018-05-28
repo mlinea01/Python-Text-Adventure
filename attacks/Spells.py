@@ -66,6 +66,7 @@ class calming_waters(Attack):
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
+        TargetFilters.target_filter_isAlive(targets)
 
 
 class Hurricane(Attack):
@@ -95,3 +96,4 @@ class healing_breeze(Attack):
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
+        TargetFilters.target_filter_isAlive(targets)
