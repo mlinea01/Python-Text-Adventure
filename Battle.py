@@ -69,7 +69,16 @@ class Battle:
                         time.sleep(2)
                         attack_missed = random.randint(1, 100) > chosen_attack.get_accuracy()
                         for target in target_list:
-                            target_dodged = target.speed > fighter.speed and random.randint(1, 3) == 1
+
+                            target_dodged = False
+                            if chosen_attack.is_dodgeable:
+                                if target.speed > fighter.speed:
+                                    dodge_chance = ( (target.speed - fighter.speed) / fighter.speed) * 100
+                                    if dodge_chance > 60:
+                                        dodge_chance = 60
+                                    if random.randint(1,100) <= dodge_chance:
+                                        target_dodged = True
+
                             if attack_missed:
                                 IO.print_text(fighter.name + "'s " + "attack missed!", self.player_nums)
                             elif target_dodged:

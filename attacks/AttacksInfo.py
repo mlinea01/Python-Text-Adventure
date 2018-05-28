@@ -5,12 +5,13 @@ from Multiplayer import IO
 
 # Base class for all attacks
 class Attack:
-    def __init__(self, name, desc, damage, atkType, statusEffects, manaCost, multi_target=False, accuracy=100):
+    def __init__(self, name, desc, damage, atkType, statusEffects, manaCost, multi_target=False, is_dodgeable=True, accuracy=100):
         self.name = name
         self.desc = desc
         self.damage = damage
         self.atkType = atkType
         self.multi_target = multi_target
+        self.is_dodgeable = is_dodgeable
         self.manaCost = manaCost
         self.statusEffects = statusEffects
         self.enabled = True

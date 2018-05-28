@@ -61,7 +61,8 @@ class Mist(Attack):
 class calming_waters(Attack):
     def __init__(self):
         desc = "Heals a target ally"
-        super().__init__("Calming Waters", desc, damage=-7, atkType=AttackTypes.Water, statusEffects=[], manaCost=2)
+        super().__init__("Calming Waters", desc, damage=-7, atkType=AttackTypes.Water, statusEffects=[], manaCost=2,
+                         is_dodgeable=False)
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
@@ -89,7 +90,8 @@ class poison_breeze(Attack):
 class healing_breeze(Attack):
     def __init__(self):
         desc = "Heals a target ally"
-        super().__init__("Healing Wind", desc, damage=-7, atkType=AttackTypes.Wind, statusEffects=[], manaCost=2)
+        super().__init__("Healing Wind", desc, damage=-7, atkType=AttackTypes.Wind, statusEffects=[], manaCost=2,
+                         is_dodgeable=False)
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
