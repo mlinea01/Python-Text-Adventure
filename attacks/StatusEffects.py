@@ -192,3 +192,18 @@ class DamageBoost(StatusEffect):
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True
+
+
+class HpIncrease(StatusEffect):
+    def __init__(self, amount):
+        super().__init__()
+        self.name = "Hp Increase"
+        self.amount = amount
+
+    def on_effect_apply(self, args):
+        super().on_effect_apply_getargs(args)
+        self.character.change_hp(self.amount)
+        self.is_resolved = True
+
+    def resolve(self):
+        super().resolve()

@@ -205,3 +205,14 @@ class Character:
 
         self.maxHp += hp_mod
         self.hp = self.maxHp
+
+    def change_hp(self, amount):
+        if amount > 0:
+            self.hp += amount
+            if self.hp > self.maxHp:
+                self.hp = self.maxHp
+        else:
+            if self.hp >= amount*-1:
+                self.hp += amount
+            else:
+                self.hp = 0

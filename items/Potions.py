@@ -1,9 +1,11 @@
 from items.ItemsInfo import Items
 from attacks import StatusEffects
+from attacks.AttacksInfo import Attack
 
 
 class HealthPotion(Items):
     def __init__(self):
+        item_attack = Attack()
         super().__init__("Health Potion", "Restores missing health")
 
     def use_item_on(self, character):
