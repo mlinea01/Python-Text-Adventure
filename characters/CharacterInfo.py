@@ -216,3 +216,25 @@ class Character:
                 self.hp += amount
             else:
                 self.hp = 0
+
+    def change_mana(self, amount):
+        if amount > 0:
+            self.mana += amount
+            if self.mana > self.maxMana:
+                self.mana = self.maxMana
+        else:
+            if self.mana >= amount*-1:
+                self.mana += amount
+            else:
+                self.mana = 0
+
+    def change_speed(self, amount):
+        if amount > 0:
+            self.speed += amount
+            if self.speed > self.maxSpeed:
+                self.speed = self.maxSpeed
+            else:
+                if self.speed >= amount*-1:
+                    self.speed += amount
+                else:
+                    self.speed = 0

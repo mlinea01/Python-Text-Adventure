@@ -178,7 +178,7 @@ class Slow(StatusEffect):
 class DamageBoost(StatusEffect):
     def __init__(self, amount, duration, chance=100):
         super().__init__()
-        self.name = "Damage Boosted"
+        self.name = "increasing damage"
         self.amount = amount
         self.duration = duration
         self.chance = chance
@@ -207,5 +207,35 @@ class HpBoost(StatusEffect):
         self.is_resolved = True
         IO.print_text(self.character.name + "'s HP is now " + str(self.character.hp), self.character.players_list)
 
-    def resolve(self):
-        super().resolve()
+
+class manaBoost(StatusEffect):
+    def __init__(self, amount):
+        super().__init__()
+        self.name = "increasing mana"
+        self.amount = amount
+        self.chance = 100
+
+    def on_effect_apply(self, args):
+        super().on_effect_apply_getargs(args)
+        self.character.change_mana(self.amount)
+        self.is_resolved = True
+        IO.print_text(self.character.name + "'s mana is now " + str(self.character.mana), self.character.players_list)
+
+class speedBoost(StatusEffect):
+    def __init__(self, amount, duration):
+        super().__init__()
+        self.name = "faster"
+        self.amount = amount
+        self.duration = duration
+        self.chance = 100
+
+    def on_effect_apply(self, args):
+        super().on_effect_apply_getargs(args)
+        self.character.change_speed(self.amount)
+        self.is_resolved = True
+        IO.print_text(self.character.name + "'s speed is now " + str(self.character.speed), self.character.players_list)
+
+    def on_turn_end(self, args):
+        self.duration -= 1
+        if self.duration == 0:
+            self.is_resolved = True
