@@ -119,6 +119,22 @@ class Character:
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
 
+    def level_up(self, max_xp_mod=150, speed_mod=0, mana_mod=0, hp_mod=0):
+        self.maxXp += max_xp_mod
+        self.xp = 0
+
+        for attack in self.attacks:
+            attack.upgrade()
+
+        self.maxSpeed += speed_mod
+        self.speed = self.maxSpeed
+
+        self.maxMana += mana_mod
+        self.mana = self.maxMana
+
+        self.maxHp += hp_mod
+        self.hp = self.maxHp
+
     def status_effect_remove(self, status_effect):
         for effect in self.status_effects:
             if effect == status_effect:
@@ -190,51 +206,24 @@ class Character:
     def attack_enable(self, attack):
         attack.enabled = True
 
-    def level_up(self, max_xp_mod=150, speed_mod=0, mana_mod=0, hp_mod=0):
-        self.maxXp += max_xp_mod
-        self.xp = 0
-
-        for attack in self.attacks:
-            attack.upgrade()
-
-        self.maxSpeed += speed_mod
-        self.speed = self.maxSpeed
-
-        self.maxMana += mana_mod
-        self.mana = self.maxMana
-
-        self.maxHp += hp_mod
-        self.hp = self.maxHp
-
     def change_hp(self, amount):
-        if amount > 0:
             self.hp += amount
             if self.hp > self.maxHp:
                 self.hp = self.maxHp
-        else:
-            if self.hp >= amount*-1:
-                self.hp += amount
-            else:
+            if self.hp < 0:
                 self.hp = 0
 
+
     def change_mana(self, amount):
-        if amount > 0:
             self.mana += amount
             if self.mana > self.maxMana:
                 self.mana = self.maxMana
-        else:
-            if self.mana >= amount*-1:
-                self.mana += amount
-            else:
+            if self.mana < 0:
                 self.mana = 0
 
+
     def change_speed(self, amount):
-        if amount > 0:
             self.speed += amount
-            if self.speed > self.maxSpeed:
-                self.speed = self.maxSpeed
-            else:
-                if self.speed >= amount*-1:
-                    self.speed += amount
-                else:
-                    self.speed = 0
+            if self.speed < 0:
+                self.speed = 0
+

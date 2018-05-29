@@ -2,6 +2,8 @@ from copy import deepcopy
 from attacks.StatusEffects import Triggers
 from Multiplayer import IO
 from functools import partial
+from characters.CharacterLevelUp import *
+
 
 # Player class used to keep track of player stats and actions
 class Player:
@@ -28,7 +30,7 @@ class Player:
                 IO.print_text(str(target_num) + ". " + target.name, [self.player_num])
                 target_num += 1
             target_choice = int(IO.get_input(self.player_num, "Your choice: ",
-                                             partial(IO.check_num_in_range, minimum=1, maximum=len(targets))))-1
+                                             partial(IO.check_num_in_range, minimum=1, maximum=len(targets)))) - 1
             return [targets[target_choice]]
 
     def choose_attack(self):
@@ -51,8 +53,10 @@ class Player:
                 IO.print_text(str(attack_num) + ". " + item.name, [self.player_num])
                 attack_num += 1
 
-            chosen_attack_num = int(IO.get_input(self.player_num, "Your choice: ", partial(IO.check_num_in_range, minimum=1,
-                                             maximum=len(self.character.attacks) + len(self.character.items))))-1
+            chosen_attack_num = int(
+                IO.get_input(self.player_num, "Your choice: ", partial(IO.check_num_in_range, minimum=1,
+                                                                       maximum=len(self.character.attacks) + len(
+                                                                           self.character.items)))) - 1
 
             while True:
                 if chosen_attack_num < len(self.character.attacks):
@@ -63,7 +67,7 @@ class Player:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
                         IO.print_text(self.name + " uses " + attack_chosen.name, self.players_list)
                         self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
-                        if self.character.mana > 0 and not(self.character.mana < attack_chosen.manaCost):
+                        if self.character.mana > 0 and not (self.character.mana < attack_chosen.manaCost):
                             self.character.mana -= attack_chosen.manaCost
                         elif self.character.mana < attack_chosen.manaCost:
                             IO.print_text("You don't have enough mana for that attack")
@@ -79,6 +83,38 @@ class Player:
         else:
             IO.print_text(self.name + " cannot attack this turn!", [self.player_num])
             return None
+
+    def learn_new_spell(self):
+        spellTypes = None
+
+        if self.character_type == "Fire":
+            spellTypes = NewSpells.fireTierOne
+
+        if self.character_type == "Water":
+            spellTypes = NewSpells.waterTierOne
+
+        if self.character_type == "Earth":
+            spellTypes = NewSpells.earthTierOne
+
+        if self.character_type == "Wind":
+            spellTypes = NewSpells.windTierOne
+
+        while True:
+            IO.print_text("You grew a level, Choose a new spell to use on your journey!", self.players_list)
+            spellNum = 1
+            for spell in spellTypes:
+                IO.print_text(str(spellNum) + ". " + spell.name, self.players_list)
+                spellNum += 1
+            new_spell = spellTypes[int(IO.get_input(self.player_num, "\nYour choice: ",
+                                                    partial(IO.check_num_in_range, minimum=1,
+                                                            maximum=len(spellTypes)))) - 1]
+            IO.print_text(new_spell.name + "-" + new_spell.desc, self.player_list)
+            if int(IO.get_input(self.player_num, "Is this the spell you want? (1.yes 2.no)",
+                                partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
+                continue
+            else:
+                self.character.learn_attack(new_spell)
+                break
 
     def __getattr__(self, item):
         if hasattr(self.character, item):

@@ -44,6 +44,8 @@ class Battle:
 
                 if fighter.hp <= 0:
                     i += 1
+                    if fighter.is_player:
+                        IO.print_text(fighter.name + "is dead and cannot attack!", self.player_nums)
                     continue
 
                 IO.print_text("Turn " + str(turn_num), self.player_nums)
@@ -94,6 +96,7 @@ class Battle:
                                     if fighter.character.xp >= fighter.character.maxXp:
                                         fighter.character.level += 1
                                         fighter.character.level_up()
+                                        fighter.learn_new_spell()
 
                                         IO.print_text(fighter.name + " grew to level " + str(fighter.character.level)
                                                       + "!", self.player_nums)

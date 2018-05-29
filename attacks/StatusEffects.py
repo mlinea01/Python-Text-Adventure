@@ -211,7 +211,7 @@ class HpBoost(StatusEffect):
 class manaBoost(StatusEffect):
     def __init__(self, amount):
         super().__init__()
-        self.name = "increasing mana"
+        self.name = "imbued with mana"
         self.amount = amount
         self.chance = 100
 
