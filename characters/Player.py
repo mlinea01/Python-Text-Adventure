@@ -103,8 +103,10 @@ class Player:
             IO.print_text("You grew a level, Choose a new spell to use on your journey!", self.players_list)
             spellNum = 1
             for spell in spellTypes:
-                IO.print_text(str(spellNum) + ". " + spell.name, self.players_list)
-                spellNum += 1
+                if not self.character.has_attack(spell):
+                    IO.print_text(str(spellNum) + ". " + spell.name, self.players_list)
+                    spellNum += 1
+
             new_spell = spellTypes[int(IO.get_input(self.player_num, "\nYour choice: ",
                                                     partial(IO.check_num_in_range, minimum=1,
                                                             maximum=len(spellTypes)))) - 1]

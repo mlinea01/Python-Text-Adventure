@@ -200,6 +200,12 @@ class Character:
             except TypeError:
                 self.status_effect_add(attack.statusEffects)
 
+    def has_attack(self, attackToCheck):
+        for attack in self.attacks:
+            if attack.name == attackToCheck.name:
+                return True
+        return False
+
     def attack_disable(self, attack):
         attack.enabled = False
 
