@@ -10,7 +10,7 @@ import time
 # This is the base class for all characters
 class Character:
 
-    def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[], armor=[], reward_xp=50):
+    def __init__(self, name, desc, hp, mana, speed, attacks, weapons=[], armor=[], resistance=[], reward_xp=50):
         self.hp = hp
         self.maxHp = hp
         self.mana = mana
@@ -33,6 +33,7 @@ class Character:
         self.armor = []
         for a in armor:
             self.equip_armor(a, False)
+        self.resistance = resistance
         self.status_effects = []
         self.cannot_attack = 0
         self.attacks_disabled = []
@@ -186,6 +187,12 @@ class Character:
 
                 else:
                     attack.damage -= (self.totalMagResist/5)
+
+                for res in self.resistance:
+                    if attack.atkType == res:
+                        IO.print_text(self.name + " is resistant to " + attack.atkType.name + " damage!")
+                        attack.damage /= 2
+                        break
 
                 if attack.damage < 0:
                     attack.damage = 0

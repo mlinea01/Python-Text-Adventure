@@ -4,7 +4,7 @@ from attacks import BasicAttacks
 class MountainDragon(Character):
     def __init__(self):
         super().__init__("Mountain Dragon", "", hp=15, mana=10, speed=15, attacks=[BasicAttacks.Punch()], weapons=[],
-                         reward_xp=50)
+                         resistance=[AttackTypes.Fire], reward_xp=50)
 
 
 class TerrifyingTurantula(Character):
@@ -22,4 +22,4 @@ class ZombieRat(Character):
 class GiantSquid(Character):
     def __init__(self):
         super().__init__("Giant Squid", "", hp=25, mana=20, speed=25, attacks=[BasicAttacks.Bind()], weapons=[],
-                         reward_xp=70)
+                         resistance=[AttackTypes.Water], reward_xp=70)
