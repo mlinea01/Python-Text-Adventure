@@ -96,7 +96,8 @@ class Battle:
                                     if fighter.character.xp >= fighter.character.maxXp:
                                         fighter.character.level += 1
                                         fighter.character.level_up()
-                                        fighter.learn_new_spell()
+                                        if fighter.character.level % 5 == 0:
+                                            fighter.learn_new_spell()
 
                                         IO.print_text(fighter.name + " grew to level " + str(fighter.character.level)
                                                       + "!", self.player_nums)
