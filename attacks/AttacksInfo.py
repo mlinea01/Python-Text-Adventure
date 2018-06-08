@@ -36,6 +36,7 @@ class Attack:
         return self._accuracy
 
 
+
 # This class keeps track of attack types - useful for things like determining resistances to certain moves
 class AttackTypes(enum.Enum):
     Normal = enum.auto()
