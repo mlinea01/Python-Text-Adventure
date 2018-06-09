@@ -65,6 +65,7 @@ class Merchant:
         while True:
             IO.print_text("You have " + str(player.money) + " gold.")
             item_chosen = None
+            item_chosen_num = 0
             while item_chosen is None:
                 item_no = 0
                 for item in self.items_list:
@@ -88,6 +89,7 @@ class Merchant:
                     player.items.append(item_chosen)
                     player.money -= item_chosen.value
 
-            if IO.get_input(0, "Would you like anything else? (y/n)",
+            if item_chosen_num != len(self.items_list)+1 and \
+                    IO.get_input(0, "Would you like anything else? (y/n)",
                             partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                 break
