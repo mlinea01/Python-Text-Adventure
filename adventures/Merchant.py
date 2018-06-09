@@ -54,7 +54,7 @@ class Merchant:
                 player.money += item_chosen.value
                 IO.print_text("You now have " + str(player.money) + " gold!")
 
-            if item_chosen_num != len(player.items)+1 and IO.get_input(0, "Wanna sell me anything else? (y/n)",
+            if item_chosen_num == len(player.items)+1 or IO.get_input(0, "Wanna sell me anything else? (y/n)",
                             partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                 break
 
@@ -89,7 +89,6 @@ class Merchant:
                     player.items.append(item_chosen)
                     player.money -= item_chosen.value
 
-            if item_chosen_num != len(self.items_list)+1 and \
-                    IO.get_input(0, "Would you like anything else? (y/n)",
-                            partial(IO.check_in_list, list_data=["y", "n"])) == "n":
+            if item_chosen_num == len(self.items_list)+1 or IO.get_input(0, "Would you like anything else? (y/n)",
+                                                                partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                 break
