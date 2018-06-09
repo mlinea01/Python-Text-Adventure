@@ -31,7 +31,7 @@ class ForestAttacks:
                     if status_effect.name == "charmed":
                         is_charmed = True
 
-                if is_charmed:
+                if not is_charmed:
                     targets.remove(target)
                 else:
                     targetIndex += 1
