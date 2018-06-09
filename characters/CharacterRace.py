@@ -1,6 +1,7 @@
 from attacks import BasicAttacks
 from characters.CharacterInfo import Character
 from equipment.Armor import *
+from adventures.Forest.ForestAttacks import ForestAttacks
 
 
 class Gnome(Character):

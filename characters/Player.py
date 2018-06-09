@@ -34,9 +34,11 @@ class Player:
                                              partial(IO.check_num_in_range, minimum=1, maximum=len(targets)))) - 1
             return [targets[target_choice]]
 
-    def choose_attack(self):
+    def choose_attack(self, battle):
         attacks_enabled = []
         for a in self.attacks:
+            if not battle.attack_has_targets(self, a):
+                a.enabled = False
             if a.enabled:
                 attacks_enabled.append(a)
 
@@ -63,7 +65,7 @@ class Player:
                 if chosen_attack_num < len(self.character.attacks):
                     if self.attacks[chosen_attack_num].enabled is False:
                         IO.print_text("That attack is disabled this turn!", [self.player_num])
-                        return self.choose_attack()
+                        return self.choose_attack(battle)
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
                         IO.print_text(self.name + " uses " + attack_chosen.name, self.players_list)
@@ -72,7 +74,7 @@ class Player:
                             self.character.mana -= attack_chosen.manaCost
                         elif self.character.mana < attack_chosen.manaCost:
                             IO.print_text("You don't have enough mana for that attack")
-                            return self.choose_attack()
+                            return self.choose_attack(battle)
                         else:
                             self.character.mana = 0
                         return attack_chosen

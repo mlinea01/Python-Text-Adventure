@@ -17,7 +17,7 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,             self.camp,               self.hit_trap],
+        map_data = [[self.step1,             self.venusFlyTrap_fight, self.hit_trap],
                     [self.empty,                None,                 self.empty],
                     [self.camp,              self.empty,              self.turantula_fight],
                     [self.zombieRat_fight,   self.hit_trap,           self.empty],
@@ -178,3 +178,19 @@ class Adventure1:
         else:
             IO.print_text("The blood from the zombie rat is here but the rat is gone! we must not have killed it!")
             IO.print_text("We've searched this camp as much as we could, lets go before that rat comes back.")
+
+    def venusFlyTrap_fight(self):
+        if self.adventure.already_visited() is False:
+            IO.print_text("ACK! There's something touching my leg - it's a vine!")
+            time.sleep(2)
+            IO.print_text("")
+            if Battle().start(self.players, VenusFlyTrap()):
+                IO.print_text("")
+                IO.get_input(self.get_primary_player(self.players), "Whew, that plant almost made us dinner!")
+                IO.print_text("")
+                self.item_loot()
+                self.find_clues()
+                self.adventure.mark_visited()
+
+        else:
+            IO.print_text("The brutal venus fly trap is here, tunring to compost to grow more venus fly traps... weird.")

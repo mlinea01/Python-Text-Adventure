@@ -256,3 +256,17 @@ class charmed(StatusEffect):
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True
+
+class antiCharmed(StatusEffect):
+    def __init__(self, duration=1):
+        super().__init__()
+        self.name = "no longer charmed"
+        self.duration = duration
+        self.chance = 100
+
+    def on_effect_apply(self, args):
+        super().on_effect_apply_getargs(args)
+        for status_effect in self.character.status_effects:
+            if status_effect.name == "charmed":
+                status_effect.is_resolved = True
+        self.is_resolved = True

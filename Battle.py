@@ -20,27 +20,27 @@ class Battle:
             self.player_nums.append(self.players[p_num].player_num)
             p_num += 1
 
-        fighters = copy(self.players)
+        self.fighters = copy(self.players)
         try:
             for enemy in enemies:
-                fighters.append(enemy)
+                self.fighters.append(enemy)
         except TypeError:
             self.enemies = [enemies]
-            fighters.append(enemies)
+            self.fighters.append(enemies)
 
-        for fighter in fighters:
+        for fighter in self.fighters:
             fighter.battle_start(self.player_nums)
 
         while Battle.alive(self.enemies) and Battle.alive(self.players):
-            fighters.sort(key=lambda char: char.speed, reverse=True)
+            self.fighters.sort(key=lambda char: char.speed, reverse=True)
             IO.print_text(" ", self.player_nums)
             IO.print_text("ROUND START", self.player_nums)
             IO.print_text(" ", self.player_nums)
 
             i = 0
             turn_num = 1
-            while i < len(fighters):
-                fighter = fighters[i]
+            while i < len(self.fighters):
+                fighter = self.fighters[i]
 
                 if fighter.hp <= 0:
                     i += 1
@@ -59,10 +59,10 @@ class Battle:
                 if fighter.cannot_attack > 0:
                     IO.print_text(fighter.name + " cannot attack!", self.player_nums)
                 else:
-                    chosen_attack = fighter.choose_attack()
+                    chosen_attack = fighter.choose_attack(self)
                     if chosen_attack is not None:
 
-                        target_list = copy(fighters)
+                        target_list = copy(self.fighters)
                         chosen_attack.filter_targets(fighter, target_list)
 
                         if chosen_attack.multi_target is False:
@@ -110,6 +110,11 @@ class Battle:
                 time.sleep(3)
 
         return Battle.alive(self.players)
+
+    def attack_has_targets(self, attacker, attack):
+        target_list = copy(self.fighters)
+        attack.filter_targets(attacker, target_list)
+        return len(target_list) > 0
 
     @classmethod
     def alive(self, characters):

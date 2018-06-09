@@ -77,14 +77,15 @@ class Character:
 
     # default behavior is to choose an attack randomly
     #   (this can be overridden in subclasses for more specific behavior)
-    def choose_attack(self):
+    def choose_attack(self, battle):
         time.sleep(2)
         attacks_enabled = []
         for a in self.attacks:
-            if a.enabled:
+            if a.enabled and battle.attack_has_targets(self, a):
                 attacks_enabled.append(a)
+
         if len(attacks_enabled) > 0:
-            attack_chosen = deepcopy(self.attacks[random.randint(0, len(attacks_enabled) - 1)])
+            attack_chosen = deepcopy(attacks_enabled[random.randint(0, len(attacks_enabled) - 1)])
             IO.print_text(self.name + " uses " + attack_chosen.name, self.players_list)
             self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
             return attack_chosen

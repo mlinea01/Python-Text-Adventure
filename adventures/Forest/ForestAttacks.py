@@ -14,15 +14,31 @@ class ForestAttacks:
         def __init__(self):
             name = "Sweet Scent"
             desc = "Lures the enemy in."
-            super().__init__(name, desc, damage=0, atkType=AttackTypes.Normal, statusEffects=charmed(1, 100), manaCost=0)
+            super().__init__(name, desc, damage=None, atkType=AttackTypes.Normal, statusEffects=charmed(2, 100), manaCost=0)
+
+        def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
+            targetIndex = 0
+            while targetIndex < len(targets):
+                target = targets[targetIndex]
+                is_charmed = False
+                for status_effect in target.status_effects:
+                    if status_effect.name == "charmed":
+                        is_charmed = True
+
+                if is_charmed:
+                    targets.remove(target)
+                else:
+                    targetIndex += 1
 
     class Devour(Attack):
         def __init__(self):
             name = "Devour"
             desc = "Devours enemy whole!"
-            super().__init__(name, desc, damage=7, atkType=AttackTypes.Normal, statusEffects=[], manaCost=0)
+            super().__init__(name, desc, damage=7, atkType=AttackTypes.Normal, statusEffects=[antiCharmed()], manaCost=0)
 
         def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
             targetIndex = 0
             while targetIndex < len(targets):
                 target = targets[targetIndex]
