@@ -28,6 +28,7 @@ class Merchant:
         IO.print_text("What do you have to sell?")
         item_no = 0
         item_chosen = None
+        item_chosen_num = 0
         while True:
             while item_chosen is None:
                 for item in player.items:
@@ -46,13 +47,14 @@ class Merchant:
                 if IO.get_input(0, "Sure, I can give ya " + str(item_chosen.value) + " gold for that. Sound good? (y/n)",
                                 partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                     IO.print_text("Okay, fine, no deal...", [player.player_num])
-                    break
+                    continue
+                    
                 IO.print_text("Sold!", [player.player_num])
                 player.items.remove(item_chosen)
                 player.money += item_chosen.value
                 IO.print_text("You now have " + str(player.money) + " gold!")
 
-            if IO.get_input(0, "Wanna sell me anything else? (y/n)",
+            if item_chosen_num != len(player.items)+1 and IO.get_input(0, "Wanna sell me anything else? (y/n)",
                             partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                 break
 
