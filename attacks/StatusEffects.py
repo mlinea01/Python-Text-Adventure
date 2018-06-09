@@ -239,3 +239,20 @@ class speedBoost(StatusEffect):
         self.duration -= 1
         if self.duration == 0:
             self.is_resolved = True
+
+
+class charmed(StatusEffect):
+    def __init__(self, duration, chance=100):
+        super().__init__()
+        self.name = "charmed"
+        self.duration = duration
+        self.chance = chance
+
+    def on_attacking(self, args):
+        super().on_attacking_getargs(args)
+        self.attack.change_accuracy(-50)
+
+    def on_turn_end(self, args):
+        self.duration -= 1
+        if self.duration == 0:
+            self.is_resolved = True
