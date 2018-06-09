@@ -10,7 +10,7 @@ class Merchant:
         IO.print_text("Hello. Are ya lookin to buy or sell?", [player.player_num])
         IO.print_text("1. Buy", [player.player_num])
         IO.print_text("2. Sell", [player.player_num])
-        IO.print_text("3. Nevermind", [player.player_num])
+        IO.print_text("3. Goodbye", [player.player_num])
         sellbuy_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
                                            partial(IO.check_num_in_range,
                                                    minimum=1,
@@ -33,7 +33,7 @@ class Merchant:
                 for item in player.items:
                     item_no += 1
                     IO.print_text(str(item_no) + ". " + item.name, [player.player_num])
-                IO.print_text(str(item_no+1) + ". Nevermind")
+                IO.print_text(str(item_no+1) + ". Goodbye")
                 item_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
                                                    partial(IO.check_num_in_range,
                                                            minimum=1,
@@ -43,7 +43,7 @@ class Merchant:
                     break
 
                 item_chosen = player.items[item_chosen_num-1]
-                if IO.get_input(0, "Sure, I can give ya " + str(item.value) + " gold for that. Sound good? (y/n)",
+                if IO.get_input(0, "Sure, I can give ya " + str(item_chosen.value) + " gold for that. Sound good? (y/n)",
                                 partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                     IO.print_text("Okay, fine, no deal...", [player.player_num])
                     break
@@ -68,7 +68,7 @@ class Merchant:
                 for item in self.items_list:
                     item_no += 1
                     IO.print_text(str(item_no) + ". " + item.name + " - " + str(item.value))
-                IO.print_text(str(item_no+1) + ". Nevermind")
+                IO.print_text(str(item_no+1) + ". Goodbye")
                 item_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
                                                    partial(IO.check_num_in_range,
                                                            minimum=1,
