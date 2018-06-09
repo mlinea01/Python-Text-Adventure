@@ -10,7 +10,6 @@ import threading
 from Multiplayer import IO,Server
 from functools import partial
 
-
 class Game:
     players = []
     player_backup = []

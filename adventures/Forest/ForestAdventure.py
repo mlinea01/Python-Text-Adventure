@@ -7,6 +7,7 @@ from adventures.Puzzles import Riddle
 from adventures.Forest.Enemies import *
 import threading
 from time import sleep
+from adventures.Merchant import Merchant
 
 startJourney = True
 
@@ -16,15 +17,15 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,             self.camp,         self.hit_trap],
-                    [self.empty,                None,           self.empty],
-                    [self.camp,              self.empty,        self.dragon_fight],
-                    [self.zombieRat_fight,   self.hit_trap,     self.empty],
-                    [self.camp,              self.empty,          None],
-                    [None,                   self.camp,         self.empty],
-                    [self.turantula_fight,   self.empty,        self.empty],
-                    [None,                   self.empty,          None],
-                    [self.camp,              self.hit_trap,     self.giantSquid_fight]]
+        map_data = [[self.step1,             self.camp,               self.hit_trap],
+                    [self.empty,                None,                 self.empty],
+                    [self.camp,              self.empty,              self.dragon_fight],
+                    [self.zombieRat_fight,   self.hit_trap,           self.empty],
+                    [self.camp,              self.forest_merchant,          None],
+                    [None,                   self.camp,               self.empty],
+                    [self.turantula_fight,   self.empty,              self.empty],
+                    [None,                   self.empty,              None],
+                    [self.camp,              self.hit_trap,           self.giantSquid_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
@@ -43,6 +44,11 @@ class Adventure1:
                 return result
             else:
                 result += 1
+
+    def forest_merchant(self):
+        IO.print_text("A merchant stands in a cozy hut in a shaded area. You go inside...")
+        merchant = Merchant([HealthPotion(), ManaPotion()])
+        merchant.greet(self.players[0])
 
     def empty(self):
         IO.print_text(

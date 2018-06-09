@@ -15,6 +15,7 @@ class Player:
         self.character.player_num = player_num
         self.character_type = character_type
         self.desc = "mighty"
+        self.money = 10
         character.name = name
         character.is_player = True
 

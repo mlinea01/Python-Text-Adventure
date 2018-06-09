@@ -8,7 +8,7 @@ class HealthPotion(Items):
         item_attack = Attack(atkType=AttackTypes.Normal, damage=None, desc="", manaCost=0, name="Health Potion",
                              statusEffects=StatusEffects.HpBoost(10))
         item_attack.filter_targets = self.filter_targets
-        super().__init__("Health Potion", "Restores missing health", item_attack)
+        super().__init__("Health Potion", "Restores missing health", item_attack, value=10)
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
@@ -20,7 +20,7 @@ class ManaPotion(Items):
         item_attack = Attack(atkType=AttackTypes.Normal, damage=None, desc="", manaCost=0, name="Mana Potion",
                              statusEffects=StatusEffects.manaBoost(10))
         item_attack.filter_targets = self.filter_targets
-        super().__init__("Mana Potion", "Replenishes 10 points of mana", item_attack)
+        super().__init__("Mana Potion", "Replenishes 10 points of mana", item_attack, value=11)
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
@@ -32,7 +32,7 @@ class SpeedPotion(Items):
         item_attack = Attack(atkType=AttackTypes.Normal, damage=None, desc="", manaCost=0, name="Speed Potion",
                              statusEffects=StatusEffects.speedBoost(amount=10, duration=3))
         item_attack.filter_targets = self.filter_targets
-        super().__init__("Speed Potion", "Increases speed for a short duration", item_attack)
+        super().__init__("Speed Potion", "Increases speed for a short duration", item_attack, value=10)
 
     def filter_targets(self, attacker, targets):
         TargetFilters.target_filter_allies(attacker, targets)
