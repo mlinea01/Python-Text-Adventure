@@ -19,13 +19,13 @@ class Adventure1:
 
         map_data = [[self.step1,             self.camp,               self.hit_trap],
                     [self.empty,                None,                 self.empty],
-                    [self.camp,              self.empty,              self.dragon_fight],
+                    [self.camp,              self.empty,              self.turantula_fight],
                     [self.zombieRat_fight,   self.hit_trap,           self.empty],
                     [self.camp,              self.forest_merchant,          None],
                     [None,                   self.camp,               self.empty],
                     [self.turantula_fight,   self.empty,              self.empty],
                     [None,                   self.empty,              None],
-                    [self.camp,              self.hit_trap,           self.giantSquid_fight]]
+                    [self.camp,              self.hit_trap,           self.turantula_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
@@ -145,23 +145,6 @@ class Adventure1:
         self.adventure.mark_visited()
         self.activePlayers.remove(player)
 
-    def dragon_fight(self):
-        if self.adventure.already_visited() is False:
-            IO.print_text("There is a Mountain Dragon in the camp, Hurry, take that dragon down!")
-            time.sleep(2)
-            IO.print_text("")
-            if Battle().start(self.players, MountainDragon()):
-                IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
-                IO.print_text("")
-                self.item_loot()
-                self.find_clues()
-                self.adventure.mark_visited()
-
-        else:
-            IO.print_text("The slain Mountain Dragon lies in the middle of the camp.")
-            IO.print_text("The wind blows steadily from the mountains to the East, but there is nothing else here.")
-
     def turantula_fight(self):
         if self.adventure.already_visited() is False:
             IO.print_text("There is a huge turantula in this camp! OMG kill it!!!!!")
@@ -195,20 +178,3 @@ class Adventure1:
         else:
             IO.print_text("The blood from the zombie rat is here but the rat is gone! we must not have killed it!")
             IO.print_text("We've searched this camp as much as we could, lets go before that rat comes back.")
-
-    def giantSquid_fight(self):
-        if self.adventure.already_visited() is False:
-            IO.print_text("What is that coming out of the water? NO! its a giant squid!!!")
-            time.sleep(2)
-            IO.print_text("")
-            if Battle().start(self.players, GiantSquid()):
-                IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "That squid almost had us! And you wanted to take a boat!")
-                IO.print_text("")
-                self.item_loot()
-                self.find_clues()
-                self.adventure.mark_visited()
-
-        else:
-            IO.print_text("Whats that smell? Smells like rotten fish! oh its that squid!")
-            IO.print_text("If you want to look around go for it, ")

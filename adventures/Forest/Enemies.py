@@ -1,25 +1,32 @@
 from characters.CharacterInfo import *
 from attacks import BasicAttacks
 
-class MountainDragon(Character):
-    def __init__(self):
-        super().__init__("Mountain Dragon", "", hp=15, mana=10, speed=15, attacks=[BasicAttacks.Punch()], weapons=[]
-                         , reward_xp=50, character_type= AttackTypes.Fire)
-
-
 class TerrifyingTurantula(Character):
     def __init__(self):
         super().__init__("Terrifying Turantula", "", hp=20, mana=15, speed=20, attacks=[BasicAttacks.Bite()],
                          weapons=[], reward_xp=65, character_type= AttackTypes.Normal)
-
 
 class ZombieRat(Character):
     def __init__(self):
         super().__init__("Zombie Rat", "", hp=20, mana=15, speed=20, attacks=[BasicAttacks.Bite()], weapons=[],
                          reward_xp=65, character_type= AttackTypes.Normal)
 
-
-class GiantSquid(Character):
+class VenusFlyTrap(Character):
     def __init__(self):
-        super().__init__("Giant Squid", "", hp=25, mana=20, speed=25, attacks=[BasicAttacks.Bind()], weapons=[]
-                         , reward_xp=70, character_type= AttackTypes.Water)
+        super().__init__("Venus Fly Trap", "", hp=20, mana=15, speed=20, attacks=[BasicAttacks.Bite()], weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Normal)
+
+class SlappingTree(Character):
+    def __init__(self):
+        super().__init__("Slapping Tree", "", hp=20, mana=15, speed=20, attacks=[BasicAttacks.Punch], weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Normal)
+
+class DeathBeetle(Character):
+    def __init__(self):
+        super().__init__("Death Beetle", "", hp=20, mana=15, speed=20, attacks=[BasicAttacks.Bite()], weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Normal)
+
+class WidowWasp(Character):
+    def __init__(self):
+        super().__init__("Widow Wasp", "", hp=20, mana=15, speed=20, attacks=[BasicAttacks.Bite()], weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Normal)
