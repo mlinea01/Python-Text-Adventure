@@ -18,7 +18,7 @@ class Adventure1:
         self.players = players
 
         map_data = [[self.step1,             self.venusFlyTrap_fight, self.hit_trap],
-                    [self.empty,                None,                 self.empty],
+                    [self.minions_fight,                None,                 self.empty],
                     [self.camp,              self.empty,              self.turantula_fight],
                     [self.zombieRat_fight,   self.hit_trap,           self.empty],
                     [self.camp,              self.forest_merchant,          None],
@@ -56,6 +56,23 @@ class Adventure1:
     def empty(self):
         IO.print_text(
             "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
+
+    def minions_fight(self):
+        IO.print_text("It's a swarm!")
+        time.sleep(2)
+        IO.print_text("")
+        num_minions = random.randint(2, 4)
+        minions = []
+        while num_minions > 0:
+            num_minions -= 1
+            if random.randint(1,2) == 1:
+                minions.append(DeathBeetle())
+            else:
+                minions.append(WidowWasp())
+
+        if Battle().start(self.players, minions):
+            IO.print_text("Wow, we made it out alive!")
+            self.adventure.mark_visited()
 
     def step1(self):
         if self.adventure.already_visited():

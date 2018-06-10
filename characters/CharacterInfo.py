@@ -263,6 +263,10 @@ class CharacterUtils:
             return [AttackTypes.Wind]
         elif character_type == AttackTypes.Normal:
             return []
+        elif character_type == AttackTypes.Plant:
+            return [AttackTypes.Water, AttackTypes.Earth]
+        elif character_type == AttackTypes.Poison:
+            return [AttackTypes.Poison]
         else:
             return []
 
@@ -271,12 +275,16 @@ class CharacterUtils:
         if character_type == AttackTypes.Fire:
             return [AttackTypes.Water, AttackTypes.Earth]
         elif character_type == AttackTypes.Water:
-            return []
+            return [AttackTypes.Plant]
         elif character_type == AttackTypes.Earth:
             return [AttackTypes.Water]
         elif character_type == AttackTypes.Wind:
             return [AttackTypes.Fire]
         elif character_type == AttackTypes.Normal:
             return []
+        elif character_type == AttackTypes.Plant:
+            return [AttackTypes.Fire, AttackTypes.Poison]
+        elif character_type == AttackTypes.Poison:
+            return [AttackTypes.Water]
         else:
             return []

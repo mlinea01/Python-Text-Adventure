@@ -127,6 +127,27 @@ class Bleed(StatusEffect):
             self.is_resolved = True
 
 
+class Poison(StatusEffect):
+    def __init__(self, poison_duration=1, damage=1, chance=100):
+        super().__init__()
+        self.name = "poisoned"
+        self.duration = poison_duration
+        self.damage = damage
+        self.chance = chance
+
+    def on_turn_end(self, args):
+        super().on_turn_end_getargs(args)
+        hpLeft = self.character.hp-self.damage
+        if hpLeft < 0:
+            hpLeft = 0
+        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from poison! HP: " + str(hpLeft))
+        self.character.apply_damage(self.damage, False)
+        self.duration -= 1
+        self.damage += 1
+        if self.duration == 0:
+            self.is_resolved = True
+
+
 class Paralyze(StatusEffect):
     def __init__(self, paralyzeDuration, chance=100):
         super().__init__()

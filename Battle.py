@@ -21,9 +21,24 @@ class Battle:
             p_num += 1
 
         self.fighters = copy(self.players)
+        enemy_names = ""
         try:
-            for enemy in enemies:
+            enemy_num = 0
+            while enemy_num < len(enemies):
+                enemy = enemies[enemy_num]
+                enemy_num += 1
                 self.fighters.append(enemy)
+                enemy_names += enemy.name
+                if enemy_num < len(enemies)-1:
+                    enemy_names += ", "
+                elif enemy_num == len(enemies)-1:
+                    enemy_names += " and "
+
+            if len(enemy_names) > 1:
+                IO.print_text(enemy_names + " are about to attack!", self.player_nums)
+            else:
+                IO.print_text(enemy_names + " is about to attack!", self.player_nums)
+
         except TypeError:
             self.enemies = [enemies]
             self.fighters.append(enemies)

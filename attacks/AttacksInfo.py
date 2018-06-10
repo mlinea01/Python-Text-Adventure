@@ -44,6 +44,8 @@ class AttackTypes(enum.Enum):
     Water = enum.auto()
     Earth = enum.auto()
     Wind = enum.auto()
+    Plant = enum.auto()
+    Poison = enum.auto()
 
 
 # used for filtering valid targets for attacks
