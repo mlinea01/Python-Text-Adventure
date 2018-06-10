@@ -191,21 +191,17 @@ class Character:
                 else:
                     attack.damage -= (self.totalMagResist / 5)
 
-                if attack.damage > 0:
-                    for res in self.resistances:
-                        if attack.atkType == res:
-                            IO.print_text(self.name + " is resistant to " + attack.atkType.name + " damage!")
-                            attack.damage /= 2
-                            break
+                for res in self.resistances:
+                    if attack.atkType == res:
+                        IO.print_text(self.name + " is resistant to " + attack.atkType.name + " damage!")
+                        attack.damage /= 2
+                        break
 
-                    for weak in self.weaknesses:
-                        if attack.atkType == weak:
-                            IO.print_text(self.name + " is weak against " + attack.atkType.name + " damage!")
-                            attack.damage *= 2
-                            break
-
-                if attack.damage < 0:
-                    attack.damage = 0
+                for weak in self.weaknesses:
+                    if attack.atkType == weak:
+                        IO.print_text(self.name + " is weak against " + attack.atkType.name + " damage!")
+                        attack.damage *= 2
+                        break
 
             self.apply_damage(attack.damage)
 

@@ -21,7 +21,7 @@ class Battle:
             p_num += 1
 
         self.fighters = copy(self.players)
-        enemy_names = ""
+        enemy_names = "A "
         try:
             enemy_num = 0
             while enemy_num < len(enemies):
