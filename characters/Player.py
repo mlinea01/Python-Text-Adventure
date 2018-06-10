@@ -37,8 +37,13 @@ class Player:
     def choose_attack(self, battle):
         attacks_enabled = []
         for a in self.attacks:
+            if not a.enabled:
+                a.disabled_message = "That attack is disabled this turn!"
+
             if not battle.attack_has_targets(self, a):
                 a.enabled = False
+                a.disabled_message = "That attack has no valid targets!"
+
             if a.enabled:
                 attacks_enabled.append(a)
 
@@ -64,7 +69,7 @@ class Player:
             while True:
                 if chosen_attack_num < len(self.character.attacks):
                     if self.attacks[chosen_attack_num].enabled is False:
-                        IO.print_text("That attack is disabled this turn!", [self.player_num])
+                        IO.print_text(self.attacks[chosen_attack_num].disabled_message, [self.player_num])
                         return self.choose_attack(battle)
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
