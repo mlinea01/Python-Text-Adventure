@@ -47,7 +47,10 @@ class Adventure1:
 
     def forest_merchant(self):
         IO.print_text("A merchant stands in a cozy hut in a shaded area. You go inside...")
-        merchant = Merchant([HealthPotion(), ManaPotion()])
+        merchant = Merchant(items_list=[HealthPotion(), ManaPotion()],
+                            greeting="The forest smiles upon us and provides us with bounty.",
+                            sales_pitch="Perhaps these will give you sustenance. What would you like?",
+                            goodbye="Farewell, and beware.")
         merchant.greet(self.players[0])
 
     def empty(self):
@@ -186,7 +189,8 @@ class Adventure1:
             IO.print_text("")
             if Battle().start(self.players, VenusFlyTrap()):
                 IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "Whew, that plant almost made us dinner!")
+                IO.get_input(self.get_primary_player(self.players), "Whew, that plant almost made us its dinner! \
+                                                                    (Press enter to continue)")
                 IO.print_text("")
                 self.item_loot()
                 self.find_clues()

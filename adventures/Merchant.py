@@ -1,13 +1,20 @@
 from Multiplayer import IO
 from functools import partial
 
+
 class Merchant:
 
-    def __init__(self, items_list):
+    def __init__(self, items_list,
+                 greeting="Hello. Are you looking to buy or sell?",
+                 sales_pitch="Here are the goods I have to sell.",
+                 goodbye="Goodbye."):
         self.items_list = items_list
+        self.greeting = greeting
+        self.sales_pitch = sales_pitch
+        self.goodbye = goodbye
 
     def greet(self, player):
-        IO.print_text("Hello. Are ya lookin to buy or sell?", [player.player_num])
+        IO.print_text(self.greeting, [player.player_num])
         IO.print_text("1. Buy", [player.player_num])
         IO.print_text("2. Sell", [player.player_num])
         IO.print_text("3. Goodbye", [player.player_num])
@@ -22,7 +29,7 @@ class Merchant:
             self.buy_items_from(player)
             self.greet(player)
         else:
-            IO.print_text("Fine, goodbye then.", [player.player_num])
+            IO.print_text(self.goodbye, [player.player_num])
 
     def buy_items_from(self, player):
         IO.print_text("What do you have to sell?")
@@ -54,12 +61,12 @@ class Merchant:
                 player.money += item_chosen.value
                 IO.print_text("You now have " + str(player.money) + " gold!")
 
-            if item_chosen_num == len(player.items)+1 or IO.get_input(0, "Wanna sell me anything else? (y/n)",
+            if item_chosen_num == len(player.items)+1 or IO.get_input(0, "would you like to sell anything else? (y/n)",
                             partial(IO.check_in_list, list_data=["y", "n"])) == "n":
                 break
 
     def sell_items_to(self, player):
-        IO.print_text("Plz buy my stuff!", [player.player_num])
+        IO.print_text(self.sales_pitch, [player.player_num])
         item_chosen_num = 0
 
         while True:
@@ -88,6 +95,7 @@ class Merchant:
                     IO.print_text("Sure, here's your " + item_chosen.name + "! (cha-ching)")
                     player.items.append(item_chosen)
                     player.money -= item_chosen.value
+                    IO.print_text("You now have " + str(player.money) + " gold.")
 
             if item_chosen_num == len(self.items_list)+1 or IO.get_input(0, "Would you like anything else? (y/n)",
                                                                 partial(IO.check_in_list, list_data=["y", "n"])) == "n":
