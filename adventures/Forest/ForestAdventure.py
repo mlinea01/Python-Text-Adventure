@@ -17,7 +17,7 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,             self.venusFlyTrap_fight, self.hit_trap],
+        map_data = [[self.step1,             self.random_fight, self.hit_trap],
                     [self.minions_fight,                None,                 self.empty],
                     [self.camp,              self.empty,              self.turantula_fight],
                     [self.zombieRat_fight,   self.hit_trap,           self.empty],
@@ -36,6 +36,22 @@ class Adventure1:
 
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
+
+    def random_fight(self, difficulty=3):
+        enemies = EnemyGen.get_random_enemies(difficulty)
+        if Battle().start(self.players, enemies):
+            IO.print_text("")
+            IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
+            IO.print_text("")
+            self.adventure.mark_visited()
+
+    def minions_fight(self):
+        enemies = EnemyGen.get_random_enemies(random.randint(1, 3), [DeathBeetle, WidowWasp])
+        if Battle().start(self.players, enemies):
+            IO.print_text("")
+            IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
+            IO.print_text("")
+            self.adventure.mark_visited()
 
     def get_primary_player(self, players):
         result = 0
@@ -56,23 +72,6 @@ class Adventure1:
     def empty(self):
         IO.print_text(
             "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
-
-    def minions_fight(self):
-        IO.print_text("It's a swarm!")
-        time.sleep(2)
-        IO.print_text("")
-        num_minions = random.randint(2, 4)
-        minions = []
-        while num_minions > 0:
-            num_minions -= 1
-            if random.randint(1,2) == 1:
-                minions.append(DeathBeetle())
-            else:
-                minions.append(WidowWasp())
-
-        if Battle().start(self.players, minions):
-            IO.print_text("Wow, we made it out alive!")
-            self.adventure.mark_visited()
 
     def step1(self):
         if self.adventure.already_visited():
