@@ -8,6 +8,7 @@ from adventures.Forest.Enemies import *
 import threading
 from time import sleep
 from adventures.Merchant import Merchant
+import csv
 
 startJourney = True
 
@@ -16,6 +17,12 @@ class Adventure1:
 
     def __init__(self, players):
         self.players = players
+
+        adventure_data_file = open("forestAdventureData.csv", "rt", encoding="utf-8")
+        adventure_data_reader = csv.reader(adventure_data_file)
+        adventure_data = []
+        for data in adventure_data_reader:
+            adventure_data.append(data)
 
         map_data = [[self.step1,                           partial(self.random_fight, 3, 1, 80),    self.hit_trap],
                     [partial(self.random_fight, 4, 4, 80),     None,                                self.empty],
@@ -35,6 +42,7 @@ class Adventure1:
         self.traps = [Hole(), Net(), BarbedWire(), BearTrap()]
 
         self.adventure = Adventure(self.players, map_data, 0, 0)
+        print(adventure_data[1][1])
         self.adventure.start()
 
     def random_fight(self, difficulty=3, max_diff=10, chance=100):
