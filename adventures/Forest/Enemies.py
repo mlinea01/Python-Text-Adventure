@@ -60,20 +60,20 @@ class EnemyGen:
         return 2
 
     @classmethod
-    def get_random_enemies(cls, difficulty, enemy_list=None):
+    def get_random_enemies(cls, diff, max_diff=10, enemy_list=None):
         enemies = []
         if enemy_list is None:
             enemy_list = [DeathBeetle, WidowWasp, SlappingTree, VenusFlyTrap, ZombieRat, TerrifyingTurantula]
-        while difficulty > 0:
+        while diff > 0:
             max_enemy_num = 0
             d = 1
             for enemy in enemy_list:
                 d = cls.get_enemy_difficulty(enemy)
-                if d > difficulty:
+                if d > diff or d > max_diff:
                     break
                 max_enemy_num += 1
 
             enemy_to_add = enemy_list[random.randint(0, max_enemy_num-1)]
-            difficulty -= d
+            diff -= d
             enemies.append(enemy_to_add())
         return enemies

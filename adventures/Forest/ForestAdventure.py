@@ -17,15 +17,15 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,             self.random_fight, self.hit_trap],
-                    [self.minions_fight,                None,                 self.empty],
-                    [self.camp,              self.empty,              self.turantula_fight],
-                    [self.zombieRat_fight,   self.hit_trap,           self.empty],
-                    [self.camp,              self.forest_merchant,          None],
-                    [None,                   self.camp,               self.empty],
-                    [self.turantula_fight,   self.empty,              self.empty],
-                    [None,                   self.empty,              None],
-                    [self.camp,              self.hit_trap,           self.turantula_fight]]
+        map_data = [[self.step1,                           partial(self.random_fight, 3, 1),    self.hit_trap],
+                    [partial(self.random_fight, 4, 4),     None,                                self.empty],
+                    [self.camp,                            self.empty,                          self.turantula_fight],
+                    [self.zombieRat_fight,                 self.hit_trap,                       self.empty],
+                    [self.camp,                            self.forest_merchant,                None],
+                    [None,                                 self.camp,                           self.empty],
+                    [self.turantula_fight,                 self.empty,                          self.empty],
+                    [None,                                 self.empty,                          None],
+                    [self.camp,                            self.hit_trap,                       self.turantula_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
@@ -37,16 +37,8 @@ class Adventure1:
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
 
-    def random_fight(self, difficulty=3):
-        enemies = EnemyGen.get_random_enemies(difficulty)
-        if Battle().start(self.players, enemies):
-            IO.print_text("")
-            IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
-            IO.print_text("")
-            self.adventure.mark_visited()
-
-    def minions_fight(self):
-        enemies = EnemyGen.get_random_enemies(random.randint(1, 3), [DeathBeetle, WidowWasp])
+    def random_fight(self, difficulty=3, max_diff=10):
+        enemies = EnemyGen.get_random_enemies(difficulty, max_diff)
         if Battle().start(self.players, enemies):
             IO.print_text("")
             IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
