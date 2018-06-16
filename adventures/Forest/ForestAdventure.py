@@ -17,8 +17,8 @@ class Adventure1:
     def __init__(self, players):
         self.players = players
 
-        map_data = [[self.step1,                           partial(self.random_fight, 3, 1),    self.hit_trap],
-                    [partial(self.random_fight, 4, 4),     None,                                self.empty],
+        map_data = [[self.step1,                           partial(self.random_fight, 3, 1, 80),    self.hit_trap],
+                    [partial(self.random_fight, 4, 4, 80),     None,                                self.empty],
                     [self.camp,                            self.empty,                          self.turantula_fight],
                     [self.zombieRat_fight,                 self.hit_trap,                       self.empty],
                     [self.camp,                            self.forest_merchant,                None],
@@ -37,13 +37,20 @@ class Adventure1:
         self.adventure = Adventure(self.players, map_data, 0, 0)
         self.adventure.start()
 
-    def random_fight(self, difficulty=3, max_diff=10):
-        enemies = EnemyGen.get_random_enemies(difficulty, max_diff)
-        if Battle().start(self.players, enemies):
-            IO.print_text("")
-            IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
-            IO.print_text("")
+    def random_fight(self, difficulty=3, max_diff=10, chance=100):
+        if random.randint(0,100) < chance:
+            enemies = EnemyGen.get_random_enemies(difficulty, max_diff)
+            if Battle().start(self.players, enemies):
+                IO.print_text("")
+                IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
+                IO.print_text("")
+                self.adventure.mark_visited()
+
+        if self.adventure.already_visited():
+            self.item_loot()
             self.adventure.mark_visited()
+        else:
+            IO.get_input(self.get_primary_player(self.players), "Looks like this place has been ransacked...")
 
     def get_primary_player(self, players):
         result = 0
