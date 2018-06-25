@@ -3,7 +3,7 @@ from adventures.Clouds.Enemies import *
 from adventures.Adventures import *
 
 
-class DesertAdventure:
+class CloudAdventure:
     def __init__(self, players):
         self.players = players
 
