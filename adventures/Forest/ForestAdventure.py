@@ -41,8 +41,7 @@ class Adventure1:
 
         self.traps = [Hole(), Net(), BarbedWire(), BearTrap()]
 
-        self.adventure = Adventure(self.players, map_data, 0, 0)
-        print(adventure_data[1][1])
+        self.adventure = Adventure(self.players, adventure_data, self, 0, 0)
         self.adventure.start()
 
     def random_fight(self, difficulty=3, max_diff=10, chance=100):

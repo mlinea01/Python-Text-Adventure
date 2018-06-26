@@ -1,11 +1,13 @@
 from Multiplayer import IO
 from functools import partial
+from adventures.Forest import ForestAdventure
 
 
 class Adventure:
-    def __init__(self, players, map_data, start_x=0, start_y=0):
+    def __init__(self, players, map_data, adventure, start_x=0, start_y=0):
         self.players = players
         self.map_data = map_data
+        self.adventure = adventure
 
         self.player_x = start_x
         self.player_y = start_y
@@ -62,7 +64,7 @@ class Adventure:
                 return False
             if y < 0 or y >= len(self.map_data):
                 return False
-            if self.map_data[y][x] is None:
+            if self.map_data[y][x] == "":
                 return False
 
             return True
@@ -71,7 +73,7 @@ class Adventure:
             return False
 
     def run_room(self, x, y):
-        self.map_data[y][x]()
+        exec(self.map_data[y][x])
 
     def already_visited(self):
         try:

@@ -1,3 +1,9 @@
-A1,B1,C1
-A2,B2,C2
-A3,B3,C3
+self.adventure.step1(),self.adventure.empty(),self.adventure.hit_trap()
+self.adventure.empty(),,self.adventure.empty()
+self.adventure.camp(),self.adventure.empty(),self.adventure.turantula_fight()
+self.adventure.zombieRat_fight(),self.adventure.hit_trap(),self.adventure.empty()
+self.adventure.camp(),self.adventure.forest_merchant,
+,self.adventure.camp(),self.adventure.empty()
+self.adventure.turantula_fight(),self.adventure.empty(),self.adventure.empty()
+,self.adventure.empty(),
+self.adventure.camp(),self.adventure.hit_trap(),self.adventure.turantula_fight()
