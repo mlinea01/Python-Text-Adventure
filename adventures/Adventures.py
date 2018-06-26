@@ -1,6 +1,5 @@
 from Multiplayer import IO
 from functools import partial
-from adventures.Forest import ForestAdventure
 
 
 class Adventure:
