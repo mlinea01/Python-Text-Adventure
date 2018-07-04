@@ -11,6 +11,7 @@ class Adventure:
         self.player_x = start_x
         self.player_y = start_y
         self.visited = set()
+        self.player_choose_next_move = True
 
     def get_primary_player(self, players):
         result = 0
@@ -29,33 +30,37 @@ class Adventure:
                 sumHp += player.hp
             if sumHp == 0:
                 return
-            IO.print_text("Choose direction to go in: ", self.get_primary_player(self.players))
-            directions = []
-            dir_num = 1
-            if self.can_move_to(self.player_x, self.player_y-1):
-                directions.append("North")
-            if self.can_move_to(self.player_x, self.player_y+1):
-                directions.append("South")
-            if self.can_move_to(self.player_x+1, self.player_y):
-                directions.append("East")
-            if self.can_move_to(self.player_x-1, self.player_y):
-                directions.append("West")
 
-            for direction in directions:
-                IO.print_text(str(dir_num) + ". " + direction)
-                dir_num += 1
+            if self.player_choose_next_move:
+                IO.print_text("Choose direction to go in: ", self.get_primary_player(self.players))
+                directions = []
+                dir_num = 1
+                if self.can_move_to(self.player_x, self.player_y-1):
+                    directions.append("North")
+                if self.can_move_to(self.player_x, self.player_y+1):
+                    directions.append("South")
+                if self.can_move_to(self.player_x+1, self.player_y):
+                    directions.append("East")
+                if self.can_move_to(self.player_x-1, self.player_y):
+                    directions.append("West")
 
-            direction = int(IO.get_input(self.get_primary_player(self.players), "Your choice: ", partial(IO.check_num_in_range, minimum=1,
-                                                                     maximum=len(directions))))-1
+                for direction in directions:
+                    IO.print_text(str(dir_num) + ". " + direction)
+                    dir_num += 1
 
-            if directions[direction] == "North":
-                self.player_y -= 1
-            elif directions[direction] == "South":
-                self.player_y += 1
-            elif directions[direction] == "East":
-                self.player_x += 1
+                direction = int(IO.get_input(self.get_primary_player(self.players), "Your choice: ", partial(IO.check_num_in_range, minimum=1,
+                                                                         maximum=len(directions))))-1
+
+                if directions[direction] == "North":
+                    self.player_y -= 1
+                elif directions[direction] == "South":
+                    self.player_y += 1
+                elif directions[direction] == "East":
+                    self.player_x += 1
+                else:
+                    self.player_x -= 1
             else:
-                self.player_x -= 1
+                self.player_choose_next_move = True
 
     def can_move_to(self, x, y):
         try:
@@ -85,3 +90,17 @@ class Adventure:
 
     def mark_visited(self):
         self.visited.add((self.player_x, self.player_y))
+
+    def move_players(self, x, y):
+        self.player_x += x
+        self.player_y += y
+
+    def move_players_in_dir(self, direction):
+        if direction == "North":
+            self.move_players(0, -1)
+        elif direction == "South":
+            self.move_players(0, 1)
+        elif direction == "East":
+            self.move_players(1, 0)
+        elif direction == "West":
+            self.move_players(-1, 0)

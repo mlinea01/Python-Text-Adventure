@@ -1,4 +1,4 @@
-self.adventure.step1(),"self.adventure.random_fight(3,1,80)",self.adventure.hit_trap()
+self.adventure.step1(),"self.adventure.bridge_event(""East"", ""West"")",self.adventure.hit_trap()
 "self.adventure.random_fight(4,4,80)",,self.adventure.empty()
 self.adventure.camp(),self.adventure.empty(),self.adventure.turantula_fight()
 self.adventure.zombieRat_fight(),self.adventure.hit_trap(),self.adventure.empty()

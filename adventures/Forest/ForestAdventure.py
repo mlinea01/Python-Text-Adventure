@@ -9,6 +9,7 @@ import threading
 from time import sleep
 from adventures.Merchant import Merchant
 import csv
+from adventures.Forest.ForestEvents import *
 
 startJourney = True
 
@@ -143,14 +144,12 @@ class Adventure1:
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
-            traps = random.randint(1, 4)
-            trap = self.traps[traps-1]
+            trap = self.traps[random.randint(0, 3)]
             self.activePlayers = copy(self.players)
             TargetFilters.target_filter_isAlive(self.activePlayers)
 
             for player in self.players:
-                intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
-                intro_thread.start()
+                threading.Thread(target=self.player_hit_by_trap, args=[player, trap]).start()
         else:
             IO.print_text("Theres that trap you got caught in! Let's not do that again!")
 
@@ -158,7 +157,8 @@ class Adventure1:
             sleep(0.5)
 
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
+        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!",
+                            time_out=50)
         IO.print_text(" ")
         if jump != "jump":
             IO.print_text(trap.desc, player.player_num)
@@ -220,3 +220,29 @@ class Adventure1:
 
         else:
             IO.print_text("The brutal venus fly trap is here, tunring to compost to grow more venus fly traps... weird.")
+
+    def bridge_event(self, dir_success, dir_fail):
+        if self.adventure.already_visited() is False:
+            result = BridgeEvent(self.players).start_event().get_event_result()
+            if result == BridgeResults.MadeItAcross:
+                sleep(1)
+                IO.print_text("The party continues " + dir_success)
+                sleep(1)
+                self.adventure.move_players_in_dir(dir_success)
+                self.adventure.player_choose_next_move = False
+
+            elif result == BridgeResults.BridgeBroke or result == BridgeResults.RanAway:
+                self.adventure.mark_visited()
+                sleep(1)
+                IO.print_text("The party moves back " + dir_fail)
+                sleep(1)
+                self.adventure.move_players_in_dir(dir_fail)
+                self.adventure.player_choose_next_move = False
+        else:
+            IO.print_text("The bridge still lies broken in pieces and the wind howls down the gorge.\n"
+                          "Looks like there is no way across now...")
+            sleep(1)
+            IO.print_text("The party moves back " + dir_fail)
+            sleep(1)
+            self.adventure.move_players_in_dir(dir_fail)
+            self.adventure.player_choose_next_move = False
