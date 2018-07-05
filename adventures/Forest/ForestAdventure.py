@@ -228,14 +228,17 @@ class Adventure1:
                 sleep(1)
                 IO.print_text("The party continues " + dir_success)
                 sleep(1)
+                IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
                 self.adventure.move_players_in_dir(dir_success)
                 self.adventure.player_choose_next_move = False
 
             elif result == BridgeResults.BridgeBroke or result == BridgeResults.RanAway:
-                self.adventure.mark_visited()
+                if result == BridgeResults.BridgeBroke:
+                    self.adventure.mark_visited()
                 sleep(1)
                 IO.print_text("The party moves back " + dir_fail)
                 sleep(1)
+                IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
                 self.adventure.move_players_in_dir(dir_fail)
                 self.adventure.player_choose_next_move = False
         else:
@@ -244,5 +247,6 @@ class Adventure1:
             sleep(1)
             IO.print_text("The party moves back " + dir_fail)
             sleep(1)
+            IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
             self.adventure.move_players_in_dir(dir_fail)
             self.adventure.player_choose_next_move = False
