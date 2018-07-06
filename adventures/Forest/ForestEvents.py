@@ -117,7 +117,7 @@ class BridgeEvent:
             if talk_word_index is not None:
                 talk_word_used = self.talk_words[talk_word_index]
                 what_to_say = input_text.split(talk_word_used,1)[1]
-                IO.print_text(player.name + talk_word_used+"s '" + what_to_say + "'")
+                IO.print_text(player.name + " " + talk_word_used+"s '" + what_to_say + " '")
 
             elif StringUtils.string_contains(input_text, self.retreat_words):
                 self.lock.acquire()
