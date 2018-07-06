@@ -182,31 +182,32 @@ class Character:
     def hit_by(self, attack):
 
         self.trigger_status_effects(Triggers.ON_HIT_BY, self, attack)
+        atk_dmg = attack.damage
 
-        if attack.damage is not None:
-            if attack.damage > 0:
+        if atk_dmg is not None:
+            if atk_dmg > 0:
                 if attack.atkType == AttackTypes.Normal:
-                    attack.damage -= (self.totalArmor / 5)
+                    atk_dmg -= (self.totalArmor / 5)
 
                 else:
-                    attack.damage -= (self.totalMagResist / 5)
+                    atk_dmg -= (self.totalMagResist / 5)
 
-                if attack.damage < 0:
-                    attack.damage = 0
+                if atk_dmg < 0:
+                    atk_dmg = 0
 
                 for res in self.resistances:
                     if attack.atkType == res:
                         IO.print_text(self.name + " is resistant to " + attack.atkType.name + " damage!")
-                        attack.damage /= 2
+                        atk_dmg /= 2
                         break
 
                 for weak in self.weaknesses:
                     if attack.atkType == weak:
                         IO.print_text(self.name + " is weak against " + attack.atkType.name + " damage!")
-                        attack.damage *= 2
+                        atk_dmg *= 2
                         break
 
-            self.apply_damage(attack.damage)
+            self.apply_damage(atk_dmg)
 
         if self.hp > 0:
             # if not defeated, apply status effect(s) - one or more can be applied

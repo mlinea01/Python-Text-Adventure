@@ -38,7 +38,7 @@ class BridgeEvent:
     def __init__(self, players):
         IO.print_text("The party comes upon a clearing in the forest in which you can see a giant gorge extending\n"
                       "downfor miles with a stream running at the bottom. Stretching the length of the gorge is a\n"
-                      "bridge that looks like it's been there for ages. It looks really old and doesn't seem like\n "
+                      "bridge that looks like it's been there for ages. It looks really old and doesn't seem like\n"
                       "rope it can handle much weight. Nonetheless, it is the only way across.")
         self.players = players
         self.lock = threading.Lock()
