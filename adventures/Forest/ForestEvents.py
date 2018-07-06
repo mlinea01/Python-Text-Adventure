@@ -140,6 +140,7 @@ class BridgeEvent:
         self.lock.acquire()
         self.players_on_bridge.append(player)
         IO.print_text(player.name + " steps onto the bridge and begins moving across...")
+        self.lock.release()
         if len(self.players_on_bridge) >= 2:
             self.lock.acquire()
             self.bridge_status = "broken"
@@ -152,8 +153,6 @@ class BridgeEvent:
             self.lock.release()
 
         else:
-            self.lock.release()
-
             if is_moving_fast:
                 sleep(3)
             else:
