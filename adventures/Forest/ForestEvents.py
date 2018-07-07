@@ -5,25 +5,30 @@ from copy import copy
 from attacks.AttacksInfo import Attack
 from attacks.AttacksInfo import AttackTypes
 import enum
+import re
 
 
 class StringUtils:
     @classmethod
     def string_contains(cls, input_str, str_list):
-        if cls.get_index_string_in_list(input_str, str_list) is not None:
-            return True
-        else:
-            return False
+        for word in str_list:
+            if cls.search_str_for_word(word)(input_str) is not None:
+                return True
+        return False
 
     @classmethod
     def get_index_string_in_list(cls, input_str, str_list):
         str_index = 0
         while str_index < len(str_list):
             s = str_list[str_index]
-            if s in input_str:
+            if cls.search_str_for_word(s)(input_str):
                 return str_index
             str_index += 1
         return None
+
+    @classmethod
+    def search_str_for_word(cls, word):
+        return re.compile(r'\b({0})\b'.format(word), flags=re.IGNORECASE).search
 
 
 # This class keeps track of attack types - useful for things like determining resistances to certain moves
@@ -65,6 +70,7 @@ class BridgeEvent:
         self.move_words_slow = ["stroll", "meander", "crawl"]
         self.move_words_neutral = ["go", "walk", "skip", "cartwheel"]
         self.move_words_fast = ["run", "sprint", "jog", "fast", "quick", "quickly", "swiftly", "speed"]
+        self.move_words_cross = ["cross"]
         self.investigate_words = ["investigate", "look", "test", "check", "examine", "touch"]
         self.retreat_words = ["back", "leave", "away", "turn around", "flee", "retreat"]
         self.talk_words = ["say", "tell", "yell", "scream", "whisper"]
@@ -129,6 +135,7 @@ class BridgeEvent:
                 input_text = IO.get_input(player.player_num, "You are partying it up on the other side!")
             is_moving_neutral = StringUtils.string_contains(input_text, self.move_words_neutral)
             is_moving_fast = StringUtils.string_contains(input_text, self.move_words_fast)
+            is_moving_cross = StringUtils.string_contains(input_text, self.move_words_cross)
             talk_word_index = StringUtils.get_index_string_in_list(input_text, self.talk_words)
             move_death_index = StringUtils.get_index_string_in_list(input_text, self.move_words_death)
 
@@ -148,8 +155,8 @@ class BridgeEvent:
                 self.lock.release()
                 break
 
-            elif is_moving_neutral or is_moving_fast:
-                if StringUtils.string_contains(input_text, self.move_words_bridge):
+            elif is_moving_neutral or is_moving_fast or is_moving_cross:
+                if is_moving_cross or StringUtils.string_contains(input_text, self.move_words_bridge):
                     if player.bridge_status == PlayerBridgeStatus.MadeItAcross:
                         IO.print_text("You start to go back over the bridge, but decide not to try your luck a "
                                       "second time...",
@@ -165,10 +172,15 @@ class BridgeEvent:
 
             elif move_death_index is not None:
                 self.lock.acquire()
-                IO.print_text(player.name + self.move_words_death[move_death_index]+"s into the gorge!")
+                IO.print_text(player.name + " " + self.move_words_death[move_death_index]+"s into the gorge!")
                 sleep(1)
+                IO.print_text("They yell aaaaaall the way down...")
+                sleep(2)
                 player.hit_by(self.fall_death)
                 IO.print_text("I think they're dead now.")
+                sleep(1)
+                IO.print_text("They were so " + player.desc + ". They will be missed...")
+                sleep(1)
                 self.players_dead.append(player)
                 break
 
