@@ -182,6 +182,7 @@ class BridgeEvent:
                 IO.print_text("They were so " + player.desc + ". They will be missed...")
                 sleep(1)
                 self.players_dead.append(player)
+                self.lock.release()
                 break
 
             else:
