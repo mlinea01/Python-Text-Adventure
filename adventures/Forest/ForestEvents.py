@@ -77,6 +77,7 @@ class BridgeEvent:
         self.investigate_words = ["investigate", "look", "test", "check", "examine", "touch"]
         self.retreat_words = ["back", "leave", "away", "turn around", "flee", "retreat"]
         self.talk_words = ["say", "tell", "yell", "scream", "whisper"]
+        self.dance_words = ["dance"]
         self.num_players_on_bridge = 0
 
     def get_event_result(self):
@@ -102,8 +103,8 @@ class BridgeEvent:
                     injured_names += " climb"
                 else:
                     injured_names += " climbs"
-                IO.print_text(injured_names + " back up after clinging on to part of the bridge as it swung down "
-                                              "hard into the side of the gorge, with some bruises to show for it.")
+                IO.print_text(injured_names + " back up after clinging onto part of the bridge as it swung down "
+                                              "hard into the side of the gorge. They have some bruises to show for it.")
                 self.result = BridgeResults.BridgeBroke
                 return self
 
@@ -138,7 +139,8 @@ class BridgeEvent:
             if player.bridge_status is not PlayerBridgeStatus.MadeItAcross:
                 input_text = IO.get_input(player.player_num, "What would you like to do? ")
             else:
-                input_text = IO.get_input(player.player_num, "You are partying it up on the other side!")
+                input_text = IO.get_input(player.player_num, "You are partying it up on the other side!\n"
+                                                             "Would you like to do anything else?")
 
             if self.event_active is False:
                 return
@@ -194,6 +196,9 @@ class BridgeEvent:
                 self.players_dead.append(player)
                 self.lock.release()
                 break
+
+            elif StringUtils.string_contains(input_text, self.dance_words):
+                IO.print_text(player.name + " is dancing!")
 
             else:
                 IO.print_text("You cannot do that.", player.player_num)
