@@ -57,13 +57,17 @@ class IO:
                 return True
         return False
 
+    @classmethod
+    def stop_waiting_for_input(cls, player_num):
+        Server.clear_player_input_flag(player_num)
+
 
 class ServerIO:
     def get_server_input(self, player, message="", time_out=-1):
         Server.print_text(message, [player])
         Server.set_player_input_flag(player)
         player_input = None
-        while player_input is None:
+        while Server.get_player_input_flag(player):
             player_input = Server.get_player_input(player)
             time.sleep(0.1)
             time_out -= 1
@@ -120,7 +124,6 @@ class Server:
             player_num = cls.get_player_num(connection)
             if cls.waiting_for_input[player_num] is True:
                 cls.player_input_buffer[player_num] = str_data
-                cls.waiting_for_input[player_num] = False
                 continue
 
             if cls.status == ServerStatus.WaitingToStartGame and not cls.playersReady.__contains__(connection):
@@ -180,9 +183,19 @@ class Server:
         cls.waiting_for_input[player] = True
 
     @classmethod
+    def clear_player_input_flag(cls, player):
+        cls.waiting_for_input[player] = False
+
+    @classmethod
+    def get_player_input_flag(cls, player):
+        return cls.waiting_for_input[player]
+
+    @classmethod
     def get_player_input(cls, player):
         buffer = copy(cls.player_input_buffer[player])
         cls.player_input_buffer[player] = None
+        if buffer is not None:
+            cls.clear_player_input_flag(player)
         return buffer
 
     @classmethod

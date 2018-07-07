@@ -48,6 +48,7 @@ class BridgeEvent:
                       "down for miles with a stream running at the bottom. Stretching the length of the gorge is a\n"
                       "rope bridge that looks like it's been there for ages. It looks really old and doesn't seem\n"
                       "like it can handle much weight. Nonetheless, it is the only way across.")
+        self.event_active = True
         self.players = players
         for player in players:
             player.bridge_status = PlayerBridgeStatus.AtStart
@@ -113,6 +114,9 @@ class BridgeEvent:
                     IO.print_text("Everyone who is still alive anyway...")
                 self.result = BridgeResults.MadeItAcross
                 sleep(1)
+                for player in self.players:
+                    IO.stop_waiting_for_input(player.player_num)
+                self.event_active = False
                 return self
 
             elif len(self.player_go_back) > 0:
@@ -133,6 +137,10 @@ class BridgeEvent:
                 input_text = IO.get_input(player.player_num, "What would you like to do? ")
             else:
                 input_text = IO.get_input(player.player_num, "You are partying it up on the other side!")
+
+            if self.event_active is False:
+                return
+
             is_moving_neutral = StringUtils.string_contains(input_text, self.move_words_neutral)
             is_moving_fast = StringUtils.string_contains(input_text, self.move_words_fast)
             is_moving_cross = StringUtils.string_contains(input_text, self.move_words_cross)
