@@ -11,6 +11,8 @@ import re
 class StringUtils:
     @classmethod
     def string_contains(cls, input_str, str_list):
+        if input_str is None:
+            return False
         for word in str_list:
             if cls.search_str_for_word(word)(input_str) is not None:
                 return True
