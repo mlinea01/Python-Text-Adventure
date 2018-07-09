@@ -41,7 +41,7 @@ class StatusEffect:
 class Shield(StatusEffect):
     def __init__(self, shieldAmount, duration=1, chance=100):
         super().__init__()
-        self.name = "Shielded"
+        self.name = "is shielded"
         self.amount = shieldAmount
         self.duration = duration
         self.chance = chance
@@ -70,7 +70,7 @@ class Shield(StatusEffect):
 class Stun(StatusEffect):
     def __init__(self, stunDuration, chance=100):
         super().__init__()
-        self.name = "Stunned"
+        self.name = "is stunned"
         self.duration = stunDuration
         self.chance = chance
 
@@ -92,7 +92,7 @@ class Stun(StatusEffect):
 class Blind(StatusEffect):
     def __init__(self, blindDuration, chance=100):
         super().__init__()
-        self.name = "Blinded"
+        self.name = "is blinded"
         self.duration = blindDuration
         self.chance = chance
 
@@ -110,7 +110,7 @@ class Blind(StatusEffect):
 class Bleed(StatusEffect):
     def __init__(self, bleedDuration, damage=1, chance=100):
         super().__init__()
-        self.name = "Bleeding"
+        self.name = "is bleeding"
         self.duration = bleedDuration
         self.damage = damage
         self.chance = chance
@@ -130,7 +130,7 @@ class Bleed(StatusEffect):
 class Poison(StatusEffect):
     def __init__(self, poison_duration=1, damage=1, chance=100):
         super().__init__()
-        self.name = "poisoned"
+        self.name = "is poisoned"
         self.duration = poison_duration
         self.damage = damage
         self.chance = chance
@@ -151,7 +151,7 @@ class Poison(StatusEffect):
 class Paralyze(StatusEffect):
     def __init__(self, paralyzeDuration, chance=100):
         super().__init__()
-        self.name = "Paralyzed"
+        self.name = "is paralyzed"
         self.duration = paralyzeDuration
         self.chance = chance
 
@@ -173,7 +173,7 @@ class Paralyze(StatusEffect):
 class Slow(StatusEffect):
     def __init__(self, slowDuration, slow_amount=2, chance=100):
         super().__init__()
-        self.name = "Slowed"
+        self.name = "is slowed"
         self.duration = slowDuration+1
         self.chance = chance
         self.amount = slow_amount
@@ -199,7 +199,7 @@ class Slow(StatusEffect):
 class DamageBoost(StatusEffect):
     def __init__(self, amount, duration, chance=100):
         super().__init__()
-        self.name = "increasing damage"
+        self.name = "now has increased damage"
         self.amount = amount
         self.duration = duration
         self.chance = chance
@@ -218,7 +218,7 @@ class DamageBoost(StatusEffect):
 class HpBoost(StatusEffect):
     def __init__(self, amount):
         super().__init__()
-        self.name = "Healed"
+        self.name = "is healed"
         self.amount = amount
         self.chance = 100
 
@@ -232,7 +232,7 @@ class HpBoost(StatusEffect):
 class manaBoost(StatusEffect):
     def __init__(self, amount):
         super().__init__()
-        self.name = "imbued with mana"
+        self.name = "is imbued with mana"
         self.amount = amount
         self.chance = 100
 
@@ -245,7 +245,7 @@ class manaBoost(StatusEffect):
 class speedBoost(StatusEffect):
     def __init__(self, amount, duration):
         super().__init__()
-        self.name = "faster"
+        self.name = "is faster"
         self.amount = amount
         self.duration = duration
         self.chance = 100
@@ -265,7 +265,7 @@ class speedBoost(StatusEffect):
 class charmed(StatusEffect):
     def __init__(self, duration, chance=100):
         super().__init__()
-        self.name = "charmed"
+        self.name = "is charmed"
         self.duration = duration
         self.chance = chance
 
@@ -281,7 +281,7 @@ class charmed(StatusEffect):
 class antiCharmed(StatusEffect):
     def __init__(self, duration=1):
         super().__init__()
-        self.name = "no longer charmed"
+        self.name = "is no longer charmed"
         self.duration = duration
         self.chance = 100
 

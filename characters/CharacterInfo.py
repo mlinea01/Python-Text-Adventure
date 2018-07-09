@@ -116,10 +116,10 @@ class Character:
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
                 if e.name == effect.name:
-                    IO.print_text(self.name + " is already " + effect.name, self.players_list)
+                    IO.print_text(self.name + " already " + effect.name, self.players_list)
                     return
 
-            IO.print_text(self.name + " is " + effect.name, self.players_list)
+            IO.print_text(self.name + " " + effect.name, self.players_list)
             time.sleep(1)
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
