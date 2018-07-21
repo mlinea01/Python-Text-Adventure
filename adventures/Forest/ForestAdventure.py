@@ -1,5 +1,6 @@
 from Battle import *
 from adventures.Forest.ForestEvents.BridgeEvent import BridgeEvent, BridgeResults
+from adventures.Forest.ForestEvents.FruitEvent import FruitEvent
 from items.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
@@ -250,3 +251,6 @@ class Adventure1:
             IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
             self.adventure.move_players_in_dir(dir_fail)
             self.adventure.player_choose_next_move = False
+
+    def fruit_event(self):
+        FruitEvent(self.players).start_event()

@@ -1,5 +1,5 @@
 self.adventure.step1(),"self.adventure.bridge_event(""East"", ""West"")",self.adventure.hit_trap()
-"self.adventure.random_fight(4,4,80)",,self.adventure.empty()
+self.adventure.fruit_event(),,self.adventure.empty()
 self.adventure.camp(),self.adventure.empty(),self.adventure.turantula_fight()
 self.adventure.zombieRat_fight(),self.adventure.hit_trap(),self.adventure.empty()
 self.adventure.camp(),self.adventure.forest_merchant(),
