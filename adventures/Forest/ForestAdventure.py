@@ -1,4 +1,5 @@
 from Battle import *
+from adventures.Forest.ForestEvents.BridgeEvent import BridgeEvent, BridgeResults
 from items.Potions import *
 from functools import partial
 from adventures.Adventures import Adventure
@@ -9,7 +10,6 @@ import threading
 from time import sleep
 from adventures.Merchant import Merchant
 import csv
-from adventures.Forest.ForestEvents import *
 
 startJourney = True
 
