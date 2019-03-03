@@ -1,7 +1,7 @@
-from Multiplayer import GameSession
+from Game import Game
 import time
 
 class Main:
 
-    GameSession.start_session()
+    Game()
 

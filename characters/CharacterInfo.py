@@ -61,7 +61,7 @@ class Character:
             if effect_num < len(self.status_effects) - 1:
                 all_effects += ", "
             effect_num += 1
-        IO.print_text(self.name + ": HP: " + str(self.hp) + " MANA: " + str(self.mana) + " SPEED: " + str(self.speed)
+        print(self.name + ": HP: " + str(self.hp) + " MANA: " + str(self.mana) + " SPEED: " + str(self.speed)
                       + ", Status: " + all_effects, self.players_list)
 
     def turn_end(self):
@@ -86,29 +86,29 @@ class Character:
 
         if len(attacks_enabled) > 0:
             attack_chosen = deepcopy(attacks_enabled[random.randint(0, len(attacks_enabled) - 1)])
-            IO.print_text(self.name + " uses " + attack_chosen.name, self.players_list)
+            print(self.name + " uses " + attack_chosen.name, self.players_list)
             self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
             return attack_chosen
         else:
-            IO.print_text(self.name + " cannot attack this turn!", self.players_list)
+            print(self.name + " cannot attack this turn!", self.players_list)
             return None
 
     def equip_weapon(self, weapon, show_message=True):
         if show_message:
-            IO.print_text(self.name + " equipped " + weapon.name + "!", [self.player_num])
+            print(self.name + " equipped " + weapon.name + "!")
         self.weapons.append(weapon)
         self.learn_attack(weapon.attack, False)
 
     def equip_armor(self, Armor, show_message=True):
         if show_message:
-            IO.print_text(self.name + " equipped " + Armor.name + "!", [self.player_num])
+            print(self.name + " equipped " + Armor.name + "!")
         self.armor.append(Armor)
         self.totalArmor += Armor.armor
         self.totalMagResist += Armor.magResist
 
     def learn_attack(self, attack, show_message=True):
         if show_message:
-            IO.print_text(self.name + " learned " + attack.name + "!", [self.player_num])
+            print(self.name + " learned " + attack.name + "!")
         self.attacks.append(attack)
 
     # status effects
@@ -116,10 +116,10 @@ class Character:
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
                 if e.name == effect.name:
-                    IO.print_text(self.name + " already " + effect.name, self.players_list)
+                    print(self.name + " already " + effect.name, self.players_list)
                     return
 
-            IO.print_text(self.name + " " + effect.name, self.players_list)
+            print(self.name + " " + effect.name, self.players_list)
             time.sleep(1)
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
@@ -166,16 +166,16 @@ class Character:
 
         if show_message:
             if damage >= 0:
-                IO.print_text(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),
+                print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),
                               self.players_list)
             else:
-                IO.print_text(self.name + " is healed for " + str(-damage) + " damage! " + "HP: " + str(self.hp),
+                print(self.name + " is healed for " + str(-damage) + " damage! " + "HP: " + str(self.hp),
                               self.players_list)
 
         time.sleep(1.5)
 
         if self.hp == 0:
-            IO.print_text(self.name + " has been defeated!", self.players_list)
+            print(self.name + " has been defeated!", self.players_list)
             time.sleep(2)
 
     # called when hit by an attack
@@ -197,13 +197,13 @@ class Character:
 
                 for res in self.resistances:
                     if attack.atkType == res:
-                        IO.print_text(self.name + " is resistant to " + attack.atkType.name + " damage!")
+                        print(self.name + " is resistant to " + attack.atkType.name + " damage!")
                         atk_dmg /= 2
                         break
 
                 for weak in self.weaknesses:
                     if attack.atkType == weak:
-                        IO.print_text(self.name + " is weak against " + attack.atkType.name + " damage!")
+                        print(self.name + " is weak against " + attack.atkType.name + " damage!")
                         atk_dmg *= 2
                         break
 

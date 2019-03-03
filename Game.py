@@ -17,71 +17,42 @@ class Game:
     def __init__(self):
 
         levels = [Adventure1]
-
-        IO.print_text("Game has started!")
-
-        p_num = 0
-        while p_num < IO.get_num_players():
-            intro_thread = threading.Thread(target=self.adventure_intro, args=[p_num])
-            intro_thread.start()
-            p_num += 1
-            Game.players.append(None)
-
-        players_ready = False
-        while not players_ready:
-            time.sleep(0.1)
-            players_ready = True
-            for player in Game.players:
-                if player is None:
-                    players_ready = False
-
-        IO.print_text("Well done in your training everyone!")
-        p_num = 0
-        for player in Game.players:
-            time.sleep(0.5)
-            IO.print_text(player.name + " the " + player.desc + " " + player.character_type + " " + player.race +
-                              " has joined the party!")
-            p_num += 1
-
+        self.adventure_intro()
+        
+        print("Well done in your training!")
         time.sleep(1)
 
         game_restart = True
         level_num = 0
         # start of new game
-        while game_restart:
 
-            # if there is a backup version of players, restore from backup
-            if len(Game.player_backup) > 0:
-                player_num = 0
-                while player_num < len(Game.players):
-                    Game.players[player_num].character = Game.player_backup[player_num]
-                    player_num += 1
+        # if there is a backup version of players, restore from backup
+        if len(Game.player_backup) > 0:
+            player_num = 0
+            while player_num < len(Game.players):
+                Game.players[player_num].character = Game.player_backup[player_num]
+                player_num += 1
 
-            # play each level
-            while level_num < len(levels):
-                Game.player_backup = []
-                for player in Game.players:
-                    if player is not None:
-                        Game.player_backup.append(deepcopy(player.character))
-                levels[level_num](Game.players)
+        # play each level
+        while level_num < len(levels):
+            Game.player_backup = []
+            for player in Game.players:
+                if player is not None:
+                    Game.player_backup.append(deepcopy(player.character))
+            levels[level_num](Game.players)
 
-                # check if all players are dead after each level
-                sumHp = 0
-                for player in Game.players:
-                    sumHp += player.hp
-                if sumHp == 0:
-                    break
+            # check if all players are dead after each level
+            sumHp = 0
+            for player in Game.players:
+                sumHp += player.hp
+            if sumHp == 0:
+                break
 
-                level_num = level_num + 1
+            level_num = level_num + 1
 
-            if IO.get_input(0,"GAME OVER\nWould you like to restart the current level? (y/n)",partial(IO.check_in_list,
-                                                                                    list_data=["y", "n"])) == "n":
-                game_restart = False
 
-    def adventure_intro(self, player_num):
-
-        from Multiplayer import IO
-
+    def adventure_intro(self):
+        
         leaveGame = 0
 
         # starting spells: fire, water, earth, wind
@@ -98,61 +69,54 @@ class Game:
         while leaveGame != "q":
 
             # prompt player to choose a starting character type which will determine starting spell choices
-            IO.print_text("Choose a character type.\n", [player_num])
+            print("Choose a character type.\n")
             typeNum = 1
             for charType in characterTypes:
-                IO.print_text(str(typeNum) + ". " + charType, [player_num])
+                print(str(typeNum) + ". " + charType)
                 typeNum += 1
 
-            characterType = int(IO.get_input(player_num, "\nYour choice: ",
-                                             partial(IO.check_num_in_range,minimum=1, maximum=len(characterTypes))))
-            IO.print_text("", [player_num])
+            characterType = int(input("\nYour choice: "))
+            print("")
 
             # confirm character type choice
-            IO.print_text("You chose a " + characterTypes[characterType - 1] + " character.", [player_num])
-            change = int(IO.get_input(player_num,
-                                      "Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)",
-                                      partial(IO.check_num_in_range, minimum=1, maximum=2)))
+            print("You chose a " + characterTypes[characterType - 1] + " character.")
+            change = int(input("Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)"))
+
             if change == 2:
                 continue
 
             # Prompt player to choose a Race for his/her character
-            IO.print_text("Choose a Race for your character.\n", [player_num])
+            print("Choose a Race for your character.\n")
             raceNum = 1
             for raceType in characterRaces:
-                IO.print_text(str(raceNum) + ". " + raceType.name, [player_num])
+                print(str(raceNum) + ". " + raceType.name)
                 raceNum += 1
 
-            characterRace = int(IO.get_input(player_num, "\nYour choice: ",
-                                             partial(IO.check_num_in_range,minimum=1, maximum=len(characterRaces))))
+            characterRace = int(input("\nYour choice: "))
             char = characterRaces[characterRace - 1]
-            IO.print_text("", [player_num])
-            IO.print_text("You chose " + char.name, [player_num])
-            IO.print_text(char.desc, [player_num])
+            print("")
+            print("You chose " + char.name)
+            print(char.desc)
 
             # prompt the player for a character name
-            name = IO.get_input(player_num, "\nCreate a name for your character: ", partial(IO.check_not_null))
-            player = Player(name, char, player_num, characterTypes[characterType - 1])
-            player.desc = IO.get_input(player_num, "Describe your character in one word: ",
-                                       partial(IO.check_not_null)).split(' ', 1)[0]
-            IO.print_text("Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1]
-                              + " " + player.race, [player_num])
+            name = input("\nCreate a name for your character: ")
+            player = Player(name, char, 0, characterTypes[characterType - 1])
+            player.desc = input("Describe your character in one word: ").split(' ', 1)[0]
+            print("Hello " + player.name + " the " + player.desc + " " + characterTypes[characterType - 1]
+                              + " " + player.race)
 
             # prompt the player to choose a starting weapon
             player_weapon = None
             while True:
-                IO.print_text("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n", [player_num])
+                print("\nBefore you go out on your adventure, grab a weapon! (Choose One)\n")
                 weaponNum = 1
                 for weapon in weapons:
-                    IO.print_text(str(weaponNum) + ". " + weapon.name, [player_num])
+                    print(str(weaponNum) + ". " + weapon.name)
                     weaponNum += 1
-                player_weapon = weapons[int(IO.get_input(player_num, "\nYour choice: ",
-                                                         partial(IO.check_num_in_range, minimum=1,
-                                                                 maximum=len(weapons)))) - 1]
-                IO.print_text("", [player_num])
-                IO.print_text("The " + player_weapon.name + " - " + player_weapon.desc, [player_num])
-                if int(IO.get_input(player_num, "Is this the weapon you want? (1.yes 2.no)",
-                                    partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
+                player_weapon = weapons[int(input("\nYour choice: ")) - 1]
+                print("")
+                print("The " + player_weapon.name + " - " + player_weapon.desc)
+                if int(input("Is this the weapon you want? (1.yes 2.no)")) != 1:
                     continue
                 else:
                     player.equip_weapon(player_weapon, False)
@@ -160,28 +124,25 @@ class Game:
 
             # prompt the player to choose a starting spell
             while True:
-                IO.print_text("\nYou will also need an ability to protect yourself.(Choose One)\n", [player_num])
+                print("\nYou will also need an ability to protect yourself.(Choose One)\n")
                 spellNum = 1
                 for spell in startingSpells[characterType - 1]:
-                    IO.print_text(str(spellNum) + ". " + spell.name, [player_num])
+                    print(str(spellNum) + ". " + spell.name)
                     spellNum += 1
                 chosenSpell = startingSpells[characterType - 1][
-                    int(IO.get_input(player_num, "\nYour choice: ",
-                                     partial(IO.check_num_in_range,minimum=1, maximum=len(startingSpells)))) - 1]
-                IO.print_text(chosenSpell.name + " - " + chosenSpell.desc, [player_num])
-                if int(IO.get_input(player_num, "Is this the spell you want? (1.yes 2.no)",
-                                    partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
+                    int(input("\nYour choice: ")) - 1]
+                print(chosenSpell.name + " - " + chosenSpell.desc)
+                if int(input("Is this the spell you want? (1.yes 2.no)")) != 1:
                     continue
                 else:
                     player.learn_attack(chosenSpell)
                     break
 
             # practice battle
-            IO.print_text("\nYou'll need to learn how to fight out there. Let's see what ya got!", [player_num])
-            IO.print_text("Attack this training dummy to practice.\n", [player_num])
+            print("\nYou'll need to learn how to fight out there. Let's see what ya got!")
+            print("Attack this training dummy to practice.\n")
 
             leaveGame = "q"
             Battle().start([player], TrainingDummy())
 
-            Game.players[player_num] = player
-            IO.print_text("Waiting for other players to finish their training...", [player_num])
+            print("Waiting for other players to finish their training...")

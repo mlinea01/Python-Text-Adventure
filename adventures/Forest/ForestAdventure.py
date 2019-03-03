@@ -50,16 +50,16 @@ class Adventure1:
         if random.randint(0,100) < chance:
             enemies = EnemyGen.get_random_enemies(difficulty, max_diff)
             if Battle().start(self.players, enemies):
-                IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "Whew we made it out alive!")
-                IO.print_text("")
+                print("")
+                input("Whew we made it out alive!")
+                print("")
                 self.adventure.mark_visited()
 
         if self.adventure.already_visited():
             self.item_loot()
             self.adventure.mark_visited()
         else:
-            IO.get_input(self.get_primary_player(self.players), "Looks like this place has been ransacked...")
+            input("Looks like this place has been ransacked...")
 
     def get_primary_player(self, players):
         result = 0
@@ -70,7 +70,7 @@ class Adventure1:
                 result += 1
 
     def forest_merchant(self):
-        IO.print_text("A merchant stands in a cozy hut in a shaded area. You go inside...")
+        print("A merchant stands in a cozy hut in a shaded area. You go inside...")
         merchant = Merchant(items_list=[HealthPotion(), ManaPotion()],
                             greeting="The forest smiles upon us and provides us with bounty.",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
@@ -78,36 +78,35 @@ class Adventure1:
         merchant.greet(self.players[0])
 
     def empty(self):
-        IO.print_text(
+        print(
             "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
 
     def step1(self):
         if self.adventure.already_visited():
-            IO.print_text("You have returned to the start!")
+            print("You have returned to the start!")
         else:
-            IO.print_text("Now that you have completed your training, we can begin our first adventure!")
-            IO.print_text("This is exciting!")
-            start = IO.get_input(self.get_primary_player(self.players), "Are you ready to go? (yes or no)",
-                                 partial(IO.check_in_list, list_data=["yes", "no"]))
-            IO.print_text("")
+            print("Now that you have completed your training, we can begin our first adventure!")
+            print("This is exciting!")
+            start = input("Are you ready to go? (yes or no)")
+            print("")
 
             if start == "yes":
-                IO.print_text("A long time ago, in a mythical land...It is up to you to find those responsible and take"
+                print("A long time ago, in a mythical land...It is up to you to find those responsible and take"
                               " them down!")
-                IO.print_text("You must begin your journey through the enchanted forest, but be careful! It's not as "
+                print("You must begin your journey through the enchanted forest, but be careful! It's not as "
                               "glamorous as it sounds!")
 
-                IO.get_input(0, "Press enter to start your journey in the enchanted forest!")
-                IO.print_text("")
+                input("Press enter to start your journey in the enchanted forest!")
+                print("")
 
-                IO.get_input(0, "There's no turning back now! Keep your eyes open, this forest is filled with "
+                input("There's no turning back now! Keep your eyes open, this forest is filled with "
                                 "creatures that will not be too happy about you being on their land.")
-                IO.print_text("")
+                print("")
                 self.adventure.mark_visited()
 
     def camp(self):
-        IO.print_text("Look! There is a camp up ahead, Let's check it out and see if we can find any clues!")
-        IO.print_text("")
+        print("Look! There is a camp up ahead, Let's check it out and see if we can find any clues!")
+        print("")
         time.sleep(1)
         self.item_loot()
         self.find_clues()
@@ -117,31 +116,31 @@ class Adventure1:
         search = random.randint(1, 8)
 
         if search <= 4 and self.adventure.already_visited() is False:
-            IO.print_text("You found an item!")
+            print("You found an item!")
             item = potions[search - 1]()
-            IO.print_text("You found a " + item.name)
+            print("You found a " + item.name)
             self.players[self.get_primary_player(self.players)].items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
-            IO.print_text("The place has been ransacked! Looks like there's nothing left.")
+            print("The place has been ransacked! Looks like there's nothing left.")
         else:
-            IO.print_text("There are no items here, Let's see if we can find any clues.")
+            print("There are no items here, Let's see if we can find any clues.")
 
     def find_clues(self):
         find = random.randint(1, 8)
 
         if find <= 4 and self.adventure.already_visited() is False:
-            IO.print_text("You found a clue! You may need this at some point.")
+            print("You found a clue! You may need this at some point.")
             clue = self.riddle.get_rand_clue()
-            IO.print_text("Clue: " + clue)
+            print("Clue: " + clue)
             self.players[self.get_primary_player(self.players)].clues.append(clue)
             self.adventure.mark_visited()
 
         elif self.adventure.mark_visited():
-            IO.print_text("We already found all the clues we could here!")
+            print("We already found all the clues we could here!")
         else:
-            IO.print_text("There doesn't seem to be any clues!")
+            print("There doesn't seem to be any clues!")
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
@@ -152,84 +151,82 @@ class Adventure1:
             for player in self.players:
                 threading.Thread(target=self.player_hit_by_trap, args=[player, trap]).start()
         else:
-            IO.print_text("Theres that trap you got caught in! Let's not do that again!")
+            print("Theres that trap you got caught in! Let's not do that again!")
 
         while len(self.activePlayers) > 0:
             sleep(0.5)
 
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!",
-                            time_out=50)
-        IO.print_text(" ")
+        jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
+        print(" ")
         if jump != "jump":
-            IO.print_text(trap.desc, player.player_num)
+            print(trap.desc, player.player_num)
             player.hit_by(trap)
             time.sleep(2)
             self.adventure.mark_visited()
         else:
-            IO.print_text("You avoided the trap! I almost peed my pants!", player.player_num)
+            print("You avoided the trap! I almost peed my pants!", player.player_num)
         self.adventure.mark_visited()
         self.activePlayers.remove(player)
 
     def turantula_fight(self):
         if self.adventure.already_visited() is False:
-            IO.print_text("There is a huge turantula in this camp! OMG kill it!!!!!")
+            print("There is a huge turantula in this camp! OMG kill it!!!!!")
             time.sleep(2)
-            IO.print_text("")
+            print("")
             if Battle().start(self.players, TerrifyingTurantula()):
-                IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "Wow that was a huge spider, I really hope we don't see another one of those!")
-                IO.print_text("")
+                print("")
+                input("Wow that was a huge spider, I really hope we don't see another one of those!")
+                print("")
                 self.item_loot()
                 self.find_clues()
                 self.adventure.mark_visited()
 
         else:
-            IO.print_text("That nasty spider is still laying here, why did we come back here?")
-            IO.print_text("This camp is completely empty, no need to look around again and be near this spider!")
+            print("That nasty spider is still laying here, why did we come back here?")
+            print("This camp is completely empty, no need to look around again and be near this spider!")
 
     def zombieRat_fight(self):
         if self.adventure.already_visited() is False:
-            IO.print_text("That is one big rat, it looks like it should be dead.  Its a ZOMBIE!!!")
+            print("That is one big rat, it looks like it should be dead.  Its a ZOMBIE!!!")
             time.sleep(2)
-            IO.print_text("")
+            print("")
             if Battle().start(self.players, ZombieRat()):
-                IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "Where did a zombie rat come from? that was so wierd!")
-                IO.print_text("")
+                print("")
+                input("Where did a zombie rat come from? that was so wierd!")
+                print("")
                 self.item_loot()
                 self.find_clues()
                 self.adventure.mark_visited()
 
         else:
-            IO.print_text("The blood from the zombie rat is here but the rat is gone! we must not have killed it!")
-            IO.print_text("We've searched this camp as much as we could, lets go before that rat comes back.")
+            print("The blood from the zombie rat is here but the rat is gone! we must not have killed it!")
+            print("We've searched this camp as much as we could, lets go before that rat comes back.")
 
     def venusFlyTrap_fight(self):
         if self.adventure.already_visited() is False:
-            IO.print_text("ACK! There's something touching my leg - it's a vine!")
+            print("ACK! There's something touching my leg - it's a vine!")
             time.sleep(2)
-            IO.print_text("")
+            print("")
             if Battle().start(self.players, VenusFlyTrap()):
-                IO.print_text("")
-                IO.get_input(self.get_primary_player(self.players), "Whew, that plant almost made us its dinner! \
-                                                                    (Press enter to continue)")
-                IO.print_text("")
+                print("")
+                input("Whew, that plant almost made us its dinner! (Press enter to continue)")
+                print("")
                 self.item_loot()
                 self.find_clues()
                 self.adventure.mark_visited()
 
         else:
-            IO.print_text("The brutal venus fly trap is here, tunring to compost to grow more venus fly traps... weird.")
+            print("The brutal venus fly trap is here, tunring to compost to grow more venus fly traps... weird.")
 
     def bridge_event(self, dir_success, dir_fail):
         if self.adventure.already_visited() is False:
             result = BridgeEvent(self.players).start_event().get_event_result()
             if result == BridgeResults.MadeItAcross:
                 sleep(1)
-                IO.print_text("The party continues " + dir_success)
+                print("The party continues " + dir_success)
                 sleep(1)
-                IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
+                input("Press Enter to continue.")
                 self.adventure.move_players_in_dir(dir_success)
                 self.adventure.player_choose_next_move = False
 
@@ -237,18 +234,18 @@ class Adventure1:
                 if result == BridgeResults.BridgeBroke:
                     self.adventure.mark_visited()
                 sleep(1)
-                IO.print_text("The party moves back " + dir_fail)
+                print("The party moves back " + dir_fail)
                 sleep(1)
-                IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
+                input("Press Enter to continue.")
                 self.adventure.move_players_in_dir(dir_fail)
                 self.adventure.player_choose_next_move = False
         else:
-            IO.print_text("The bridge still lies broken in pieces and the wind howls down the gorge.\n"
+            print("The bridge still lies broken in pieces and the wind howls down the gorge.\n"
                           "Looks like there is no way across now...")
             sleep(1)
-            IO.print_text("The party moves back " + dir_fail)
+            print("The party moves back " + dir_fail)
             sleep(1)
-            IO.get_input(self.adventure.get_primary_player(self.players), "Press Enter to continue.")
+            input("Press Enter to continue.")
             self.adventure.move_players_in_dir(dir_fail)
             self.adventure.player_choose_next_move = False
 

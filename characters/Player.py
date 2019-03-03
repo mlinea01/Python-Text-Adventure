@@ -26,12 +26,11 @@ class Player:
             return targets
         else:
             target_num = 1
-            IO.print_text("Choose target: ", [self.player_num])
+            print("Choose target: ")
             for target in targets:
-                IO.print_text(str(target_num) + ". " + target.name, [self.player_num])
+                print(str(target_num) + ". " + target.name)
                 target_num += 1
-            target_choice = int(IO.get_input(self.player_num, "Your choice: ",
-                                             partial(IO.check_num_in_range, minimum=1, maximum=len(targets)))) - 1
+            target_choice = int(input("Your choice: ")) - 1
             return [targets[target_choice]]
 
     def choose_attack(self, battle):
@@ -48,48 +47,45 @@ class Player:
                 attacks_enabled.append(a)
 
         if len(attacks_enabled) > 0 or len(self.character.items) > 0:
-            IO.print_text("Choose your attack: ", [self.player_num])
+            print("Choose your attack: ")
             attack_num = 1
             for attack in self.character.attacks:
                 if attack.enabled:
-                    IO.print_text(str(attack_num) + ". " + attack.name + " - " + attack.desc, [self.player_num])
+                    print(str(attack_num) + ". " + attack.name + " - " + attack.desc)
                 else:
-                    IO.print_text(str(attack_num) + ". " + attack.name + " - (DISABLED)", [self.player_num])
+                    print(str(attack_num) + ". " + attack.name + " - (DISABLED)")
                 attack_num += 1
 
             for item in self.character.items:
-                IO.print_text(str(attack_num) + ". " + item.name, [self.player_num])
+                print(str(attack_num) + ". " + item.name)
                 attack_num += 1
 
-            chosen_attack_num = int(
-                IO.get_input(self.player_num, "Your choice: ", partial(IO.check_num_in_range, minimum=1,
-                                                                       maximum=len(self.character.attacks) + len(
-                                                                           self.character.items)))) - 1
+            chosen_attack_num = int(input("Your choice: ")) - 1
 
             while True:
                 if chosen_attack_num < len(self.character.attacks):
                     if self.attacks[chosen_attack_num].enabled is False:
-                        IO.print_text(self.attacks[chosen_attack_num].disabled_message, [self.player_num])
+                        print(self.attacks[chosen_attack_num].disabled_message)
                         return self.choose_attack(battle)
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
-                        IO.print_text(self.name + " uses " + attack_chosen.name, self.players_list)
+                        print(self.name + " uses " + attack_chosen.name, self.players_list)
                         self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
                         if self.character.mana > 0 and not (self.character.mana < attack_chosen.manaCost):
                             self.character.mana -= attack_chosen.manaCost
                         elif self.character.mana < attack_chosen.manaCost:
-                            IO.print_text("You don't have enough mana for that attack")
+                            print("You don't have enough mana for that attack")
                             return self.choose_attack(battle)
                         else:
                             self.character.mana = 0
                         return attack_chosen
                 else:
                     chosen_item = self.character.items[chosen_attack_num - len(self.character.attacks)]
-                    IO.print_text(self.character.name + " used a " + chosen_item.name, self.players_list)
+                    print(self.character.name + " used a " + chosen_item.name, self.players_list)
                     self.character.items.remove(chosen_item)
                     return chosen_item.itemAttack
         else:
-            IO.print_text(self.name + " cannot attack this turn!", [self.player_num])
+            print(self.name + " cannot attack this turn!")
             return None
 
     def learn_new_spell(self):
@@ -108,19 +104,16 @@ class Player:
             spellTypes = NewSpells.windTierOne
 
         while True:
-            IO.print_text("You grew a level, Choose a new spell to use on your journey!", self.players_list)
+            print("You grew a level, Choose a new spell to use on your journey!")
             spellNum = 1
             for spell in spellTypes:
                 if not self.character.has_attack(spell):
-                    IO.print_text(str(spellNum) + ". " + spell.name, self.players_list)
+                    print(str(spellNum) + ". " + spell.name, self.players_list)
                     spellNum += 1
 
-            new_spell = spellTypes[int(IO.get_input(self.player_num, "\nYour choice: ",
-                                                    partial(IO.check_num_in_range, minimum=1,
-                                                            maximum=len(spellTypes)))) - 1]
-            IO.print_text(new_spell.name + "-" + new_spell.desc, self.player_list)
-            if int(IO.get_input(self.player_num, "Is this the spell you want? (1.yes 2.no)",
-                                partial(IO.check_num_in_range, minimum=1, maximum=2))) != 1:
+            new_spell = spellTypes[int(input("\nYour choice: ")) - 1]
+            print(new_spell.name + "-" + new_spell.desc)
+            if int(input("Is this the spell you want? (1.yes 2.no)")) != 1:
                 continue
             else:
                 self.character.learn_attack(new_spell)

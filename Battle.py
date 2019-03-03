@@ -35,9 +35,9 @@ class Battle:
                     enemy_names += " and "
 
             if len(enemy_names) > 1:
-                IO.print_text(enemy_names + " are about to attack!", self.player_nums)
+                print(enemy_names + " are about to attack!")
             else:
-                IO.print_text(enemy_names + " is about to attack!", self.player_nums)
+                print(enemy_names + " is about to attack!")
 
         except TypeError:
             self.enemies = [enemies]
@@ -48,9 +48,9 @@ class Battle:
 
         while Battle.alive(self.enemies) and Battle.alive(self.players):
             self.fighters.sort(key=lambda char: char.speed, reverse=True)
-            IO.print_text(" ", self.player_nums)
-            IO.print_text("ROUND START", self.player_nums)
-            IO.print_text(" ", self.player_nums)
+            print(" ")
+            print("ROUND START")
+            print(" ")
 
             i = 0
             turn_num = 1
@@ -60,19 +60,19 @@ class Battle:
                 if fighter.hp <= 0:
                     i += 1
                     if fighter.is_player:
-                        IO.print_text(fighter.name + "is dead and cannot attack!", self.player_nums)
+                        print(fighter.name + "is dead and cannot attack!")
                     continue
 
-                IO.print_text("Turn " + str(turn_num), self.player_nums)
+                print("Turn " + str(turn_num))
                 turn_num += 1
-                IO.print_text(fighter.name + " is attacking!", self.player_nums)
+                print(fighter.name + " is attacking!")
                 fighter.turn_start()
                 if fighter.is_player:
-                    IO.print_text("Level: " + str(fighter.level) + ", XP: " + str(fighter.xp) + " / " +
-                                  str(fighter.maxXp), self.player_nums)
+                    print("Level: " + str(fighter.level) + ", XP: " + str(fighter.xp) + " / " +
+                                  str(fighter.maxXp))
 
                 if fighter.cannot_attack > 0:
-                    IO.print_text(fighter.name + " cannot attack!", self.player_nums)
+                    print(fighter.name + " cannot attack!")
                 else:
                     chosen_attack = fighter.choose_attack(self)
                     if chosen_attack is not None:
@@ -97,16 +97,16 @@ class Battle:
                                         target_dodged = True
 
                             if attack_missed:
-                                IO.print_text(fighter.name + "'s " + "attack missed!", self.player_nums)
+                                print(fighter.name + "'s " + "attack missed!")
                             elif target_dodged:
-                                IO.print_text(target.name + " dodged the attack!", self.player_nums)
+                                print(target.name + " dodged the attack!")
                             else:
                                 target.hit_by(chosen_attack)
 
                             if fighter.is_player and target.hp == 0:
                                 for fighter in players:
                                     fighter.character.xp += target.reward_xp
-                                    IO.print_text("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
+                                    print("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
 
                                     if fighter.character.xp >= fighter.character.maxXp:
                                         fighter.character.level += 1
@@ -114,14 +114,14 @@ class Battle:
                                         if fighter.character.level % 5 == 0:
                                             fighter.learn_new_spell()
 
-                                        IO.print_text(fighter.name + " grew to level " + str(fighter.character.level)
-                                                      + "!", self.player_nums)
+                                        print(fighter.name + " grew to level " + str(fighter.character.level)
+                                                      + "!")
 
                 i += 1
                 fighter.turn_end()
                 if fighter.hp > 0 and Battle.alive(self.players) and Battle.alive(self.enemies):
-                    IO.print_text(fighter.name + "'s turn is over!", self.player_nums)
-                IO.print_text(" ", self.player_nums)
+                    print(fighter.name + "'s turn is over!")
+                print(" ")
                 time.sleep(3)
 
         return Battle.alive(self.players)
