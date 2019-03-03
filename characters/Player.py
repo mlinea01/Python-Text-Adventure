@@ -1,7 +1,4 @@
 from copy import deepcopy
-from attacks.StatusEffects import Triggers
-from Multiplayer import IO
-from functools import partial
 from characters.CharacterLevelUp import *
 
 
@@ -66,16 +63,16 @@ class Player:
                 if chosen_attack_num < len(self.character.attacks):
                     if self.attacks[chosen_attack_num].enabled is False:
                         print(self.attacks[chosen_attack_num].disabled_message)
-                        return self.choose_attack(battle)
+                        return self.choose_attack()
                     else:
                         attack_chosen = deepcopy(self.character.attacks[chosen_attack_num])
-                        print(self.name + " uses " + attack_chosen.name, self.players_list)
+                        print(self.name + " uses " + attack_chosen.name)
                         self.trigger_status_effects(Triggers.ON_ATTACKING, self.character, attack_chosen)
                         if self.character.mana > 0 and not (self.character.mana < attack_chosen.manaCost):
                             self.character.mana -= attack_chosen.manaCost
                         elif self.character.mana < attack_chosen.manaCost:
                             print("You don't have enough mana for that attack")
-                            return self.choose_attack(battle)
+                            return self.choose_attack()
                         else:
                             self.character.mana = 0
                         return attack_chosen

@@ -1,7 +1,6 @@
 from Game import Game
-import time
 
 class Main:
 
-    Game()
+    Game.adventure_intro()
 

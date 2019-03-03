@@ -4,7 +4,6 @@ import random
 from attacks.StatusEffects import Triggers
 from copy import deepcopy
 from attacks.AttacksInfo import *
-from Multiplayer import IO
 import time
 
 
@@ -40,14 +39,10 @@ class Character:
         self.attacks_disabled = []
         self.player_num = None
         self.is_player = False
-        self.players_list = []
         self.reward_xp = reward_xp
         self.character_type = character_type
         self.resistances = CharacterUtils.get_resistances(character_type)
         self.weaknesses = CharacterUtils.get_weaknesses(character_type)
-
-    def battle_start(self, players_list):
-        self.players_list = players_list
 
     # start and ending turn in battle
     def turn_start(self):
@@ -62,7 +57,7 @@ class Character:
                 all_effects += ", "
             effect_num += 1
         print(self.name + ": HP: " + str(self.hp) + " MANA: " + str(self.mana) + " SPEED: " + str(self.speed)
-                      + ", Status: " + all_effects, self.players_list)
+                      + ", Status: " + all_effects)
 
     def turn_end(self):
         self.trigger_status_effects(Triggers.ON_TURN_END, self)
@@ -86,11 +81,11 @@ class Character:
 
         if len(attacks_enabled) > 0:
             attack_chosen = deepcopy(attacks_enabled[random.randint(0, len(attacks_enabled) - 1)])
-            print(self.name + " uses " + attack_chosen.name, self.players_list)
+            print(self.name + " uses " + attack_chosen.name)
             self.trigger_status_effects(Triggers.ON_ATTACKING, self, attack_chosen)
             return attack_chosen
         else:
-            print(self.name + " cannot attack this turn!", self.players_list)
+            print(self.name + " cannot attack this turn!")
             return None
 
     def equip_weapon(self, weapon, show_message=True):
@@ -116,10 +111,10 @@ class Character:
         if random.randint(0, 100) <= effect.chance:
             for e in self.status_effects:
                 if e.name == effect.name:
-                    print(self.name + " already " + effect.name, self.players_list)
+                    print(self.name + " already " + effect.name)
                     return
 
-            print(self.name + " " + effect.name, self.players_list)
+            print(self.name + " " + effect.name)
             time.sleep(1)
             self.status_effects.append(effect)
             self.trigger_status_effects(Triggers.ON_EFFECT_APPLY, self)
@@ -166,16 +161,14 @@ class Character:
 
         if show_message:
             if damage >= 0:
-                print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp),
-                              self.players_list)
+                print(self.name + " takes " + str(damage) + " damage!" + "  HP: " + str(self.hp))
             else:
-                print(self.name + " is healed for " + str(-damage) + " damage! " + "HP: " + str(self.hp),
-                              self.players_list)
+                print(self.name + " is healed for " + str(-damage) + " damage! " + "HP: " + str(self.hp))
 
         time.sleep(1.5)
 
         if self.hp == 0:
-            print(self.name + " has been defeated!", self.players_list)
+            print(self.name + " has been defeated!")
             time.sleep(2)
 
     # called when hit by an attack
