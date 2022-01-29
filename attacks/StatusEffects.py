@@ -54,7 +54,7 @@ class Shield(StatusEffect):
         if self.attack.damage < self.amount:
             blocked_amount = self.attack.damage
 
-        IO.print_text(self.character.name + " blocked " + str(blocked_amount) + " damage!")
+        print(self.character.name + " blocked " + str(blocked_amount) + " damage!")
         self.attack.damage -= blocked_amount
         self.amount -= blocked_amount
         if self.amount <= 0:
@@ -120,7 +120,7 @@ class Bleed(StatusEffect):
         hpLeft = self.character.hp-self.damage
         if hpLeft < 0:
             hpLeft = 0
-        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: " + str(hpLeft))
+        print(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: " + str(hpLeft))
         self.character.apply_damage(self.damage, False)
         self.duration -= 1
         if self.duration == 0:
@@ -140,7 +140,7 @@ class Poison(StatusEffect):
         hpLeft = self.character.hp-self.damage
         if hpLeft < 0:
             hpLeft = 0
-        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from poison! HP: " + str(hpLeft))
+        print(self.character.name + " takes " + str(self.damage) + " damage from poison! HP: " + str(hpLeft))
         self.character.apply_damage(self.damage, False)
         self.duration -= 1
         self.damage += 1
@@ -226,7 +226,7 @@ class HpBoost(StatusEffect):
         super().on_effect_apply_getargs(args)
         self.character.change_hp(self.amount)
         self.is_resolved = True
-        IO.print_text(self.character.name + "'s HP is now " + str(self.character.hp), self.character.players_list)
+        print(self.character.name + "'s HP is now " + str(self.character.hp))
 
 
 class manaBoost(StatusEffect):
@@ -240,7 +240,7 @@ class manaBoost(StatusEffect):
         super().on_effect_apply_getargs(args)
         self.character.change_mana(self.amount)
         self.is_resolved = True
-        IO.print_text(self.character.name + "'s mana is now " + str(self.character.mana), self.character.players_list)
+        print(self.character.name + "'s mana is now " + str(self.character.mana))
 
 class speedBoost(StatusEffect):
     def __init__(self, amount, duration):
@@ -254,7 +254,7 @@ class speedBoost(StatusEffect):
         super().on_effect_apply_getargs(args)
         self.character.change_speed(self.amount)
         self.is_resolved = True
-        IO.print_text(self.character.name + "'s speed is now " + str(self.character.speed), self.character.players_list)
+        print(self.character.name + "'s speed is now " + str(self.character.speed))
 
     def on_turn_end(self, args):
         self.duration -= 1

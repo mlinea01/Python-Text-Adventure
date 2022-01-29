@@ -37,19 +37,19 @@ class StringUtils:
 class FruitEvent:
 
     def __init__(self, players):
-        IO.print_text("You come to a clearing in the dense forest trees, in the middle of which is a\n"
+        print("You come to a clearing in the dense forest trees, in the middle of which is a\n"
                       "beautiful willow tree. The tree is bearing fruit that looks strange, but at the\n"
                       "same time, enticingly delicious. They are plump and juicy looking with a bright\n"
                       "blue skin and dark green leaves. One of them is particularly low and one of you\n"
                       "goes to grab it...")
         sleep(7)
-        IO.print_text("Willow Tree: Hey! What do you think you're doing?! That's my fruit!")
+        print("Willow Tree: Hey! What do you think you're doing?! That's my fruit!")
         sleep(2)
-        IO.print_text("Willow Tree: Hmm... tell you what, if you are worthy I will give you\n"
+        print("Willow Tree: Hmm... tell you what, if you are worthy I will give you\n"
                       "the fruit. Answer my questions to prove your heart is true. You may\n"
                       "discuss amongst yourselves, just say 'final answer' before your final answer!")
         sleep(7)
-        IO.print_text("Willow Tree: Ready? Then we shall begin...")
+        print("Willow Tree: Ready? Then we shall begin...")
         sleep(2)
 
         self.players = players
@@ -66,7 +66,7 @@ class FruitEvent:
         self.answers = [["trees"],
                         ["roots"]]
 
-        IO.print_text(self.questions[self.question_num])
+        print(self.questions[self.question_num])
 
     def start_event(self, ):
         for player in self.players:
@@ -75,40 +75,40 @@ class FruitEvent:
         while True:
             if self.answer_given is not None:
                 if StringUtils.string_contains(self.answer_given,  self.answers[self.question_num]):
-                    IO.print_text("That is correct!")
+                    print("That is correct!")
                     if self.question_num == len(self.questions)-1:
-                        IO.print_text("Wow, you are the first creatures to pass my test in over a century.")
+                        print("Wow)
                         if len(self.players) == 1:
-                            IO.print_text("You have earned this fruit! Here you go...")
+                            print("You have earned this fruit! Here you go...")
                         else:
-                            IO.print_text("You have each earned a fruit. Here you go...")
+                            print("You have each earned a fruit. Here you go...")
                         for player in self.players:
-                            IO.print_text("You have recieved a " + self.fruit_item.name + "!", player.player_num)
+                            print("You have recieved a " + self.fruit_item.name + "!")
                             player.items.append(copy(self.fruit_item))
                     else:
                         self.question_num += 1
-                        IO.print_text("On to the next question...")
+                        print("On to the next question...")
                         sleep(1)
                         self.answer_given = None
-                        IO.print_text(self.questions[self.question_num])
+                        print(self.questions[self.question_num])
                         self.looking_for_player_input = True
                 else:
-                    IO.print_text("That is incorrect! I knew you were not worthy! Be gone with you!")
+                    print("That is incorrect! I knew you were not worthy! Be gone with you!")
                     return
 
     def player_action(self, player):
         while True:
             if self.looking_for_player_input:
-                IO.print_text("What would you like to say?", player.player_num)
+                print("What would you like to say?")
                 input_text = IO.get_input(player.player_num,
                                           "(type 'final answer' first to give your answer to the Willow Tree)")
                 if not self.looking_for_player_input:
                     continue
                 if input_text.startswith("final answer"):
                     self.answer_given = input_text
-                    IO.print_text(player.name + " has answered: " + input_text)
+                    print(player.name + " has answered: " + input_text)
                     self.looking_for_player_input = False
                     for player in self.players:
                         IO.stop_waiting_for_input(player.player_num)
                 else:
-                    IO.print_text(player.name + " says " + input_text)
+                    print(player.name + " says " + input_text)
