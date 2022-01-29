@@ -226,7 +226,7 @@ class HpBoost(StatusEffect):
         super().on_effect_apply_getargs(args)
         self.character.change_hp(self.amount)
         self.is_resolved = True
-        IO.print_text(self.character.name + "'s HP is now " + str(self.character.hp), self.character.players_list)
+        print(self.character.name + "'s HP is now " + str(self.character.hp))
 
 
 class manaBoost(StatusEffect):
@@ -240,7 +240,7 @@ class manaBoost(StatusEffect):
         super().on_effect_apply_getargs(args)
         self.character.change_mana(self.amount)
         self.is_resolved = True
-        IO.print_text(self.character.name + "'s mana is now " + str(self.character.mana), self.character.players_list)
+        print(self.character.name + "'s mana is now " + str(self.character.mana))
 
 class speedBoost(StatusEffect):
     def __init__(self, amount, duration):
@@ -254,7 +254,7 @@ class speedBoost(StatusEffect):
         super().on_effect_apply_getargs(args)
         self.character.change_speed(self.amount)
         self.is_resolved = True
-        IO.print_text(self.character.name + "'s speed is now " + str(self.character.speed), self.character.players_list)
+        print(self.character.name + "'s speed is now " + str(self.character.speed))
 
     def on_turn_end(self, args):
         self.duration -= 1

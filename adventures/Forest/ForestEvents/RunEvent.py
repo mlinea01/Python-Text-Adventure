@@ -38,4 +38,4 @@ class RunEvent:
 
         if jump != "jump":
             enemy = random.randint(0,1)
-            IO.print_text(self.enemies[enemy] + self.enemy_attacks[enemy].desc, player.player_num)
+            print(self.enemies[enemy] + self.enemy_attacks[enemy].desc)

@@ -83,7 +83,7 @@ class FruitEvent:
                         else:
                             IO.print_text("You have each earned a fruit. Here you go...")
                         for player in self.players:
-                            IO.print_text("You have recieved a " + self.fruit_item.name + "!", player.player_num)
+                            print("You have recieved a " + self.fruit_item.name + "!")
                             player.items.append(copy(self.fruit_item))
                     else:
                         self.question_num += 1
@@ -99,7 +99,7 @@ class FruitEvent:
     def player_action(self, player):
         while True:
             if self.looking_for_player_input:
-                IO.print_text("What would you like to say?", player.player_num)
+                print("What would you like to say?")
                 input_text = IO.get_input(player.player_num,
                                           "(type 'final answer' first to give your answer to the Willow Tree)")
                 if not self.looking_for_player_input:

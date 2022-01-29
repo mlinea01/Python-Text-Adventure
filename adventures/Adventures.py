@@ -32,7 +32,7 @@ class Adventure:
                 return
 
             if self.player_choose_next_move:
-                IO.print_text("Choose direction to go in: ", self.get_primary_player(self.players))
+                print("Choose direction to go in: ")
                 directions = []
                 dir_num = 1
                 if self.can_move_to(self.player_x, self.player_y-1):

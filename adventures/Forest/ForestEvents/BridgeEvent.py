@@ -176,7 +176,7 @@ class BridgeEvent:
                         continue
                     self.player_crosses(player, is_moving_fast)
                 else:
-                    IO.print_text("Can you please be more specific?", player.player_num)
+                    print("Can you please be more specific?")
 
             elif StringUtils.string_contains(input_text, self.investigate_words):
                 IO.print_text("The bridge sways and creaks in the breeze.\n"
@@ -201,7 +201,7 @@ class BridgeEvent:
                 IO.print_text(player.name + " is dancing!")
 
             else:
-                IO.print_text("You cannot do that.", player.player_num)
+                print("You cannot do that.")
 
     def player_crosses(self, player, is_moving_fast):
         self.lock.acquire()

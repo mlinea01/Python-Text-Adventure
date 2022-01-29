@@ -80,12 +80,12 @@ class MountainAdventure:
                             time_out=50)
         IO.print_text(" ")
         if jump != "jump":
-            IO.print_text(trap.desc, player.player_num)
+            print(trap.desc)
             player.hit_by(trap)
             time.sleep(2)
             self.adventure.mark_visited()
         else:
-            IO.print_text("You avoided the trap! I almost peed my pants!", player.player_num)
+            print("You avoided the trap! I almost peed my pants!")
         self.adventure.mark_visited()
         self.activePlayers.remove(player)
 
