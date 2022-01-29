@@ -26,7 +26,7 @@ class OceanAdventure:
                 result += 1
 
     def Ocean_merchant(self):
-        print("A merchant sits on an island in the middle of the sea. You swim over...")
+        IO.print_text("A merchant sits on an island in the middle of the sea. You swim over...")
         merchant = Merchant(items_list=[HealthPotion(), ManaPotion()],
                             greeting="Does the ocean call to you like it calls to me?, bless this deep blue ocean!",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
@@ -34,12 +34,12 @@ class OceanAdventure:
         merchant.greet(self.players[0])
 
     def empty(self):
-        print(
+        IO.print_text(
             "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
 
     def camp(self):
-        print("Look! There is a camp up ahead)
-        print("")
+        IO.print_text("Look! There is a camp up ahead, Let's check it out and see if we can find any clues!")
+        IO.print_text("")
         time.sleep(1)
         self.item_loot()
 
@@ -48,16 +48,16 @@ class OceanAdventure:
         search = random.randint(1, 8)
 
         if search <= 4 and self.adventure.already_visited() is False:
-            print("You found an item!")
+            IO.print_text("You found an item!")
             item = potions[search - 1]()
-            print("You found a " + item.name)
+            IO.print_text("You found a " + item.name)
             self.players[self.get_primary_player(self.players)].items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
-            print("The place has been ransacked! Looks like there's nothing left.")
+            IO.print_text("The place has been ransacked! Looks like there's nothing left.")
         else:
-            print("There are no items here)
+            IO.print_text("There are no items here, Let's see if we can find any clues.")
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
@@ -70,7 +70,7 @@ class OceanAdventure:
                 intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
                 intro_thread.start()
         else:
-            print("Theres that trap you got caught in! Let's not do that again!")
+            IO.print_text("Theres that trap you got caught in! Let's not do that again!")
 
         while len(self.activePlayers) > 0:
             sleep(0.5)
@@ -78,61 +78,61 @@ class OceanAdventure:
     def player_hit_by_trap(self, player, trap):
         jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!",
                             time_out=50)
-        print(" ")
+        IO.print_text(" ")
         if jump != "jump":
-            print(trap.desc)
+            IO.print_text(trap.desc, player.player_num)
             player.hit_by(trap)
             time.sleep(2)
             self.adventure.mark_visited()
         else:
-            print("You avoided the trap! I almost peed my pants!")
+            IO.print_text("You avoided the trap! I almost peed my pants!", player.player_num)
         self.adventure.mark_visited()
         self.activePlayers.remove(player)
 
     def giantSquid_fight(self):
         if self.adventure.already_visited() is False:
-            print("What is that coming out of the water? NO! its a giant squid!!!")
+            IO.print_text("What is that coming out of the water? NO! its a giant squid!!!")
             time.sleep(2)
-            print("")
+            IO.print_text("")
             if Battle().start(self.players, GiantSquid()):
-                print("")
+                IO.print_text("")
                 IO.get_input(self.get_primary_player(self.players),
                              "That squid almost had us! And you wanted to take a boat!")
-                print("")
+                IO.print_text("")
                 self.adventure.mark_visited()
 
         else:
-            print("Whats that smell? Smells like rotten fish! oh its that squid!")
-            print("If you want to look around go for it)
+            IO.print_text("Whats that smell? Smells like rotten fish! oh its that squid!")
+            IO.print_text("If you want to look around go for it, ")
 
     def megalodonShark_fight(self):
         if self.adventure.already_visited() is False:
-            print("Ok I know it's supposed to be a myth but i think that's a megalodon!")
+            IO.print_text("Ok I know it's supposed to be a myth but i think that's a megalodon!")
             time.sleep(2)
-            print("")
+            IO.print_text("")
             if Battle().start(self.players, MegalodonShark()):
-                print("")
+                IO.print_text("")
                 IO.get_input(self.get_primary_player(self.players),
                              "Ok that was scary, I'm not crying it's from the ocean!")
-                print("")
+                IO.print_text("")
                 self.adventure.mark_visited()
 
         else:
-            print("Oh my jesus its the shark! The waters just warm here)
-            print("maybe we should just go!")
+            IO.print_text("Oh my jesus its the shark! The waters just warm here, don't look at me!")
+            IO.print_text("maybe we should just go!")
 
     def petrifyingPiranha_fight(self):
         if self.adventure.already_visited() is False:
-            print("Ok its a huge piranha, I'm not saying we're screwed)
+            IO.print_text("Ok its a huge piranha, I'm not saying we're screwed, but we're screwed!")
             time.sleep(2)
-            print("")
+            IO.print_text("")
             if Battle().start(self.players, PetrifyingPiranha()):
-                print("")
+                IO.print_text("")
                 IO.get_input(self.get_primary_player(self.players),
                              "I LIVED! YES!! i may or may not have lost a finger!")
-                print("")
+                IO.print_text("")
                 self.adventure.mark_visited()
 
         else:
-            print("Ok i think that's the piranha again! oh hey look it's a rainbow)
-            print("There's nothing here)
+            IO.print_text("Ok i think that's the piranha again! oh hey look it's a rainbow, lets go this way!")
+            IO.print_text("There's nothing here, I looked!")

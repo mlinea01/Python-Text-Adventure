@@ -46,7 +46,7 @@ class PlayerBridgeStatus(enum.Enum):
 class BridgeEvent:
 
     def __init__(self, players):
-        print("The party comes upon a clearing in the forest in which you can see a giant gorge extending\n"
+        IO.print_text("The party comes upon a clearing in the forest in which you can see a giant gorge extending\n"
                       "down for miles with a stream running at the bottom. Stretching the length of the gorge is a\n"
                       "rope bridge that looks like it's been there for ages. It looks really old and doesn't seem\n"
                       "like it can handle much weight. Nonetheless, it is the only way across.")
@@ -103,7 +103,7 @@ class BridgeEvent:
                     injured_names += " climb"
                 else:
                     injured_names += " climbs"
-                print(injured_names + " back up after clinging onto part of the bridge as it swung down "
+                IO.print_text(injured_names + " back up after clinging onto part of the bridge as it swung down "
                                               "hard into the side of the gorge. They have some bruises to show for it.")
                 self.result = BridgeResults.BridgeBroke
                 return self
@@ -111,10 +111,10 @@ class BridgeEvent:
             elif len(self.players_across) + len(self.players_dead) == len(self.players) and \
                     len(self.players_dead) < len(self.players):
                 sleep(0.5)
-                print("Everyone has made it across safely! Now you may continue onwards...")
+                IO.print_text("Everyone has made it across safely! Now you may continue onwards...")
                 if len(self.players_dead) > 0:
                     sleep(1)
-                    print("Everyone who is still alive anyway...")
+                    IO.print_text("Everyone who is still alive anyway...")
                 self.result = BridgeResults.MadeItAcross
                 sleep(1)
                 for player in self.players:
@@ -123,10 +123,10 @@ class BridgeEvent:
                 return self
 
             elif len(self.player_go_back) > 0:
-                print(self.player_go_back[0].name + " looks very flustered and just runs away!")
+                IO.print_text(self.player_go_back[0].name + " looks very flustered and just runs away!")
                 if len(self.players) > 1:
                     sleep(1)
-                    print("Everyone else quickly runs after them.")
+                    IO.print_text("Everyone else quickly runs after them.")
                 if self.bridge_status == "normal":
                    self.result = BridgeResults.RanAway
                 else:
@@ -154,11 +154,11 @@ class BridgeEvent:
             if talk_word_index is not None:
                 talk_word_used = self.talk_words[talk_word_index]
                 what_to_say = input_text.split(talk_word_used,1)[1]
-                print(player.name + " " + talk_word_used+"s '" + what_to_say + " '")
+                IO.print_text(player.name + " " + talk_word_used+"s '" + what_to_say + " '")
 
             elif StringUtils.string_contains(input_text, self.retreat_words):
                 if player.bridge_status == PlayerBridgeStatus.MadeItAcross:
-                    print("You start to go back over the bridge, but decide not to try your luck a "
+                    IO.print_text("You start to go back over the bridge, but decide not to try your luck a "
                                   "second time...",
                                   player.player_num)
                     continue
@@ -170,49 +170,49 @@ class BridgeEvent:
             elif is_moving_neutral or is_moving_fast or is_moving_cross:
                 if is_moving_cross or StringUtils.string_contains(input_text, self.move_words_bridge):
                     if player.bridge_status == PlayerBridgeStatus.MadeItAcross:
-                        print("You start to go back over the bridge, but decide not to try your luck a "
+                        IO.print_text("You start to go back over the bridge, but decide not to try your luck a "
                                       "second time...",
                                       player.player_num)
                         continue
                     self.player_crosses(player, is_moving_fast)
                 else:
-                    print("Can you please be more specific?")
+                    IO.print_text("Can you please be more specific?", player.player_num)
 
             elif StringUtils.string_contains(input_text, self.investigate_words):
-                print("The bridge sways and creaks in the breeze.\n"
+                IO.print_text("The bridge sways and creaks in the breeze.\n"
                               "This thing does NOT seem very stable!", player.player_num)
 
             elif move_death_index is not None:
                 self.lock.acquire()
-                print(player.name + " " + self.move_words_death[move_death_index]+"s into the gorge!")
+                IO.print_text(player.name + " " + self.move_words_death[move_death_index]+"s into the gorge!")
                 sleep(1)
-                print("They yell aaaaaall the way down...")
+                IO.print_text("They yell aaaaaall the way down...")
                 sleep(2)
                 player.hit_by(self.fall_death)
-                print("I think they're dead now.")
+                IO.print_text("I think they're dead now.")
                 sleep(1)
-                print("They were so " + player.desc + ". They will be missed...")
+                IO.print_text("They were so " + player.desc + ". They will be missed...")
                 sleep(1)
                 self.players_dead.append(player)
                 self.lock.release()
                 break
 
             elif StringUtils.string_contains(input_text, self.dance_words):
-                print(player.name + " is dancing!")
+                IO.print_text(player.name + " is dancing!")
 
             else:
-                print("You cannot do that.")
+                IO.print_text("You cannot do that.", player.player_num)
 
     def player_crosses(self, player, is_moving_fast):
         self.lock.acquire()
         self.players_on_bridge.append(player)
-        print(player.name + " steps onto the bridge and begins moving across...")
+        IO.print_text(player.name + " steps onto the bridge and begins moving across...")
         self.lock.release()
         if len(self.players_on_bridge) >= 2:
             self.lock.acquire()
             self.bridge_status = "broken"
             sleep(0.5)
-            print("The bridge ropes snap! The bridge begins to fall into the gorge below!")
+            IO.print_text("The bridge ropes snap! The bridge begins to fall into the gorge below!")
             self.players_falling = copy(self.players_on_bridge)
             for player_falling in self.players_falling:
                 threading.Thread(target=self.player_falls, args=[player_falling]).start()
@@ -229,7 +229,7 @@ class BridgeEvent:
             if self.bridge_status == "normal":
                 self.players_on_bridge.remove(player)
                 self.players_across.append(player)
-                print(player.name + " made it across the bridge!")
+                IO.print_text(player.name + " made it across the bridge!")
                 player.bridge_status = PlayerBridgeStatus.MadeItAcross
             self.lock.release()
 
@@ -237,14 +237,14 @@ class BridgeEvent:
         reaction = IO.get_input(player.player_num,
                                 "Type 'run back' to get back quick!",
                                 time_out=30)
-        print(" ")
+        IO.print_text(" ")
         self.lock.acquire()
         if reaction != "run back":
-            print("You start falling! But you grab onto a piece of the bridge as it swings down and you "
+            IO.print_text("You start falling! But you grab onto a piece of the bridge as it swings down and you "
                           "hit the side of the gorge!", player.player_num)
             self.players_injured.append(player)
         else:
-            print(player.name + " made it back safely!")
+            IO.print_text(player.name + " made it back safely!")
 
         self.players_falling.remove(player)
         self.lock.release()

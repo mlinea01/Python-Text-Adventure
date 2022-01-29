@@ -8,7 +8,7 @@ from attacks.AttacksInfo import AttackTypes
 class RunEvent:
 
     def __init__(self, players):
-        print("Do you hear something? It sounds like a very large animal is coming our way!")
+        IO.print_text("Do you hear something? It sounds like a very large animal is coming our way!")
         self.enemies = ["Teradactyl", "Velociraptor"]
         self.teradactyl = Attack("Devour", "grabs you in its talons and rips you to shreds", damage=1000,
                                  atkType=AttackTypes.Normal, manaCost=0, statusEffects=[]),
@@ -26,9 +26,9 @@ class RunEvent:
     def player_action(self, player):
         while True:
             if self.enemies == "Teradactyl":
-                print("OMG a Teradactyl is flying right toward us! Run and take cover! QUICK!")
+                IO.print_text("OMG a Teradactyl is flying right toward us! Run and take cover! QUICK!")
                 sleep(0.5)
-                print("Watch out for obstacles! Get someplace safe!")
+                IO.print_text("Watch out for obstacles! Get someplace safe!")
 
     def player_obstacle(self, player):
         obstacle = random.randint(0,2)
@@ -38,4 +38,4 @@ class RunEvent:
 
         if jump != "jump":
             enemy = random.randint(0,1)
-            print(self.enemies[enemy] + self.enemy_attacks[enemy].desc)
+            IO.print_text(self.enemies[enemy] + self.enemy_attacks[enemy].desc, player.player_num)

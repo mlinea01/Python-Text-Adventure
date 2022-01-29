@@ -24,7 +24,7 @@ class IO:
         while not valid:
             input_data = ServerIO().get_server_input(player, message, time_out)
             valid = check(input_data=input_data)
-            if not valid: print("Invalid Input! Please try again.")
+            if not valid: IO.print_text("Invalid Input! Please try again.", [player])
         return input_data
 
     @classmethod
