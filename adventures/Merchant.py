@@ -32,7 +32,7 @@ class Merchant:
             print(self.goodbye)
 
     def buy_items_from(self, player):
-        IO.print_text("What do you have to sell?")
+        print("What do you have to sell?")
         item_no = 0
         item_chosen = None
         item_chosen_num = 0
@@ -41,7 +41,7 @@ class Merchant:
                 for item in player.items:
                     item_no += 1
                     print(str(item_no) + ". " + item.name)
-                IO.print_text(str(item_no+1) + ". Goodbye")
+                print(str(item_no+1) + ". Goodbye")
                 item_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
                                                    partial(IO.check_num_in_range,
                                                            minimum=1,
@@ -59,7 +59,7 @@ class Merchant:
                 print("Sold!")
                 player.items.remove(item_chosen)
                 player.money += item_chosen.value
-                IO.print_text("You now have " + str(player.money) + " gold!")
+                print("You now have " + str(player.money) + " gold!")
 
             if item_chosen_num == len(player.items)+1 or IO.get_input(0, "would you like to sell anything else? (y/n)",
                             partial(IO.check_in_list, list_data=["y", "n"])) == "n":
@@ -70,15 +70,15 @@ class Merchant:
         item_chosen_num = 0
 
         while True:
-            IO.print_text("You have " + str(player.money) + " gold.")
+            print("You have " + str(player.money) + " gold.")
             item_chosen = None
             item_chosen_num = 0
             while item_chosen is None:
                 item_no = 0
                 for item in self.items_list:
                     item_no += 1
-                    IO.print_text(str(item_no) + ". " + item.name + " - " + str(item.value))
-                IO.print_text(str(item_no+1) + ". Goodbye")
+                    print(str(item_no) + ". " + item.name + " - " + str(item.value))
+                print(str(item_no+1) + ". Goodbye")
                 item_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
                                                    partial(IO.check_num_in_range,
                                                            minimum=1,
@@ -92,10 +92,10 @@ class Merchant:
                     item_chosen = None
                     continue
                 else:
-                    IO.print_text("Sure, here's your " + item_chosen.name + "! (cha-ching)")
+                    print("Sure, here's your " + item_chosen.name + "! (cha-ching)")
                     player.items.append(item_chosen)
                     player.money -= item_chosen.value
-                    IO.print_text("You now have " + str(player.money) + " gold.")
+                    print("You now have " + str(player.money) + " gold.")
 
             if item_chosen_num == len(self.items_list)+1 or IO.get_input(0, "Would you like anything else? (y/n)",
                                                                 partial(IO.check_in_list, list_data=["y", "n"])) == "n":

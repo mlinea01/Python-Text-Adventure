@@ -54,7 +54,7 @@ class Shield(StatusEffect):
         if self.attack.damage < self.amount:
             blocked_amount = self.attack.damage
 
-        IO.print_text(self.character.name + " blocked " + str(blocked_amount) + " damage!")
+        print(self.character.name + " blocked " + str(blocked_amount) + " damage!")
         self.attack.damage -= blocked_amount
         self.amount -= blocked_amount
         if self.amount <= 0:
@@ -120,7 +120,7 @@ class Bleed(StatusEffect):
         hpLeft = self.character.hp-self.damage
         if hpLeft < 0:
             hpLeft = 0
-        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: " + str(hpLeft))
+        print(self.character.name + " takes " + str(self.damage) + " damage from bleeding! HP: " + str(hpLeft))
         self.character.apply_damage(self.damage, False)
         self.duration -= 1
         if self.duration == 0:
@@ -140,7 +140,7 @@ class Poison(StatusEffect):
         hpLeft = self.character.hp-self.damage
         if hpLeft < 0:
             hpLeft = 0
-        IO.print_text(self.character.name + " takes " + str(self.damage) + " damage from poison! HP: " + str(hpLeft))
+        print(self.character.name + " takes " + str(self.damage) + " damage from poison! HP: " + str(hpLeft))
         self.character.apply_damage(self.damage, False)
         self.duration -= 1
         self.damage += 1

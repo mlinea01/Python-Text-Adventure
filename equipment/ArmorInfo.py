@@ -12,4 +12,4 @@ class Armor:
         self.magResist = magResist
 
     def equip_armor(self, armor):
-        IO.print_text(Player.name + "equipped" + armor.name)
+        print(Player.name + "equipped" + armor.name)

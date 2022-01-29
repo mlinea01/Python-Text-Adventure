@@ -23,7 +23,7 @@ class Adventure:
 
     def start(self):
         while True:
-            IO.print_text(" ")
+            print(" ")
             self.run_room(self.player_x, self.player_y)
             sumHp = 0
             for player in self.players:
@@ -45,7 +45,7 @@ class Adventure:
                     directions.append("West")
 
                 for direction in directions:
-                    IO.print_text(str(dir_num) + ". " + direction)
+                    print(str(dir_num) + ". " + direction)
                     dir_num += 1
 
                 direction = int(IO.get_input(self.get_primary_player(self.players), "Your choice: ", partial(IO.check_num_in_range, minimum=1,
