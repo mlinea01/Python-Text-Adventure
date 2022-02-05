@@ -62,6 +62,6 @@ class CharacterCreator:
             "Wind" : [Tornado(), poison_breeze(), healing_breeze()]
         }
         starting_spells = spells_per_type[character_type]
-        prompt = "nYou will also need an ability to protect yourself.(Choose One)\n"
+        prompt = "You will also need an ability to protect yourself.(Choose One)\n"
         confirm_func = lambda choice: confirm_yes_or_no(choice.name + " - " + choice.desc + "\nIs this the spell you want?")
         return get_player_choice(starting_spells, prompt, confirm_func)
