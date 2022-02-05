@@ -17,3 +17,6 @@ class Main:
     print("")
     sleep(5)
     Battle().start(player, [TrainingDummy()])
+
+    # Forest level
+    ForestAdventure([player])

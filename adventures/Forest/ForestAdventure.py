@@ -15,7 +15,7 @@ import csv
 startJourney = True
 
 
-class Adventure1:
+class ForestAdventure:
 
     def __init__(self, players):
         self.players = players
