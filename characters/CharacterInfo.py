@@ -241,6 +241,9 @@ class Character:
         if self.speed < 0:
             self.speed = 0
 
+    def __str__(self):
+        return self.name
+
 
 class CharacterUtils:
 

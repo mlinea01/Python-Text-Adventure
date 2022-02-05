@@ -35,6 +35,9 @@ class Attack:
     def get_accuracy(self):
         return self._accuracy
 
+    def __str__(self):
+        return self.name
+
 
 
 # This class keeps track of attack types - useful for things like determining resistances to certain moves
