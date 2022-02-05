@@ -1,4 +1,4 @@
-from Utility import get_player_choice
+from Utility import confirm_yes_or_no, get_player_choice
 from adventures.Forest.ForestAdventure import *
 from Battle import *
 from characters.Enemies import *
@@ -27,7 +27,7 @@ class CharacterCreator:
     def get_character_type():
         character_types = ["Fire", "Water", "Earth", "Wind"]
         prompt = "Choose a character type.\n"
-        confirm_func = lambda choice: int(input("Are you sure you want " + choice + "? (1.yes, 2.no)")) == 1
+        confirm_func = lambda choice: confirm_yes_or_no("Are you sure you want " + choice + "?")
         return get_player_choice(character_types, prompt, confirm_func)
 
     @staticmethod
@@ -35,7 +35,7 @@ class CharacterCreator:
         # Prompt player to choose a Race for his/her character
         character_races = [Gnome(), Ogre(), Elf(), Human()]
         prompt = "Choose a Race for your character.\n"
-        confirm_func = lambda choice: int(input("Are you sure you want " + str(choice) + "? (1.yes, 2.no)")) == 1
+        confirm_func = lambda choice: confirm_yes_or_no("Are you sure you want " + str(choice) + "?")
         return get_player_choice(character_races, prompt, confirm_func)
 
     @staticmethod
@@ -48,7 +48,7 @@ class CharacterCreator:
         # prompt the player to choose a starting weapon
         weapons = [Sword(), WarHammer(), Staff(), BattleAxe(), Trident(), BowAndArrow()]
         prompt = "Before you go out on your adventure, grab a weapon! (Choose One)\n"
-        confirm_func = lambda choice: int(input("The " + choice.name + " - " + choice.desc + "\nIs this the weapon you want? (1.yes 2.no)")) == 1
+        confirm_func = lambda choice: confirm_yes_or_no("The " + choice.name + " - " + choice.desc + "\nIs this the weapon you want?")
         return get_player_choice(weapons, prompt, confirm_func)
 
     @staticmethod
@@ -63,5 +63,5 @@ class CharacterCreator:
         }
         starting_spells = spells_per_type[character_type]
         prompt = "nYou will also need an ability to protect yourself.(Choose One)\n"
-        confirm_func = lambda choice: int(input(choice.name + " - " + choice.desc + "\nIs this the spell you want? (1.yes 2.no)")) == 1
+        confirm_func = lambda choice: confirm_yes_or_no(choice.name + " - " + choice.desc + "\nIs this the spell you want?")
         return get_player_choice(starting_spells, prompt, confirm_func)

@@ -12,6 +12,7 @@ def get_player_choice(choices, prompt_msg, confirm_func=None):
             print("Invalid choice!\n")
             sleep(1)
         elif confirm_func is not None and not confirm_func(choice):
+            print()
             choice = None
     return choice
 
@@ -25,3 +26,7 @@ def choose(user_input, choices):
         return None
     else:
         return choices[choice_index]
+
+def confirm_yes_or_no(msg):
+    user_input = input(msg + " (1.yes, 2.no): ")
+    return user_input.isnumeric() and int(user_input) == 1
