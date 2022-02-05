@@ -18,31 +18,31 @@ class CharacterCreator:
         player = Player(character_name, character_race, 0, character_type)
         player.desc = input("Describe your character in one word: ").split(' ', 1)[0]
         print("Hello " + player.name + " the " + player.desc + " " + character_type + " " + player.race)
-        weapon = CharacterCreator.get_character_weapon()
-        player.equip_weapon(weapon, False)
+        player.equip_weapon(CharacterCreator.get_character_weapon(), False)
         player.learn_attack(CharacterCreator.get_starting_spell(character_type))
         return player
 
     @staticmethod
     def get_character_type():
         characterTypes = ["Fire", "Water", "Earth", "Wind"]
-        character_type_selected = False
-        while not character_type_selected:
+        selected_type = None
+        while selected_type is None:
             print("Choose a character type.\n")
             typeNum = 1
             for charType in characterTypes:
                 print(str(typeNum) + ". " + charType)
                 typeNum += 1
 
-            characterType = int(input("\nYour choice: "))
+            character_type_idx = int(input("\nYour choice: "))
+            selected_type = characterTypes[character_type_idx - 1]
             print("")
 
             # confirm character type choice
-            print("You chose a " + characterTypes[characterType - 1] + " character.")
-            confirmed = int(input("Are you sure you want " + characterTypes[characterType - 1] + "? (1.yes, 2.no)")) == 1
-            if confirmed:
-                character_type_selected = True
-        return characterTypes[characterType - 1]
+            print("You chose a " + selected_type + " character.")
+            confirmed = int(input("Are you sure you want " + selected_type + "? (1.yes, 2.no)")) == 1
+            if not confirmed:
+                selected_type = None
+        return selected_type
 
     @staticmethod
     def get_character_race():
