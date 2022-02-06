@@ -5,11 +5,9 @@ from characters.CharacterLevelUp import *
 # Player class used to keep track of player stats and actions
 class Player:
 
-    def __init__(self, name, character, player_num, character_type):
+    def __init__(self, name, character, character_type):
         self.character = character
         self.race = character.name
-        self.player_num = player_num
-        self.character.player_num = player_num
         self.character.character_type = character_type
         self.desc = "mighty"
         self.money = 10
@@ -78,11 +76,11 @@ class Player:
                         return attack_chosen
                 else:
                     chosen_item = self.character.items[chosen_attack_num - len(self.character.attacks)]
-                    print(self.character.name + " used a " + chosen_item.name, self.players_list)
+                    print("You used a " + chosen_item.name)
                     self.character.items.remove(chosen_item)
                     return chosen_item.itemAttack
         else:
-            print(self.name + " cannot attack this turn!")
+            print("You cannot attack this turn!")
             return None
 
     def learn_new_spell(self):
@@ -105,7 +103,8 @@ class Player:
             spellNum = 1
             for spell in spellTypes:
                 if not self.character.has_attack(spell):
-                    print(str(spellNum) + ". " + spell.name, self.players_list)
+                    print(str(spellNum) + ". " + spell.name)
+                    print("Your learned " + spell.name)
                     spellNum += 1
 
             new_spell = spellTypes[int(input("\nYour choice: ")) - 1]

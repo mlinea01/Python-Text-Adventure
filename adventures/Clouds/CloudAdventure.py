@@ -3,26 +3,18 @@ from adventures.Clouds.Enemies import *
 from adventures.Adventures import *
 from adventures.Clouds.Traps import *
 import threading
-from time import sleep
 from items.Potions import *
 from adventures.Merchant import Merchant
+from threading import Timer
 
 class CloudAdventure:
-    def __init__(self, players):
-        self.players = players
+    def __init__(self, player):
+        self.player = player
 
         map_data = []
-        self.adventure = Adventure(self.players, map_data, 0, 0)
+        self.adventure = Adventure(self.player, map_data, 0, 0)
 
         self.traps = [RainbowRope(), LightningDart(), MeteorBucket()]
-
-    def get_primary_player(self, players):
-        result = 0
-        for player in players:
-            if player.hp > 0:
-                return result
-            else:
-                result += 1
 
     def Cloud_merchant(self):
         print("A merchant hovers in the sky on a nimbus cloud. You hover over...")
@@ -30,7 +22,7 @@ class CloudAdventure:
                             greeting="The sky is a peaceful meadow showing us what heaven will be like",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
                             goodbye="Farewell, and beware.")
-        merchant.greet(self.players[0])
+        merchant.greet(self.player)
 
     def empty(self):
         print(
@@ -50,7 +42,7 @@ class CloudAdventure:
             print("You found an item!")
             item = potions[search - 1]()
             print("You found a " + item.name)
-            self.players[self.get_primary_player(self.players)].items.append(item)
+            self.player.items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
@@ -60,22 +52,17 @@ class CloudAdventure:
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
-            traps = random.randint(1, 4)
-            trap = self.traps[traps-1]
-            self.activePlayers = copy(self.players)
-            TargetFilters.target_filter_isAlive(self.activePlayers)
-
-            for player in self.players:
-                intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
-                intro_thread.start()
+            trap = self.traps[random.randint(0, 3)]
+            self.player_hit_by_trap(self.player, trap).start()
         else:
             print("Theres that trap you got caught in! Let's not do that again!")
 
-        while len(self.activePlayers) > 0:
-            sleep(0.5)
 
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
+        time_out=50
+        timer = Timer(time_out, print, ['Times up!!!'])
+        jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!", time_out=50)
+        timer.start();
         print(" ")
         if jump != "jump":
             print(trap.desc)
@@ -84,18 +71,17 @@ class CloudAdventure:
             self.adventure.mark_visited()
         else:
             print("You avoided the trap! I almost peed my pants!")
+            timer.cancel()
         self.adventure.mark_visited()
-        self.activePlayers.remove(player)
 
     def unluckyLeprechaun_fight(self):
         if self.adventure.already_visited() is False:
             print("Hey look a leprechaun! You think he'll give us some gold?")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, UnluckyLeprechaun()):
+            if Battle().start(self.player, UnluckyLeprechaun()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players),
-                             "Ok, he didn't give us gold!")
+                input(self.player, "Ok, he didn't give us gold!")
                 print("")
                 self.adventure.mark_visited()
 
@@ -109,9 +95,9 @@ class CloudAdventure:
                           " I think that's what that is!!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, HideousHippogryph()):
+            if Battle().start(self.player, HideousHippogryph()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Ok that was creep! I don't think we're in kansas anymore")
+                input(self.player, "Ok that was creep! I don't think we're in kansas anymore")
                 print("")
                 self.adventure.mark_visited()
 
@@ -124,9 +110,9 @@ class CloudAdventure:
             print("Look a Cockatrice! It almost looks like the beast from never ending story, but not!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, CrazyCockatrice()):
+            if Battle().start(self.player, CrazyCockatrice()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Welp, it was definitely meaner than the beast from never ending story!")
+                input(self.player, "Welp, it was definitely meaner than the beast from never ending story!")
                 print("")
                 self.adventure.mark_visited()
 

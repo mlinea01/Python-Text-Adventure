@@ -1,6 +1,4 @@
 from characters.Player import *
-from Multiplayer import IO
-
 # Base class for all types of armor.
 
 
@@ -12,4 +10,4 @@ class Armor:
         self.magResist = magResist
 
     def equip_armor(self, armor):
-        print(Player.name + "equipped" + armor.name)
+        print("You equipped" + armor.name)

@@ -7,34 +7,24 @@ from adventures.Adventures import Adventure
 from adventures.Forest.Traps import *
 from adventures.Puzzles import Riddle
 from adventures.Forest.Enemies import *
-import threading
 from time import sleep
 from adventures.Merchant import Merchant
 import csv
+from threading import Timer
 
 startJourney = True
 
 
 class Adventure1:
 
-    def __init__(self, players):
-        self.players = players
+    def __init__(self, player):
+        self.player = player
 
         adventure_data_file = open("forestAdventureData.csv", "rt", encoding="utf-8")
         adventure_data_reader = csv.reader(adventure_data_file)
         adventure_data = []
         for data in adventure_data_reader:
             adventure_data.append(data)
-
-        map_data = [[self.step1,                           partial(self.random_fight, 3, 1, 80),    self.hit_trap],
-                    [partial(self.random_fight, 4, 4, 80),     None,                                self.empty],
-                    [self.camp,                            self.empty,                          self.turantula_fight],
-                    [self.zombieRat_fight,                 self.hit_trap,                       self.empty],
-                    [self.camp,                            self.forest_merchant,                None],
-                    [None,                                 self.camp,                           self.empty],
-                    [self.turantula_fight,                 self.empty,                          self.empty],
-                    [None,                                 self.empty,                          None],
-                    [self.camp,                            self.hit_trap,                       self.turantula_fight]]
 
         self.riddle = Riddle("mailbox", ["I start with M",
                                          "I end with X",
@@ -43,13 +33,13 @@ class Adventure1:
 
         self.traps = [Hole(), Net(), BarbedWire(), BearTrap()]
 
-        self.adventure = Adventure(self.players, adventure_data, self, 0, 0)
+        self.adventure = Adventure(self.player, adventure_data, self, 0, 0)
         self.adventure.start()
 
     def random_fight(self, difficulty=3, max_diff=10, chance=100):
         if random.randint(0,100) < chance:
             enemies = EnemyGen.get_random_enemies(difficulty, max_diff)
-            if Battle().start(self.players, enemies):
+            if Battle().start(self.player, enemies):
                 print("")
                 input("Whew we made it out alive!")
                 print("")
@@ -61,21 +51,13 @@ class Adventure1:
         else:
             input("Looks like this place has been ransacked...")
 
-    def get_primary_player(self, players):
-        result = 0
-        for player in players:
-            if player.hp > 0:
-                return result
-            else:
-                result += 1
-
     def forest_merchant(self):
         print("A merchant stands in a cozy hut in a shaded area. You go inside...")
         merchant = Merchant(items_list=[HealthPotion(), ManaPotion()],
                             greeting="The forest smiles upon us and provides us with bounty.",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
                             goodbye="Farewell, and beware.")
-        merchant.greet(self.players[0])
+        merchant.greet(self.player)
 
     def empty(self):
         print(
@@ -119,7 +101,7 @@ class Adventure1:
             print("You found an item!")
             item = potions[search - 1]()
             print("You found a " + item.name)
-            self.players[self.get_primary_player(self.players)].items.append(item)
+            self.player.items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
@@ -134,7 +116,7 @@ class Adventure1:
             print("You found a clue! You may need this at some point.")
             clue = self.riddle.get_rand_clue()
             print("Clue: " + clue)
-            self.players[self.get_primary_player(self.players)].clues.append(clue)
+            self.player.clues.append(clue)
             self.adventure.mark_visited()
 
         elif self.adventure.mark_visited():
@@ -145,19 +127,15 @@ class Adventure1:
     def hit_trap(self):
         if self.adventure.already_visited() is False:
             trap = self.traps[random.randint(0, 3)]
-            self.activePlayers = copy(self.players)
-            TargetFilters.target_filter_isAlive(self.activePlayers)
-
-            for player in self.players:
-                threading.Thread(target=self.player_hit_by_trap, args=[player, trap]).start()
+            self.player_hit_by_trap(self.player, trap).start()
         else:
             print("Theres that trap you got caught in! Let's not do that again!")
 
-        while len(self.activePlayers) > 0:
-            sleep(0.5)
-
     def player_hit_by_trap(self, player, trap):
+        time_out=50
+        timer = Timer(time_out, print, ['Times up!!!'])
         jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
+        timer.start();
         print(" ")
         if jump != "jump":
             print(trap.desc, player.player_num)
@@ -165,16 +143,16 @@ class Adventure1:
             time.sleep(2)
             self.adventure.mark_visited()
         else:
-            print("You avoided the trap! I almost peed my pants!", player.player_num)
+            print("You avoided the trap! I almost peed my pants!")
+            timer.cancel()
         self.adventure.mark_visited()
-        self.activePlayers.remove(player)
 
     def turantula_fight(self):
         if self.adventure.already_visited() is False:
             print("There is a huge turantula in this camp! OMG kill it!!!!!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, TerrifyingTurantula()):
+            if Battle().start(self.player, TerrifyingTurantula()):
                 print("")
                 input("Wow that was a huge spider, I really hope we don't see another one of those!")
                 print("")
@@ -191,7 +169,7 @@ class Adventure1:
             print("That is one big rat, it looks like it should be dead.  Its a ZOMBIE!!!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, ZombieRat()):
+            if Battle().start(self.player, ZombieRat()):
                 print("")
                 input("Where did a zombie rat come from? that was so wierd!")
                 print("")
@@ -208,7 +186,7 @@ class Adventure1:
             print("ACK! There's something touching my leg - it's a vine!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, VenusFlyTrap()):
+            if Battle().start(self.player, VenusFlyTrap()):
                 print("")
                 input("Whew, that plant almost made us its dinner! (Press enter to continue)")
                 print("")
@@ -221,13 +199,13 @@ class Adventure1:
 
     def bridge_event(self, dir_success, dir_fail):
         if self.adventure.already_visited() is False:
-            result = BridgeEvent(self.players).start_event().get_event_result()
+            result = BridgeEvent(self.player).start_event().get_event_result()
             if result == BridgeResults.MadeItAcross:
                 sleep(1)
-                print("The party continues " + dir_success)
+                print("The journey continues " + dir_success)
                 sleep(1)
                 input("Press Enter to continue.")
-                self.adventure.move_players_in_dir(dir_success)
+                self.adventure.move_player_in_dir(dir_success)
                 self.adventure.player_choose_next_move = False
 
             elif result == BridgeResults.BridgeBroke or result == BridgeResults.RanAway:
@@ -237,7 +215,7 @@ class Adventure1:
                 print("The party moves back " + dir_fail)
                 sleep(1)
                 input("Press Enter to continue.")
-                self.adventure.move_players_in_dir(dir_fail)
+                self.adventure.move_player_in_dir(dir_fail)
                 self.adventure.player_choose_next_move = False
         else:
             print("The bridge still lies broken in pieces and the wind howls down the gorge.\n"
@@ -246,8 +224,8 @@ class Adventure1:
             print("The party moves back " + dir_fail)
             sleep(1)
             input("Press Enter to continue.")
-            self.adventure.move_players_in_dir(dir_fail)
+            self.adventure.move_player_in_dir(dir_fail)
             self.adventure.player_choose_next_move = False
 
     def fruit_event(self):
-        FruitEvent(self.players).start_event()
+        FruitEvent(self.player).start_event()

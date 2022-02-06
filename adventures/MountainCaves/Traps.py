@@ -7,7 +7,7 @@ class StoneStakes(Attack):
         super().__init__("Stone Stakes", desc, damage=5, atkType=AttackTypes.Normal,
                          statusEffects=[Bleed(bleedDuration=1, chance=100)], manaCost=0)
 
-    def filter_targets(self, attacker, targets):
+    def filter_targets(self, targets):
         TargetFilters.target_filter_isAlive(targets)
 
 class BoulderMace(Attack):
@@ -16,7 +16,7 @@ class BoulderMace(Attack):
         super().__init__("Boulder Mace", desc, damage=5, atkType=AttackTypes.Normal,
                          statusEffects=[Bleed(bleedDuration=1, chance=100)], manaCost=0)
 
-    def filter_targets(self, attacker, targets):
+    def filter_targets(self, targets):
         TargetFilters.target_filter_isAlive(targets)
 
 class PillarLaunch(Attack):

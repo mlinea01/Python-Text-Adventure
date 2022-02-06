@@ -1,5 +1,4 @@
 from copy import copy
-from Multiplayer import IO
 import random
 from characters.Player import Player
 import time
@@ -58,7 +57,7 @@ class Battle:
                                   str(fighter.maxXp))
 
                 if fighter.cannot_attack > 0:
-                    print(fighter.name + " cannot attack!")
+                    print("You cannot attack!")
                 else:
                     chosen_attack = fighter.choose_attack(cls)
                     if chosen_attack is not None:
@@ -83,7 +82,7 @@ class Battle:
                                         target_dodged = True
 
                             if attack_missed:
-                                print(fighter.name + "'s " + "attack missed!")
+                                print("Your attack missed!")
                             elif target_dodged:
                                 print(target.name + " dodged the attack!")
                             else:
@@ -99,7 +98,7 @@ class Battle:
                                     if fighter.character.level % 5 == 0:
                                         fighter.learn_new_spell()
 
-                                    print(fighter.name + " grew to level " + str(fighter.character.level)
+                                    print("You grew to level " + str(fighter.character.level)
                                                       + "!")
 
                 i += 1
@@ -119,14 +118,13 @@ class Battle:
         return len(target_list) > 0
 
     @classmethod
-    def alive(cls, characters):
+    def alive(cls, character):
         try:
-            for c in characters:
-                if c.hp > 0:
-                    return True
+            if character.hp > 0:
+                return True
             return False
         except TypeError:
-            return characters.hp > 0
+            return character.hp > 0
 
     @classmethod
     def get_enemies_of(cls, character):
@@ -134,10 +132,3 @@ class Battle:
             return cls.enemies
         else:
             return cls.players
-
-    @classmethod
-    def get_allies_of(cls, character):
-        if isinstance(character, Player):
-            return cls.players
-        else:
-            return cls.enemies

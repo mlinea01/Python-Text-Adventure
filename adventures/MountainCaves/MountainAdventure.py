@@ -5,25 +5,19 @@ from adventures.MountainCaves.Traps import *
 from items.Potions import *
 import threading
 from time import sleep
+from threading import Timer
 from adventures.Merchant import Merchant
 
 
 class MountainAdventure:
-    def __init__(self, players):
-        self.players = players
+    def __init__(self, player):
+        self.player = player
 
         map_data = []
-        self.adventure = Adventure(self.players, map_data, 0, 0)
+        self.adventure = Adventure(self.player, map_data, 0, 0)
 
         self.traps = [StoneStakes(), BoulderMace(), PillarLaunch()]
 
-    def get_primary_player(self, players):
-        result = 0
-        for player in players:
-            if player.hp > 0:
-                return result
-            else:
-                result += 1
 
     def Mountain_merchant(self):
         print("A merchant sits in a dark cave on the edge of the mountain. You go inside...")
@@ -31,7 +25,7 @@ class MountainAdventure:
                             greeting="This mountain speaks to our souls, showing us what life is about!",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
                             goodbye="Farewell, and beware.")
-        merchant.greet(self.players[0])
+        merchant.greet(self.player)
 
     def empty(self):
         print(
@@ -51,7 +45,7 @@ class MountainAdventure:
             print("You found an item!")
             item = potions[search - 1]()
             print("You found a " + item.name)
-            self.players[self.get_primary_player(self.players)].items.append(item)
+            self.player.items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
@@ -61,14 +55,8 @@ class MountainAdventure:
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
-            traps = random.randint(1, 4)
-            trap = self.traps[traps - 1]
-            self.activePlayers = copy(self.players)
-            TargetFilters.target_filter_isAlive(self.activePlayers)
-
-            for player in self.players:
-                intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
-                intro_thread.start()
+            trap = self.traps[random.randint(0, 3)]
+            self.player_hit_by_trap(self.player, trap).start()
         else:
             print("Theres that trap you got caught in! Let's not do that again!")
 
@@ -76,8 +64,10 @@ class MountainAdventure:
             sleep(0.5)
 
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!",
-                            time_out=50)
+        time_out=50
+        timer = Timer(time_out, print, ['Times up!!!'])
+        jump = input(player.name + "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
+        timer.start()
         print(" ")
         if jump != "jump":
             print(trap.desc)
@@ -86,17 +76,17 @@ class MountainAdventure:
             self.adventure.mark_visited()
         else:
             print("You avoided the trap! I almost peed my pants!")
+            timer.cancel()
         self.adventure.mark_visited()
-        self.activePlayers.remove(player)
 
     def dragon_fight(self):
         if self.adventure.already_visited() is False:
             print("There is a Mountain Dragon in the camp, Hurry, take that dragon down!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, MountainDragon()):
+            if Battle().start(self.player, MountainDragon()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
+                input(self.player.name, "Woah that dragon was tough! Now that that's over lets take a look around this camp.")
                 print("")
                 self.adventure.mark_visited()
 
@@ -109,9 +99,9 @@ class MountainAdventure:
             print("Have you ever seen a golem? No? There's one right there!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, Golem()):
+            if Battle().start(self.player, Golem()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "I mean this is getting ridiculous! A golem? really?")
+                input(self.player.name, "I mean this is getting ridiculous! A golem? really?")
                 print("")
                 self.adventure.mark_visited()
 
@@ -124,9 +114,9 @@ class MountainAdventure:
             print("Is that a mountain lion? I knew i shouldn't have come this way!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, MaliciousMountainLion()):
+            if Battle().start(self.player, MaliciousMountainLion()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Ok, could have been worse. I may have rabies but i'll be fine!")
+                input(self.player.name, "Ok, could have been worse. I may have rabies but i'll be fine!")
                 print("")
                 self.adventure.mark_visited()
 

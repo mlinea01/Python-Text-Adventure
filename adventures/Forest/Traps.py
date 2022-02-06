@@ -7,8 +7,8 @@ class Hole(Attack):
         desc = "You fell into a huge hole! It may be tough to get out. "
         super().__init__("Hole", desc, damage=5, atkType=AttackTypes.Normal, statusEffects=[], manaCost=0)
 
-    def filter_targets(self, attacker, targets):
-        TargetFilters.target_filter_isAlive(targets)
+    def filter_targets(self, target):
+        TargetFilters.target_filter_isAlive(target)
 
 
 class Net(Attack):
@@ -16,8 +16,8 @@ class Net(Attack):
         desc = "A net fell from above you and trapped you underneath!"
         super().__init__("Net", desc, damage=5, atkType=AttackTypes.Normal, statusEffects=[], manaCost=0)
 
-    def filter_targets(self, attacker, targets):
-        TargetFilters.target_filter_isAlive(targets)
+    def filter_targets(self, target):
+        TargetFilters.target_filter_isAlive(target)
 
 
 class BarbedWire(Attack):
@@ -26,8 +26,8 @@ class BarbedWire(Attack):
         super().__init__("Barbed Wire", desc, damage=5, atkType=AttackTypes.Normal,
                          statusEffects=Bleed(bleedDuration=1, chance= 100), manaCost=0)
 
-    def filter_targets(self, attacker, targets):
-        TargetFilters.target_filter_isAlive(targets)
+    def filter_targets(self, target):
+        TargetFilters.target_filter_isAlive(target)
 
 
 class BearTrap(Attack):
@@ -36,5 +36,5 @@ class BearTrap(Attack):
         super().__init__("Bear Trap", desc, damage=5, atkType=AttackTypes.Normal,
                          statusEffects=Bleed(bleedDuration=1, chance=100), manaCost=0)
 
-    def filter_targets(self, attacker, targets):
-        TargetFilters.target_filter_isAlive(targets)
+    def filter_targets(self, target):
+        TargetFilters.target_filter_isAlive(target)

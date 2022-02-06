@@ -1,7 +1,3 @@
-from Multiplayer import IO
-from functools import partial
-
-
 class Merchant:
 
     def __init__(self, items_list,
@@ -18,10 +14,10 @@ class Merchant:
         print("1. Buy")
         print("2. Sell")
         print("3. Goodbye")
-        sellbuy_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
-                                           partial(IO.check_num_in_range,
+        sellbuy_chosen_num = int(input("Your choice: ",
+                                                self.check_num_in_range,
                                                    minimum=1,
-                                                   maximum=3)))
+                                                   maximum=3))
         if sellbuy_chosen_num == 1:
             self.sell_items_to(player)
             self.greet(player)
@@ -42,17 +38,21 @@ class Merchant:
                     item_no += 1
                     print(str(item_no) + ". " + item.name)
                 print(str(item_no+1) + ". Goodbye")
-                item_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
-                                                   partial(IO.check_num_in_range,
+                item_chosen_num = int(input("Your choice: ",
+                                                        self.check_num_in_range,
                                                            minimum=1,
-                                                           maximum=len(player.items) + 1)))
+                                                           maximum=len(player.items) + 1))
 
                 if item_chosen_num == len(player.items)+1:
                     break
 
                 item_chosen = player.items[item_chosen_num-1]
-                if IO.get_input(0, "Sure, I can give ya " + str(item_chosen.value) + " gold for that. Sound good? (y/n)",
-                                partial(IO.check_in_list, list_data=["y", "n"])) == "n":
+                
+                if input("Sure, I can give ya " + str(item_chosen.value) + " gold for that. Sound good? (y/n)", 
+                                            self.check_in_list, list_data=["y", "n"]) == "n":
+                    print("Sounds great!!!")
+                
+                else:                     
                     print("Okay, fine, no deal...")
                     continue
                     
@@ -61,8 +61,8 @@ class Merchant:
                 player.money += item_chosen.value
                 print("You now have " + str(player.money) + " gold!")
 
-            if item_chosen_num == len(player.items)+1 or IO.get_input(0, "would you like to sell anything else? (y/n)",
-                            partial(IO.check_in_list, list_data=["y", "n"])) == "n":
+            if item_chosen_num == len(player.items)+1 or input("would you like to sell anything else? (y/n)",
+                            self.check_in_list, list_data=["y", "n"]) == "n":
                 break
 
     def sell_items_to(self, player):
@@ -79,10 +79,10 @@ class Merchant:
                     item_no += 1
                     print(str(item_no) + ". " + item.name + " - " + str(item.value))
                 print(str(item_no+1) + ". Goodbye")
-                item_chosen_num = int(IO.get_input(player.player_num, "Your choice: ",
-                                                   partial(IO.check_num_in_range,
+                item_chosen_num = int(input(player.player_num, "Your choice: ",
+                                                        self.check_num_in_range,
                                                            minimum=1,
-                                                           maximum=len(self.items_list)+1)))
+                                                           maximum=len(self.items_list)+1))
                 if item_chosen_num == len(self.items_list)+1:
                     break
 
@@ -97,6 +97,22 @@ class Merchant:
                     player.money -= item_chosen.value
                     print("You now have " + str(player.money) + " gold.")
 
-            if item_chosen_num == len(self.items_list)+1 or IO.get_input(0, "Would you like anything else? (y/n)",
-                                                                partial(IO.check_in_list, list_data=["y", "n"])) == "n":
+            if item_chosen_num == len(self.items_list)+1 or input("Would you like anything else? (y/n)",
+                                                                self.check_in_list, list_data=["y", "n"]) == "n":
                 break
+            
+    @classmethod        
+    def check_in_list(cls, input_data, list_data):
+        for item in list_data:
+            if input_data == item:
+                return True
+        return False        
+    
+    def check_num_in_range(self, minimum, maximum, input_data=""):
+        try:
+            if int(input_data) >= minimum and int(input_data) <= maximum:
+                return True
+            else:
+                return False
+        except ValueError:
+            return False

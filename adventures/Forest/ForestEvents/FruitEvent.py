@@ -1,10 +1,6 @@
 import re
-import threading
 from time import sleep
-
 from copy import copy
-
-from Multiplayer import IO
 from attacks import StatusEffects
 from attacks.AttacksInfo import Attack, AttackTypes
 from items.ItemsInfo import Items
@@ -36,7 +32,7 @@ class StringUtils:
 
 class FruitEvent:
 
-    def __init__(self, players):
+    def __init__(self, player):
         print("You come to a clearing in the dense forest trees, in the middle of which is a\n"
                       "beautiful willow tree. The tree is bearing fruit that looks strange, but at the\n"
                       "same time, enticingly delicious. They are plump and juicy looking with a bright\n"
@@ -52,7 +48,7 @@ class FruitEvent:
         print("Willow Tree: Ready? Then we shall begin...")
         sleep(2)
 
-        self.players = players
+        self.player = player
         self.fruit_desc = "A delicious, juicy fruit from a magical willow tree that restores HP and Mana."
         self.fruit_effect = Attack(atkType=AttackTypes.Normal, damage=None, desc="", manaCost=0,
                                    name="Willow Tree Fruit",
@@ -68,9 +64,7 @@ class FruitEvent:
 
         print(self.questions[self.question_num])
 
-    def start_event(self, ):
-        for player in self.players:
-            threading.Thread(target=self.player_action, args=[player]).start()
+    def start_event(self, player):
 
         while True:
             if self.answer_given is not None:
@@ -78,13 +72,8 @@ class FruitEvent:
                     print("That is correct!")
                     if self.question_num == len(self.questions)-1:
                         print("Wow, you are the first creatures to pass my test in over a century.")
-                        if len(self.players) == 1:
-                            print("You have earned this fruit! Here you go...")
-                        else:
-                            print("You have each earned a fruit. Here you go...")
-                        for player in self.players:
-                            print("You have recieved a " + self.fruit_item.name + "!")
-                            player.items.append(copy(self.fruit_item))
+                        print("You have earned this fruit! Here you go...")
+                        player.items.append(copy(self.fruit_item))
                     else:
                         self.question_num += 1
                         print("On to the next question...")
@@ -100,15 +89,13 @@ class FruitEvent:
         while True:
             if self.looking_for_player_input:
                 print("What would you like to say?")
-                input_text = IO.get_input(player.player_num,
-                                          "(type 'final answer' first to give your answer to the Willow Tree)")
+                input_text = input("(type 'final answer' first to give your answer to the Willow Tree)")
                 if not self.looking_for_player_input:
                     continue
                 if input_text.startswith("final answer"):
                     self.answer_given = input_text
                     print(player.name + " has answered: " + input_text)
                     self.looking_for_player_input = False
-                    for player in self.players:
-                        IO.stop_waiting_for_input(player.player_num)
+                    break
                 else:
                     print(player.name + " says " + input_text)

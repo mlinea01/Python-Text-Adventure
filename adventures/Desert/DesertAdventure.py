@@ -3,27 +3,18 @@ from adventures.Desert.Enemies import *
 from adventures.Adventures import *
 from adventures.Desert.Traps import *
 from items.Potions import *
-import threading
-from time import sleep
+from threading import Timer
 from adventures.Merchant import Merchant
 
 
 class DesertAdventure:
-    def __init__(self, players):
-        self.players = players
+    def __init__(self, player):
+        self.player = player
 
         map_data = []
-        self.adventure = Adventure(self.players, map_data, 0, 0)
+        self.adventure = Adventure(self.player, map_data, 0, 0)
 
         self.traps = [HuggingCactus(), QuickSand(), Mirage()]
-
-    def get_primary_player(self, players):
-        result = 0
-        for player in players:
-            if player.hp > 0:
-                return result
-            else:
-                result += 1
 
     def Desert_merchant(self):
         print("You see a merchant in the distance, is that a mirage?. You approach with caution...")
@@ -31,7 +22,7 @@ class DesertAdventure:
                             greeting="Don't worry, I am as real as the heat covering this desert!",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
                             goodbye="Farewell, and beware.")
-        merchant.greet(self.players[0])
+        merchant.greet(self.player)
 
     def empty(self):
         print(
@@ -51,7 +42,7 @@ class DesertAdventure:
             print("You found an item!")
             item = potions[search - 1]()
             print("You found a " + item.name)
-            self.players[self.get_primary_player(self.players)].items.append(item)
+            self.player.items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
@@ -61,23 +52,17 @@ class DesertAdventure:
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
-            traps = random.randint(1, 4)
-            trap = self.traps[traps - 1]
-            self.activePlayers = copy(self.players)
-            TargetFilters.target_filter_isAlive(self.activePlayers)
-
-            for player in self.players:
-                intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
-                intro_thread.start()
+            trap = self.traps[random.randint(0, 3)]
+            self.player_hit_by_trap(self.player, trap).start()
         else:
             print("Theres that trap you got caught in! Let's not do that again!")
 
-        while len(self.activePlayers) > 0:
-            sleep(0.5)
-
+        
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!",
-                            time_out=50)
+        time_out=50
+        timer = Timer(time_out, print, ['Times up!!!'])
+        jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
+        timer.start()
         print(" ")
         if jump != "jump":
             print(trap.desc)
@@ -86,32 +71,32 @@ class DesertAdventure:
             self.adventure.mark_visited()
         else:
             print("You avoided the trap! I almost peed my pants!")
+            timer.cancel()
         self.adventure.mark_visited()
-        self.activePlayers.remove(player)
 
     def antagonsticArmadillo_fight(self):
         if self.adventure.already_visited() is False:
             print("Is that a huge ball rolling around the desert? OMG IT'S AN ARMADILLO, RUN!!!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, AntagonisticArmadillo()):
+            if Battle().start(self.player, AntagonisticArmadillo()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Wow that armadillo had me rollin! No pun intended!")
+                input("Wow that armadillo had me rollin! No pun intended!")
                 print("")
                 self.adventure.mark_visited()
 
         else:
-              print("Oh god we came back to the armadillo! lets run before backup shows up!!!")
-              print("If you really think you missed something, keep looking but i'm scared!")
+            print("Oh god we came back to the armadillo! lets run before backup shows up!!!")
+            print("If you really think you missed something, keep looking but i'm scared!")
 
     def chaoticCactus_fight(self):
         if self.adventure.already_visited() is False:
             print("Oh look a cactus, maybe we can get some juice i'm thirsty! OH CRAP IT'S MOVING!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, ChaoticCactus()):
+            if Battle().start(self.player, ChaoticCactus()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Well we survived but i'm still thirsty!")
+                input("Well we survived but i'm still thirsty!")
                 print("")
                 self.adventure.mark_visited()
 
@@ -124,9 +109,9 @@ class DesertAdventure:
             print("OMG it's a tremor!!! its tough has teeth, THIS IS MY NIGHTMORE!!!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, TantalizingTremor()):
+            if Battle().start(self.player, TantalizingTremor()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players), "Ok, if we see one of those again I will cry!")
+                input("Ok, if we see one of those again I will cry!")
                 print("")
                 self.adventure.mark_visited()
 

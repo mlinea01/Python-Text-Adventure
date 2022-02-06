@@ -1,6 +1,5 @@
 # This module is simply used to keep track of pre-defined values used by attack metadata (such as type)
 import enum
-from Multiplayer import IO
 
 
 # Base class for all attacks
@@ -61,16 +60,6 @@ class TargetFilters:
                 targetIndex += 1
 
     @classmethod
-    def target_filter_allies(cls, attacker, targets):
-        targetIndex = 0
-        while targetIndex < len(targets):
-            target = targets[targetIndex]
-            if target.is_player != attacker.is_player:
-                targets.remove(target)
-            else:
-                targetIndex += 1
-
-    @classmethod
     def target_filter_self(cls, attacker, targets):
         targetIndex = 0
         while targetIndex < len(targets):
@@ -83,19 +72,15 @@ class TargetFilters:
     @classmethod
     def target_filter_isAlive(cls, targets):
         targetIndex = 0
+        target = targets[targetIndex]
         while targetIndex < len(targets):
-            target = targets[targetIndex]
             if target.hp <= 0:
                 targets.remove(target)
-            else:
-                targetIndex += 1
 
     @classmethod
     def target_filter_isDead(cls, targets):
         targetIndex = 0
+        target = targets[targetIndex]
         while targetIndex < len(targets):
-            target = targets[targetIndex]
             if target.hp > 0:
                 targets.remove(target)
-            else:
-                targetIndex += 1

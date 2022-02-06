@@ -16,20 +16,6 @@ class ForestAttacks:
             desc = "Lures the enemy in."
             super().__init__(name, desc, damage=None, atkType=AttackTypes.Plant, statusEffects=charmed(2, 100), manaCost=0)
 
-        def filter_targets(self, attacker, targets):
-            TargetFilters.target_filter_enemies(attacker, targets)
-            targetIndex = 0
-            while targetIndex < len(targets):
-                target = targets[targetIndex]
-                is_charmed = False
-                for status_effect in target.status_effects:
-                    if status_effect.name == "charmed":
-                        is_charmed = True
-
-                if is_charmed:
-                    targets.remove(target)
-                else:
-                    targetIndex += 1
 
     class Devour(Attack):
         def __init__(self):
@@ -37,20 +23,6 @@ class ForestAttacks:
             desc = "Devours enemy whole!"
             super().__init__(name, desc, damage=7, atkType=AttackTypes.Normal, statusEffects=[antiCharmed()], manaCost=0)
 
-        def filter_targets(self, attacker, targets):
-            TargetFilters.target_filter_enemies(attacker, targets)
-            targetIndex = 0
-            while targetIndex < len(targets):
-                target = targets[targetIndex]
-                is_charmed = False
-                for status_effect in target.status_effects:
-                    if status_effect.name == "charmed":
-                        is_charmed = True
-
-                if not is_charmed:
-                    targets.remove(target)
-                else:
-                    targetIndex += 1
 
     class Slap(Attack):
         def __init__(self):

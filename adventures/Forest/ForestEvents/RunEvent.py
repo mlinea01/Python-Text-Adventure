@@ -7,7 +7,7 @@ from attacks.AttacksInfo import AttackTypes
 
 class RunEvent:
 
-    def __init__(self, players):
+    def __init__(self, player):
         print("Do you hear something? It sounds like a very large animal is coming our way!")
         self.enemies = ["Teradactyl", "Velociraptor"]
         self.teradactyl = Attack("Devour", "grabs you in its talons and rips you to shreds", damage=1000,
@@ -17,7 +17,7 @@ class RunEvent:
         self.enemy_attacks = [self.teradactyl, self.velociraptor]
         self.hiding_place = ["Tree", "cave"]
         self.obstacles = ["fallen tree", "hole", "fence"]
-        self.players = players
+        self.player = player
 
     def start_event(self):
         for player in self.players:
@@ -29,11 +29,12 @@ class RunEvent:
                 print("OMG a Teradactyl is flying right toward us! Run and take cover! QUICK!")
                 sleep(0.5)
                 print("Watch out for obstacles! Get someplace safe!")
+                self.player = player
 
     def player_obstacle(self, player):
         obstacle = random.randint(0,2)
 
-        jump = IO.get_input(player.player_num, "Theres a " + self.obstacles[obstacle]
+        jump = input(player.name, "Theres a " + self.obstacles[obstacle]
                             + " Type 'jump' to avoid the trap!!!", time_out=50)
 
         if jump != "jump":

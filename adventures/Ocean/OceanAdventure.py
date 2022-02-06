@@ -3,27 +3,18 @@ from adventures.Ocean.Enemies import *
 from adventures.Adventures import Adventure
 from adventures.Ocean.Traps import *
 from items.Potions import *
-import threading
-from time import sleep
 from adventures.Merchant import Merchant
+from threading import Timer
 
 
 class OceanAdventure:
-    def __init__(self, players):
-        self.players = players
+    def __init__(self, player):
+        self.player = player
 
         map_data = []
         self.adventure = Adventure(self.players, map_data, 0, 0)
 
         self.traps = [ElectrifyingNet(), StickySeaweed(), CatastrohpicClam()]
-
-    def get_primary_player(self, players):
-        result = 0
-        for player in players:
-            if player.hp > 0:
-                return result
-            else:
-                result += 1
 
     def Ocean_merchant(self):
         print("A merchant sits on an island in the middle of the sea. You swim over...")
@@ -31,11 +22,10 @@ class OceanAdventure:
                             greeting="Does the ocean call to you like it calls to me?, bless this deep blue ocean!",
                             sales_pitch="Perhaps these will give you sustenance. What would you like?",
                             goodbye="Farewell, and beware.")
-        merchant.greet(self.players[0])
+        merchant.greet(self.player)
 
     def empty(self):
-        print(
-            "This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
+        print("This area is empty. Fred wasn't sure what to put here, but wanted to put something as a proof of concept.")
 
     def camp(self):
         print("Look! There is a camp up ahead, Let's check it out and see if we can find any clues!")
@@ -51,7 +41,7 @@ class OceanAdventure:
             print("You found an item!")
             item = potions[search - 1]()
             print("You found a " + item.name)
-            self.players[self.get_primary_player(self.players)].items.append(item)
+            self.player.items.append(item)
             self.adventure.mark_visited()
 
         elif self.adventure.already_visited():
@@ -61,23 +51,16 @@ class OceanAdventure:
 
     def hit_trap(self):
         if self.adventure.already_visited() is False:
-            traps = random.randint(1, 4)
-            trap = self.traps[traps - 1]
-            self.activePlayers = copy(self.players)
-            TargetFilters.target_filter_isAlive(self.activePlayers)
-
-            for player in self.players:
-                intro_thread = threading.Thread(target=self.player_hit_by_trap, args=[player, trap])
-                intro_thread.start()
+            trap = self.traps[random.randint(0, 3)]
+            self.player_hit_by_trap(self.player, trap).start()
         else:
             print("Theres that trap you got caught in! Let's not do that again!")
 
-        while len(self.activePlayers) > 0:
-            sleep(0.5)
-
     def player_hit_by_trap(self, player, trap):
-        jump = IO.get_input(player.player_num, "Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!",
-                            time_out=50)
+        time_out=50
+        timer = Timer(time_out, print, ['Times up!!!'])
+        jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
+        timer.start();
         print(" ")
         if jump != "jump":
             print(trap.desc)
@@ -86,18 +69,17 @@ class OceanAdventure:
             self.adventure.mark_visited()
         else:
             print("You avoided the trap! I almost peed my pants!")
+            timer.cancel()
         self.adventure.mark_visited()
-        self.activePlayers.remove(player)
 
     def giantSquid_fight(self):
         if self.adventure.already_visited() is False:
             print("What is that coming out of the water? NO! its a giant squid!!!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, GiantSquid()):
+            if Battle().start(self.player, GiantSquid()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players),
-                             "That squid almost had us! And you wanted to take a boat!")
+                input(self.player, "That squid almost had us! And you wanted to take a boat!")
                 print("")
                 self.adventure.mark_visited()
 
@@ -110,10 +92,9 @@ class OceanAdventure:
             print("Ok I know it's supposed to be a myth but i think that's a megalodon!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, MegalodonShark()):
+            if Battle().start(self.player, MegalodonShark()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players),
-                             "Ok that was scary, I'm not crying it's from the ocean!")
+                input(self.player,"Ok that was scary, I'm not crying it's from the ocean!")
                 print("")
                 self.adventure.mark_visited()
 
@@ -126,10 +107,9 @@ class OceanAdventure:
             print("Ok its a huge piranha, I'm not saying we're screwed, but we're screwed!")
             time.sleep(2)
             print("")
-            if Battle().start(self.players, PetrifyingPiranha()):
+            if Battle().start(self.player, PetrifyingPiranha()):
                 print("")
-                IO.get_input(self.get_primary_player(self.players),
-                             "I LIVED! YES!! i may or may not have lost a finger!")
+                input(self.player, "I LIVED! YES!! i may or may not have lost a finger!")
                 print("")
                 self.adventure.mark_visited()
 
