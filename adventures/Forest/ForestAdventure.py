@@ -15,7 +15,7 @@ from threading import Timer
 startJourney = True
 
 
-class Adventure1:
+class ForestAdventure:
 
     def __init__(self, player):
         self.player = player

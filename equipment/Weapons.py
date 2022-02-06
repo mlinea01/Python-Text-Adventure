@@ -11,6 +11,9 @@ class Weapon:
         self.attack = attack
         self.value = value
 
+    def __str__(self):
+        return self.name
+
 
 class Sword(Weapon):
     def __init__(self):
