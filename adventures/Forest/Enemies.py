@@ -14,16 +14,8 @@ class ZombieRat(Character):
         super().__init__("Zombie Rat", "", hp=20, mana=15, speed=20,
                          attacks=[BasicAttacks.Bite()], weapons=[],
                          reward_xp=65, character_type=AttackTypes.Normal)
-
-
-class VenusFlyTrap(Character):
-    def __init__(self):
-        super().__init__("Venus Fly Trap", "", hp=15, mana=15, speed=20,
-                         attacks=[ForestAttacks.SweetScent(), ForestAttacks.Devour(), ForestAttacks.VineWhip()],
-                         weapons=[],
-                         reward_xp=65, character_type= AttackTypes.Plant)
-
-
+        
+        
 class SlappingTree(Character):
     def __init__(self):
         super().__init__("Slapping Tree", "", hp=20, mana=15, speed=25,
@@ -32,18 +24,52 @@ class SlappingTree(Character):
                          reward_xp=65, character_type=AttackTypes.Plant)
 
 
+class VenusFlyTrap(Character):
+    def __init__(self):
+        super().__init__("Venus Fly Trap", "", hp=15, mana=15, speed=20,
+                         attacks=[ForestAttacks.SweetScent(), ForestAttacks.Devour(), ForestAttacks.VineWhip()],
+                         weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Plant)
+        
+        
+class PhantomPitcherPlant(Character):
+    def __init__(self):
+        super().__init__("Phantom Pitcher Plant", "", hp=15, mana=15, speed=10,
+                         attacks=[ForestAttacks.Devour(), ForestAttacks.SweetScent()],
+                         weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Plant)
+        
+        
+class StickySundew(Character):
+    def __init__(self):
+        super().__init__("Sticky Sundew", "", hp=15, mana=15, speed=15, 
+                         attacks=[ForestAttacks.StrongVenom(), ForestAttacks.SweetScent()], 
+                         weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Plant)
+
+
 class DeathBeetle(Character):
     def __init__(self):
         super().__init__("Death Beetle", "", hp=7, mana=15, speed=20,
-                         attacks=[ForestAttacks.WeakVenom()], weapons=[],
+                         attacks=[ForestAttacks.WeakVenom()], 
+                         weapons=[],
                          reward_xp=65, character_type= AttackTypes.Poison)
 
 
 class WidowWasp(Character):
     def __init__(self):
         super().__init__("Widow Wasp", "", hp=7, mana=15, speed=20,
-                         attacks=[ForestAttacks.Sting()], weapons=[],
-                         reward_xp=65, character_type=AttackTypes.Poison)
+                         attacks=[ForestAttacks.Sting()], 
+                         weapons=[],
+                         reward_xp=65, character_type= AttackTypes.Poison)
+        
+        
+class FerociousFly(Character):
+    def __init__(self):
+        super().__init__("Ferocious Fly", "", hp=7, mana=15, speed=20, 
+                         attacks=[ForestAttacks.Sting(), ForestAttacks.WeakVenom()], 
+                         weapons=[], 
+                         reward_xp=65, character_type= AttackTypes.Normal)
 
 
 class EnemyGen:
