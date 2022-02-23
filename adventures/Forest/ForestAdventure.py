@@ -16,7 +16,7 @@ startJourney = True
 
 
 class ForestAdventure:
-
+    
     def __init__(self, player):
         self.player = player
 
@@ -127,25 +127,25 @@ class ForestAdventure:
     def hit_trap(self):
         if self.adventure.already_visited() is False:
             trap = self.traps[random.randint(0, 3)]
-            self.player_hit_by_trap(self.player, trap).start()
+            self.player_hit_by_trap(self.player, trap)
         else:
             print("Theres that trap you got caught in! Let's not do that again!")
 
     def player_hit_by_trap(self, player, trap):
-        time_out=50
-        timer = Timer(time_out, print, ['Times up!!!'])
-        jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
+        time_out=5
+        timer = Timer(time_out, print, ['\nTimes up!!!'])
         timer.start();
+        jump = input("Theres a " + trap.name + ", Type 'jump' to avoid the trap!!!!!!!!!")
         print(" ")
         if jump != "jump":
-            print(trap.desc, player.player_num)
+            print(trap.desc)
             player.hit_by(trap)
             time.sleep(2)
             self.adventure.mark_visited()
         else:
             print("You avoided the trap! I almost peed my pants!")
             timer.cancel()
-        self.adventure.mark_visited()
+            self.adventure.mark_visited()
 
     def turantula_fight(self):
         if self.adventure.already_visited() is False:

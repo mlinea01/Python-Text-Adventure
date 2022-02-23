@@ -75,15 +75,19 @@ class TargetFilters:
     @classmethod
     def target_filter_isAlive(cls, targets):
         targetIndex = 0
-        target = targets[targetIndex]
         while targetIndex < len(targets):
+            target = targets[targetIndex]
             if target.hp <= 0:
                 targets.remove(target)
+            else:
+                targetIndex += 1
 
     @classmethod
     def target_filter_isDead(cls, targets):
         targetIndex = 0
-        target = targets[targetIndex]
         while targetIndex < len(targets):
+            target = targets[targetIndex]
             if target.hp > 0:
                 targets.remove(target)
+            else:
+                targetIndex += 1

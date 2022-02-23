@@ -42,8 +42,8 @@ class Adventure:
                     print(str(dir_num) + ". " + direction)
                     dir_num += 1
 
-                direction = int(input("Your choice: ", self.check_num_in_range, minimum=1,
-                                                                         maximum=len(directions)))-1
+                direction = int(input("Your choice: "))-1
+                self.check_num_in_range(direction, 1, len(directions))
 
                 if directions[direction] == "North":
                     self.player_y -= 1

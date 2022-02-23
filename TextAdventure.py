@@ -19,4 +19,4 @@ class Main:
     Battle().start(player, [TrainingDummy()])
 
     # Forest level
-    ForestAdventure([player])
+    ForestAdventure(player)

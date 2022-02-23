@@ -16,7 +16,7 @@ class CharacterCreator:
         print("You chose " + character_race.name)
         print(character_race.desc)
         character_name = CharacterCreator.get_character_name()
-        player = Player(character_name, character_race, 0, character_type)
+        player = Player(character_name, character_race, character_type)
         player.desc = input("Describe your character in one word: ").split(' ', 1)[0]
         print("Hello " + player.name + " the " + player.desc + " " + character_type + " " + player.race)
         player.equip_weapon(CharacterCreator.get_character_weapon(), False)

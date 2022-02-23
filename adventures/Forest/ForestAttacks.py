@@ -9,12 +9,42 @@ class ForestAttacks:
             desc = "Shoots sticky web."
             super().__init__(name, desc, damage=2, atkType=AttackTypes.Normal, statusEffects=[Paralyze(
                 paralyzeDuration=1, chance=60)], manaCost=0)
+            
+        def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
+            targetIndex = 0
+            while targetIndex < len(targets):
+                target = targets[targetIndex]
+                is_paralyzed = False
+                for status_effect in target.status_effects:
+                    if status_effect.name == "is paralyzed":
+                        is_paralyzed = True
+
+                if is_paralyzed:
+                    targets.remove(target)
+                else:
+                    targetIndex += 1
 
     class SweetScent(Attack):
         def __init__(self):
             name = "Sweet Scent"
             desc = "Lures the enemy in."
             super().__init__(name, desc, damage=None, atkType=AttackTypes.Plant, statusEffects=charmed(2, 100), manaCost=0)
+            
+        def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
+            targetIndex = 0
+            while targetIndex < len(targets):
+                target = targets[targetIndex]
+                is_charmed = False
+                for status_effect in target.status_effects:
+                    if status_effect.name == "is charmed":
+                        is_charmed = True
+
+                if is_charmed:
+                    targets.remove(target)
+                else:
+                    targetIndex += 1
 
 
     class Devour(Attack):
@@ -22,6 +52,21 @@ class ForestAttacks:
             name = "Devour"
             desc = "Devours enemy whole!"
             super().__init__(name, desc, damage=7, atkType=AttackTypes.Normal, statusEffects=[antiCharmed()], manaCost=0)
+            
+        def filter_targets(self, attacker, targets):
+                TargetFilters.target_filter_enemies(attacker, targets)
+                targetIndex = 0
+                while targetIndex < len(targets):
+                    target = targets[targetIndex]
+                    is_charmed = False
+                    for status_effect in target.status_effects:
+                        if status_effect.name == "is charmed":
+                            is_charmed = True
+    
+                    if not is_charmed:
+                        targets.remove(target)
+                    else:
+                        targetIndex += 1
 
 
     class Slap(Attack):
@@ -44,6 +89,21 @@ class ForestAttacks:
                              statusEffects=[Poison(poison_duration=2, damage=1, chance=60)],
                              manaCost=0)
 
+        def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
+            targetIndex = 0
+            while targetIndex < len(targets):
+                target = targets[targetIndex]
+                is_poisoned = False
+                for status_effect in target.status_effects:
+                    if status_effect.name == "is poisoned":
+                        is_poisoned = True
+
+                if is_poisoned:
+                    targets.remove(target)
+                else:
+                    targetIndex += 1
+
     class StrongVenom(Attack):
         def __init__(self):
             name = "Strong Venom"
@@ -51,6 +111,21 @@ class ForestAttacks:
             super().__init__(name, desc, damage=3, atkType=AttackTypes.Poison,
                              statusEffects=[Poison(poison_duration=2, damage=2, chance=70)],
                              manaCost=0)
+            
+        def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
+            targetIndex = 0
+            while targetIndex < len(targets):
+                target = targets[targetIndex]
+                is_poisoned = False
+                for status_effect in target.status_effects:
+                    if status_effect.name == "is poisoned":
+                        is_poisoned = True
+
+                if is_poisoned:
+                    targets.remove(target)
+                else:
+                    targetIndex += 1
 
     class Sting(Attack):
         def __init__(self):
@@ -59,3 +134,18 @@ class ForestAttacks:
             super().__init__(name, desc, damage=2, atkType=AttackTypes.Poison,
                              statusEffects=[Poison(poison_duration=2, damage=1, chance=75)],
                              manaCost=0)
+            
+        def filter_targets(self, attacker, targets):
+            TargetFilters.target_filter_enemies(attacker, targets)
+            targetIndex = 0
+            while targetIndex < len(targets):
+                target = targets[targetIndex]
+                is_poisoned = False
+                for status_effect in target.status_effects:
+                    if status_effect.name == "is poisoned":
+                        is_poisoned = True
+
+                if is_poisoned:
+                    targets.remove(target)
+                else:
+                    targetIndex += 1

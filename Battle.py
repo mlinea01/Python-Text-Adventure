@@ -7,7 +7,7 @@ import time
 class Battle:
 
     fighters = None
-    players = None
+    player = None
     enemies = None
 
     @classmethod
@@ -28,7 +28,7 @@ class Battle:
             elif enemy_num == len(enemies)-1:
                 enemy_names += " and "
 
-        if len(enemy_names) > 1:
+        if len(enemies) > 1:
             print(enemy_names + " are about to attack!")
         else:
             print(enemy_names + " is about to attack!")
@@ -90,7 +90,7 @@ class Battle:
 
                             if fighter.is_player and target.hp == 0:
                                 fighter.character.xp += target.reward_xp
-                                print("You gained " + str(target.reward_xp) + " xp!", fighter.player_num)
+                                print("You gained " + str(target.reward_xp) + " xp!")
 
                                 if fighter.character.xp >= fighter.character.maxXp:
                                     fighter.character.level += 1
@@ -118,17 +118,18 @@ class Battle:
         return len(target_list) > 0
 
     @classmethod
-    def alive(cls, character):
+    def alive(cls, characters):
         try:
-            if character.hp > 0:
-                return True
-            return False
+            for c in characters:
+                if c.hp > 0:
+                    return True
+                return False
         except TypeError:
-            return character.hp > 0
+            return characters.hp > 0
 
     @classmethod
     def get_enemies_of(cls, character):
         if isinstance(character, Player):
             return cls.enemies
         else:
-            return cls.players
+            return cls.player
